@@ -12,8 +12,9 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class Contact implements XmlSerializable {
+class Contact  extends BaseInvoice implements XmlSerializable {
     private $telephone;
+    private $name;
     private $telefax;
     private $electronicMail;
 
@@ -30,6 +31,22 @@ class Contact implements XmlSerializable {
      */
     public function setTelephone($telephone) {
         $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return Contact
+     */
+    public function setName($name) {
+        $this->name = $name;
         return $this;
     }
 
@@ -71,25 +88,17 @@ class Contact implements XmlSerializable {
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
-        // TODO: Implement xmlSerialize() method.
-        if($this->telephone !== null) {
-            $writer->write([
-                Schema::CBC . 'Telephone' => $this->telephone
-            ]);
-        }
+    function xmlSerialize(Writer $writer): void {
+        
+        $this->setProps([
+                Schema::CBC . 'Name' => $this->name,
+                Schema::CBC . 'Telephone' => $this->telephone,
+                Schema::CBC . 'Telefax' => $this->telefax,
+                Schema::CBC . 'ElectronicMail' => $this->electronicMail,
+        ]);
+        
+        $writer->write($this->getProps());
 
-        if($this->telefax !== null) {
-            $writer->write([
-                Schema::CBC . 'Telefax' => $this->telefax
-            ]);
-        }
-
-        if($this->electronicMail !== null) {
-            $writer->write([
-                Schema::CBC . 'ElectronicMail' => $this->electronicMail
-            ]);
-        }
     }
 
 }

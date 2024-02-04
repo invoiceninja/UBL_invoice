@@ -12,11 +12,11 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class LegalMonetaryTotal implements XmlSerializable {
+class LegalMonetaryTotal  extends BaseInvoice implements XmlSerializable {
     private $lineExtensionAmount;
     private $taxExclusiveAmount;
     private $taxInclusiveAmount;
-    private $allowanceTotalAmount = 0;
+    private $allowanceTotalAmount;
     private $payableAmount;
 
     /**
@@ -106,7 +106,7 @@ class LegalMonetaryTotal implements XmlSerializable {
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
+    function xmlSerialize(Writer $writer): void {
         // TODO: Implement xmlSerialize() method.
         $writer->write([
             [

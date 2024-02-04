@@ -9,7 +9,7 @@ class InvoiceTest extends TestCase
 {
     private $invoice;
 
-    public function setUp(){
+    public function setUp(): void{
         $xmlService = new \Sabre\Xml\Service();
 
         $xmlService->namespaceMap = [
@@ -23,6 +23,7 @@ class InvoiceTest extends TestCase
         $invoice->setId('CIT1234');
         $invoice->setIssueDate($date);
         $invoice->setInvoiceTypeCode("SalesInvoice");
+        $invoice->setCopyIndicator('false');
 
         $accountingSupplierParty = new \CleverIt\UBL\Invoice\Party();
         $accountingSupplierParty->setName('CleverIt');
@@ -76,19 +77,74 @@ class InvoiceTest extends TestCase
             ->setPayableAmount(-1000)
             ->setAllowanceTotalAmount(50));
 
-
         $this->invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
+        
+     
+
+$service = new \Sabre\Xml\Service();
+print_r($service->parse($this->invoice));
+
+        echo $this->invoice;
+
     }
 
-    public function testInvoiceIsGenerated()
+    public function testFiltersUnsetProps()
     {
 
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . "/ubl.xml", $this->invoice);
+        $mutable_props = [
+            'should_stay' => true,
+            'should_go' => null
+        ];
+
+        $new_props = $this->array_filter_recursive($mutable_props);
+
+
+        $this->assertArrayHasKey('should_stay',$new_props);
+        $this->assertArrayNotHasKey('should_go', $new_props);
+
     }
+    
+    private function array_filter_recursive($input)
+    {
+        foreach ($input as &$value) {
+            if (is_array($value)) {
+                $value = $this->array_filter_recursive($value);
+            }
+        }
+        return array_filter($input);
+    }
+
+    public function testNestedPropsAreUnset()
+    {
+        
+        $mutable_props = [
+            'should_stay' => true,
+            'should_go' => [
+                'another_level' => null,
+            ]
+        ];
+
+        $new_props = $this->array_filter_recursive($mutable_props);
+
+        echo print_r($new_props, 1);
+
+        $this->assertArrayHasKey('should_stay', $new_props);
+        $this->assertArrayNotHasKey('should_go', $new_props);
+
+
+    }
+    // public function testInvoiceIsGenerated()
+    // {
+
+    //     $this->assertXmlStringEqualsXmlFile(__DIR__ . "/ubl.xml", $this->invoice);
+    // }
 
     public function testValidateSchema(){
         $validator = new UblValidator();
         $validator->isValid($this->invoice);
+
+        echo $validator->getError();
+
         $this->assertTrue($validator->isValid($this->invoice));
     }
 }

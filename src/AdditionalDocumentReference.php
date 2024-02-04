@@ -12,10 +12,10 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class AdditionalDocumentReference implements XmlSerializable {
-	private $id;
-	private $attachment;
-	private $filename;
+class AdditionalDocumentReference extends BaseInvoice implements XmlSerializable {
+	private $id = null;
+	private $attachment = null;
+	private $filename = null;
 
 	/**
 	 * @return mixed
@@ -65,8 +65,9 @@ class AdditionalDocumentReference implements XmlSerializable {
         return $this;
     }
 
-	function xmlSerialize(Writer $writer) {
-		$writer->write([
+	function xmlSerialize(Writer $writer): void {
+
+        $this->setProps([
 			Schema::CBC.'ID' => $this->id,
             Schema::CAC.'Attachment' =>[
                 [
@@ -77,6 +78,8 @@ class AdditionalDocumentReference implements XmlSerializable {
                     'filename' => $this->filename
                 ]]
             ]
-		]);
+        ]);
+        
+		$writer->write($this->getProps());
 	}
 }

@@ -12,35 +12,45 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class Party implements XmlSerializable{
-    private $name;
+class Party extends BaseInvoice implements XmlSerializable{
+    private $name = null;
     /**
      * @var Address
      */
-    private $postalAddress;
+    private $postalAddress = null;
     /**
      * @var Address
      */
-    private $physicalLocation;
+    private $physicalLocation = null;
     /**
      * @var Contact
      */
-    private $contact;
+    private $contact = null;
 
 	/**
 	 * @var string
 	 */
-    private $companyId;
+    private $companyId = null;
+
+    	/**
+	 * @var string
+	 */
+    private $id = null;
+
+    	/**
+	 * @var mixed
+	 */
+    private $partyIdentification = null;
 
 	/**
 	 * @var TaxScheme
 	 */
-    private $taxScheme;
+    private $taxScheme = null;
 
 	/**
 	 * @var LegalEntity
 	 */
-    private $legalEntity;
+    private $legalEntity = null;
 
     /**
      * @return mixed
@@ -81,11 +91,42 @@ class Party implements XmlSerializable{
     	return $this->companyId;
     }
 
+    
 	/**
 	 * @param string $companyId
 	 */
 	public function setCompanyId($companyId) {
     	$this->companyId = $companyId;
+	}
+
+    	/**
+	 * @return string
+	 */
+    public function getId() {
+    	return $this->id;
+    }
+
+    
+	/**
+	 * @param string $id
+	 */
+	public function setId($id) {
+    	$this->id = $id;
+	}
+
+    /**
+	 * @return mixed
+	 */
+    public function getPartyIdentification() {
+    	return $this->partyIdentification;
+    }
+
+	/**
+	 * @param mixed $partyIdentification
+	 */
+	public function setPartyIdentification($partyIdentification) {
+    	$this->partyIdentification = $partyIdentification;
+        return $this;
 	}
 
 	/**
@@ -151,34 +192,36 @@ class Party implements XmlSerializable{
         return $this;
     }
 
-    function xmlSerialize(Writer $writer) {
-        $writer->write([
-            Schema::CAC.'PartyName' => [
-                Schema::CBC.'Name' => $this->name
+    public function build(): self {
+
+        //calculate taxScheme (if companyId exists => set it in an array with the taxScheme)
+
+        $this->companyId ? $this->setTaxScheme([
+            Schema::CBC . 'CompanyID' => $this->companyId,
+            Schema::CAC . 'TaxScheme' => $this->taxScheme
+        ]) : $this->setTaxScheme($this->getTaxScheme());
+
+        return $this;
+    }
+
+    function xmlSerialize(Writer $writer): void {
+
+        $this->build()
+            ->setProps([
+            Schema::CAC . 'PartyName' => [
+                Schema::CBC . 'Name' => $this->name
             ],
-            Schema::CAC.'PostalAddress' => $this->postalAddress
+            Schema::CAC . 'PostalAddress' => $this->postalAddress,
+            Schema::CAC . 'PhysicalLocation' => [Schema::CAC . 'Address' => $this->physicalLocation],
+            Schema::CAC . 'PartyTaxScheme' => $this->taxScheme,
+            Schema::CAC . 'Contact' => $this->contact,
+            Schema::CAC.'PartyIdentification' => [
+                Schema::CBC.'ID' => $this->partyIdentification
+            ],
+            Schema::CAC.'PartyLegalEntity' => $this->legalEntity
         ]);
 
-	    if($this->taxScheme){
-		    $writer->write([
-			    Schema::CAC.'PartyTaxScheme' => [
-				    Schema::CBC.'CompanyID' => $this->companyId,
-                    Schema::CAC.'TaxScheme' => $this->taxScheme
-			    ],
-		    ]);
-	    }
-
-        if($this->physicalLocation){
-            $writer->write([
-               Schema::CAC.'PhysicalLocation' => [Schema::CAC.'Address' => $this->physicalLocation]
-            ]);
-        }
-
-        if($this->contact){
-            $writer->write([
-                Schema::CAC.'Contact' => $this->contact
-            ]);
-        }
+        $writer->write($this->getProps());
 
     }
 }

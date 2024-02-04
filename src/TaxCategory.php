@@ -8,15 +8,15 @@
 
 namespace CleverIt\UBL\Invoice;
 
-
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class TaxCategory implements XmlSerializable {
-    private $id;
-    private $name;
-    private $percent;
-    private $taxScheme;
+class TaxCategory extends BaseInvoice implements XmlSerializable {
+    
+    private $id = null;
+    private $percent = null;
+    private $taxScheme = null;
+    private $name = null;
 
     /**
      * @return mixed
@@ -31,22 +31,6 @@ class TaxCategory implements XmlSerializable {
      */
     public function setId($id) {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     * @return TaxCategory
-     */
-    public function setName($name) {
-        $this->name = $name;
         return $this;
     }
 
@@ -82,6 +66,21 @@ class TaxCategory implements XmlSerializable {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return TaxCategory
+     */
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
 
 
     public function validate() {
@@ -89,32 +88,27 @@ class TaxCategory implements XmlSerializable {
             throw new \InvalidArgumentException('Missing taxcategory id');
         }
 
-        if ($this->name === null) {
-            throw new \InvalidArgumentException('Missing taxcategory name');
-        }
-
         if ($this->percent === null) {
             throw new \InvalidArgumentException('Missing taxcategory percent');
         }
     }
-
+    
     /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
+    function xmlSerialize(Writer $writer): void {
         $this->validate();
 
-        $writer->write([
+        $this->setProps([
             Schema::CBC.'ID' => $this->id,
             Schema::CBC.'Name' => $this->name,
             Schema::CBC.'Percent' => $this->percent,
+            Schema::CAC.'TaxScheme' => $this->taxScheme
         ]);
 
-        if($this->taxScheme != null){
-            $writer->write([Schema::CAC.'TaxScheme' => $this->taxScheme]);
-        }
+        $writer->write($this->getProps());
     }
 }

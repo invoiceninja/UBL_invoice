@@ -8,15 +8,15 @@
 
 namespace CleverIt\UBL\Invoice;
 
-
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class Address implements XmlSerializable{
-    private $streetName;
-    private $buildingNumber;
-    private $cityName;
-    private $postalZone;
+class Address extends BaseInvoice implements XmlSerializable{
+    private $streetName = null;
+    private $buildingNumber = null;
+    private $cityName = null;
+    private $postalZone = null;
+    private $countrySubentity = null;
     /**
      * @var Country
      */
@@ -102,6 +102,21 @@ class Address implements XmlSerializable{
         return $this;
     }
 
+       /**
+     * @return mixed
+     */
+    public function getCountrySubentity() {
+        return $this->countrySubentity;
+    }
+
+    /**
+     * @param mixed $countrySubentity
+     * @return Address
+     */
+    public function setCountrySubentity($countrySubentity) {
+        $this->countrySubentity = $countrySubentity;
+        return $this;
+    }
 
     /**
      * The xmlSerialize method is called during xml writing.
@@ -109,17 +124,20 @@ class Address implements XmlSerializable{
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
+    function xmlSerialize(Writer $writer): void {
         // TODO: Implement xmlSerialize() method.
         $cbc = '{urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2}';
         $cac = '{urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2}';
 
-        $writer->write([
+        $this->setProps([
             Schema::CBC.'StreetName' => $this->streetName,
             Schema::CBC.'BuildingNumber' => $this->buildingNumber,
             Schema::CBC.'CityName' => $this->cityName,
             Schema::CBC.'PostalZone' => $this->postalZone,
+            Schema::CBC.'CountrySubentity' => $this->countrySubentity,
             Schema::CAC.'Country' => $this->country,
         ]);
+
+        $writer->write($this->getProps());
     }
 }

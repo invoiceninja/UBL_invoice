@@ -12,7 +12,7 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class AllowanceCharge implements XmlSerializable {
+class AllowanceCharge  extends BaseInvoice implements XmlSerializable {
     /**
      * @var boolean
      */
@@ -49,19 +49,16 @@ class AllowanceCharge implements XmlSerializable {
     private $taxCategory;
 
     /**
-     * @return boolean
-     */
-    public function isChargeIndicator() {
-        return $this->chargeIndicator;
-    }
-
-    /**
-     * @param boolean $chargeIndicator
+     * @param string $chargeIndicator 'true' : 'false'
      * @return AllowanceCharge
      */
     public function setChargeIndicator($chargeIndicator) {
         $this->chargeIndicator = $chargeIndicator;
         return $this;
+    }
+
+    public function getChargeIndicator() {
+        return $this->chargeIndicator;
     }
 
     /**
@@ -177,38 +174,19 @@ class AllowanceCharge implements XmlSerializable {
         return $this;
     }
     
-    
-
     /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
-        $writer->write([
-            Schema::CBC . 'ChargeIndicator' => $this->chargeIndicator ? 'true' : 'false',
-        ]);
+    function xmlSerialize(Writer $writer): void {
 
-        if ($this->allowanceChargeReasonCode !== null) {
-            $writer->write([
-                Schema::CBC . 'AllowanceChargeReasonCode' => $this->allowanceChargeReasonCode
-            ]);
-        }
-
-        if ($this->allowanceChargeReason !== null) {
-            $writer->write([
-                Schema::CBC . 'AllowanceChargeReason' => $this->allowanceChargeReason
-            ]);
-        }
-
-        if ($this->multiplierFactorNumeric !== null) {
-            $writer->write([
-                Schema::CBC . 'MultiplierFactorNumeric' => $this->multiplierFactorNumeric
-            ]);
-        }
-
-        $writer->write([
+        $data = [
+            Schema::CBC . 'ChargeIndicator' => $this->getChargeIndicator(),
+            Schema::CBC . 'AllowanceChargeReasonCode' => $this->allowanceChargeReasonCode,
+            Schema::CBC . 'AllowanceChargeReason' => $this->allowanceChargeReason,
+            Schema::CBC . 'MultiplierFactorNumeric' => $this->multiplierFactorNumeric,
             [
                 'name' => Schema::CBC . 'Amount',
                 'value' => $this->amount,
@@ -216,34 +194,27 @@ class AllowanceCharge implements XmlSerializable {
                     'currencyID' => Generator::$currencyID
                 ]
             ],
-        ]);
-        
-        if ($this->taxCategory !== null) {
-            $writer->write(
-                [
-                    Schema::CAC . 'TaxCategory' => $this->taxCategory
-                ]
-            );
-        }
-        
-        if ($this->taxTotal !== null) {
-            $writer->write(
-                [
-                    Schema::CAC . 'TaxTotal' => $this->taxTotal
-                ]
-            );
-        }
+            Schema::CAC . 'TaxCategory' => $this->taxCategory,
+            Schema::CAC . 'TaxTotal' => $this->taxTotal,
 
-        if ($this->baseAmount !== null) {
-            $writer->write([
+        ];
+
+
+        if ($this->baseAmount) {
+            $data[] =
                 [
                     'name' => Schema::CBC . 'BaseAmount',
                     'value' => $this->baseAmount,
                     'attributes' => [
                         'currencyID' => Generator::$currencyID
                     ]
-                ]
-            ]);
+                ];
+            
         }
+
+        $this->setProps($data);
+
+        $writer->write($this->getProps());
+
     }
 }

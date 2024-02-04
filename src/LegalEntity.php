@@ -11,7 +11,7 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class LegalEntity implements XmlSerializable {
+class LegalEntity  extends BaseInvoice implements XmlSerializable {
 
 	/**
 	 * @var string
@@ -19,7 +19,7 @@ class LegalEntity implements XmlSerializable {
 	private $registrationName;
 
 	/**
-	 * @var int
+	 * @var string
 	 */
 	private $companyId;
 
@@ -39,10 +39,10 @@ class LegalEntity implements XmlSerializable {
 		$this->companyId = $companyId;
 	}
 
-	function xmlSerialize(Writer $writer) {
+	function xmlSerialize(Writer $writer): void {
 		$writer->write([
-			Schema::CBC.'RegistrationName' => $this->registrationName,
-			Schema::CBC.'CompanyID' => $this->companyId
+			    Schema::CBC.'RegistrationName' => $this->registrationName,
+			    Schema::CBC.'CompanyID' => $this->companyId
 		]);
 	}
 }
