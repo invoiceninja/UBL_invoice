@@ -14,7 +14,7 @@ use Sabre\Xml\XmlSerializable;
 
 class InvoiceLine  extends BaseInvoice implements XmlSerializable {
     private $id;
-    private $invoicedQuantity;
+    protected $invoicedQuantity;
     private $lineExtensionAmount;
     private $unitCode = 'MON';
     /**

@@ -32,4 +32,9 @@ class Generator {
             $invoice
         ]);
     }
+
+    public static function creditNote(CreditNote $creditNote, $currencyId = 'EUR')
+    {
+        return self::invoice($creditNote, $currencyId);
+    }
 }
