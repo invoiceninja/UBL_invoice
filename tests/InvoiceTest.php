@@ -79,9 +79,9 @@ class InvoiceTest extends TestCase
 
         $this->invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
         
-        // $service = new \Sabre\Xml\Service();
+        $service = new \Sabre\Xml\Service();
         // print_r($service->parse($this->invoice));
-        // echo $this->invoice;
+        echo $this->invoice;
 
     }
 

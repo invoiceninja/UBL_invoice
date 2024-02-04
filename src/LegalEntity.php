@@ -13,14 +13,8 @@ use Sabre\Xml\XmlSerializable;
 
 class LegalEntity  extends BaseInvoice implements XmlSerializable {
 
-	/**
-	 * @var string
-	 */
+	private $companyIdAttributes;
 	private $registrationName;
-
-	/**
-	 * @var string
-	 */
 	private $companyId;
 
 	public function getRegistrationName() {
@@ -32,7 +26,33 @@ class LegalEntity  extends BaseInvoice implements XmlSerializable {
 	}
 
 	public function getCompanyId() {
-		return $this->companyId;
+		
+		return $this->companyIdAttributes ? [
+					'name' => Schema::CBC . 'CompanyID',
+					'value' => $this->companyId,
+					'attributes' => $this->companyIdAttributes,
+				] : [Schema::CBC.'CompanyID' => $this->companyId]; 	
+		
+	}
+
+	/**
+	 * Get the value of companyIdAttributes
+	 */ 
+	public function getCompanyIdAttributes()
+	{
+		return $this->companyIdAttributes;
+	}
+
+	/**
+	 * Set the value of companyIdAttributes
+	 *
+	 * @return  self
+	 */ 
+	public function setCompanyIdAttributes($companyIdAttributes)
+	{
+		$this->companyIdAttributes = $companyIdAttributes;
+
+		return $this;
 	}
 
 	public function setCompanyId($companyId) {
@@ -40,9 +60,10 @@ class LegalEntity  extends BaseInvoice implements XmlSerializable {
 	}
 
 	function xmlSerialize(Writer $writer): void {
-		$writer->write([
-			    Schema::CBC.'RegistrationName' => $this->registrationName,
-			    Schema::CBC.'CompanyID' => $this->companyId
-		]);
+		
+		$this->setProps(array_merge($this->getCompanyId(), [Schema::CBC.'RegistrationName' => $this->registrationName]));
+				
+		$writer->write($this->getProps());
 	}
+
 }

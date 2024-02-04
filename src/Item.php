@@ -12,10 +12,12 @@ use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
 class Item  extends BaseInvoice implements XmlSerializable {
-    private $description = null;
-    private $name = null;
-    private $classifiedTaxCategory = null;
-    private $sellersItemIdentification = null;
+    private $description;
+    private $name;
+    private $buyersItemIdentification;
+    private $sellersItemIdentification;
+    private $standardItemIdentification;
+    private $classifiedTaxCategory;
     /**
      * @return mixed
      */
@@ -80,6 +82,46 @@ class Item  extends BaseInvoice implements XmlSerializable {
         return $this;
     }
 
+    
+    /**
+     * Get the value of buyersItemIdentification
+     */ 
+    public function getBuyersItemIdentification()
+    {
+        return $this->buyersItemIdentification;
+    }
+
+    /**
+     * Set the value of buyersItemIdentification
+     *
+     * @return  self
+     */ 
+    public function setBuyersItemIdentification($buyersItemIdentification)
+    {
+        $this->buyersItemIdentification = $buyersItemIdentification;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of standardItemIdentification
+     */ 
+    public function getStandardItemIdentification()
+    {
+        return $this->standardItemIdentification;
+    }
+
+    /**
+     * Set the value of standardItemIdentification
+     *
+     * @return  self
+     */ 
+    public function setStandardItemIdentification($standardItemIdentification)
+    {
+        $this->standardItemIdentification = $standardItemIdentification;
+
+        return $this;
+    }
 
     /**
      * The xmlSerialize method is called during xml writing.
@@ -96,8 +138,15 @@ class Item  extends BaseInvoice implements XmlSerializable {
            Schema::CAC.'SellersItemIdentification' => [
                Schema::CBC.'ID' => $this->sellersItemIdentification
            ],
+           Schema::CAC . 'BuyersItemIdentification' => [
+                Schema::CBC . 'ID' => $this->buyersItemIdentification
+           ],
+           Schema::CAC . 'StandardItemIdentification' => [
+                Schema::CBC . 'ID' => $this->standardItemIdentification
+           ],
         ]);
 
         $writer->write($this->getProps());
     }
+
 }
