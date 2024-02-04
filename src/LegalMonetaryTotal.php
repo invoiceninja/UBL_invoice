@@ -127,7 +127,7 @@ class LegalMonetaryTotal  extends BaseInvoice implements XmlSerializable {
             ],
             [
                 'name' => Schema::CBC . 'TaxInclusiveAmount',
-                'value' => number_format($this->taxInclusiveAmount, 2, '.', ''),
+                'value' => number_format($this->taxInclusiveAmount ?? 0, 2, '.', ''),
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
                 ]

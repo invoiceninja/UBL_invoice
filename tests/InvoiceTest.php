@@ -79,12 +79,9 @@ class InvoiceTest extends TestCase
 
         $this->invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
         
-     
-
-$service = new \Sabre\Xml\Service();
-print_r($service->parse($this->invoice));
-
-        echo $this->invoice;
+        // $service = new \Sabre\Xml\Service();
+        // print_r($service->parse($this->invoice));
+        // echo $this->invoice;
 
     }
 
@@ -97,7 +94,6 @@ print_r($service->parse($this->invoice));
         ];
 
         $new_props = $this->array_filter_recursive($mutable_props);
-
 
         $this->assertArrayHasKey('should_stay',$new_props);
         $this->assertArrayNotHasKey('should_go', $new_props);
@@ -126,13 +122,12 @@ print_r($service->parse($this->invoice));
 
         $new_props = $this->array_filter_recursive($mutable_props);
 
-        echo print_r($new_props, 1);
-
         $this->assertArrayHasKey('should_stay', $new_props);
         $this->assertArrayNotHasKey('should_go', $new_props);
 
 
     }
+
     // public function testInvoiceIsGenerated()
     // {
 

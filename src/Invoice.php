@@ -438,10 +438,10 @@ class Invoice extends BaseInvoice implements XmlSerializable
             Schema::CAC . 'LegalMonetaryTotal' => $this->legalMonetaryTotal,
         ];
 
-        foreach ($this->allowanceCharges as $invoiceLine) 
+        foreach ($this->allowanceCharges ?? [] as $invoiceLine) 
             $data[] = [Schema::CAC . 'AllowanceCharge' => $invoiceLine];
     
-        foreach ($this->invoiceLines as $invoiceLine) 
+        foreach ($this->invoiceLines ?? []as $invoiceLine) 
             $data[] = [Schema::CAC . 'InvoiceLine' => $invoiceLine];
 
         $this->setProps($data);
