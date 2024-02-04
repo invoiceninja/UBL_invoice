@@ -8,15 +8,14 @@
 
 namespace CleverIt\UBL\Invoice;
 
-
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class Item implements XmlSerializable {
-    private $description;
-    private $name;
-    private $sellersItemIdentification;
-
+class Item  extends BaseInvoice implements XmlSerializable {
+    private $description = null;
+    private $name = null;
+    private $classifiedTaxCategory = null;
+    private $sellersItemIdentification = null;
     /**
      * @return mixed
      */
@@ -52,6 +51,22 @@ class Item implements XmlSerializable {
     /**
      * @return mixed
      */
+    public function getClassifiedTaxCategory() {
+        return $this->classifiedTaxCategory;
+    }
+
+    /**
+     * @param mixed $classifiedTaxCategory
+     * @return Item
+     */
+    public function setClassifiedTaxCategory($classifiedTaxCategory) {
+        $this->classifiedTaxCategory = $classifiedTaxCategory;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getSellersItemIdentification() {
         return $this->sellersItemIdentification;
     }
@@ -66,20 +81,23 @@ class Item implements XmlSerializable {
     }
 
 
-
     /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
-        $writer->write([
+    function xmlSerialize(Writer $writer): void {
+
+        $this->setProps([
            Schema::CBC.'Description' => $this->description,
            Schema::CBC.'Name' => $this->name,
+           Schema::CAC.'ClassifiedTaxCategory' => $this->classifiedTaxCategory,
            Schema::CAC.'SellersItemIdentification' => [
                Schema::CBC.'ID' => $this->sellersItemIdentification
            ],
         ]);
+
+        $writer->write($this->getProps());
     }
 }

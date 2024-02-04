@@ -12,7 +12,7 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class InvoiceLine implements XmlSerializable {
+class InvoiceLine  extends BaseInvoice implements XmlSerializable {
     private $id;
     private $invoicedQuantity;
     private $lineExtensionAmount;
@@ -148,8 +148,9 @@ class InvoiceLine implements XmlSerializable {
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
-        $writer->write([
+    function xmlSerialize(Writer $writer): void {
+        
+        $this->setProps([
             Schema::CBC . 'ID' => $this->id,
             [
                 'name' => Schema::CBC . 'InvoicedQuantity',
@@ -167,14 +168,11 @@ class InvoiceLine implements XmlSerializable {
             ],
             Schema::CAC . 'TaxTotal' => $this->taxTotal,
             Schema::CAC . 'Item' => $this->item,
+            Schema::CAC . 'Price' => $this->price
         ]);
 
-        if ($this->price !== null) {
-            $writer->write(
-                [
-                    Schema::CAC . 'Price' => $this->price
-                ]
-            );
-        }
+        $writer->write($this->getProps());
+                
+        
     }
 }

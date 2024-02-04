@@ -12,12 +12,12 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class TaxTotal implements XmlSerializable {
+class TaxTotal  extends BaseInvoice implements XmlSerializable {
     private $taxAmount;
     /**
      * @var array
      */
-    private $taxSubTotals = array();
+    private $taxSubTotals = [];
 
     /**
      * @return mixed
@@ -62,10 +62,10 @@ class TaxTotal implements XmlSerializable {
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
+    function xmlSerialize(Writer $writer): void {
         $this->validate();
 
-        $writer->write([
+        $data = [
             [
                 'name' => Schema::CBC . 'TaxAmount',
                 'value' => number_format($this->taxAmount, 2, '.', ''),
@@ -73,10 +73,15 @@ class TaxTotal implements XmlSerializable {
                     'currencyID' => Generator::$currencyID
                 ]
             ],
-        ]);
+        ];
 
-        foreach($this->taxSubTotals as $taxSubTotal){
-            $writer->write([Schema::CAC . 'TaxSubtotal' => $taxSubTotal]);
+        foreach($this->taxSubTotals as $taxSubTotal) {
+            $data[] = [Schema::CAC . 'TaxSubtotal' => $taxSubTotal];
         }
+
+        $this->setProps($data);
+
+        $writer->write($this->getProps());
+
     }
 }

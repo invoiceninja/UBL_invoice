@@ -12,10 +12,10 @@ namespace CleverIt\UBL\Invoice;
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class Price implements XmlSerializable {
+class Price  extends BaseInvoice implements XmlSerializable {
     private $priceAmount;
     private $baseQuantity;
-    private $unitCode = 'MON';
+    private $unitCode;
 
     /**
      * @return mixed
@@ -73,20 +73,13 @@ class Price implements XmlSerializable {
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
+    function xmlSerialize(Writer $writer): void {
         $writer->write([
             [
                 'name' => Schema::CBC.'PriceAmount',
                 'value' => $this->priceAmount,
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
-                ]
-            ],
-            [
-                'name' => Schema::CBC.'BaseQuantity',
-                'value' => $this->baseQuantity,
-                'attributes' => [
-                    'unitCode' => $this->unitCode
                 ]
             ]
 

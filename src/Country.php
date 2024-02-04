@@ -31,15 +31,13 @@ class Country implements  XmlSerializable {
         return $this;
     }
 
-
-
     /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
-    function xmlSerialize(Writer $writer) {
+    function xmlSerialize(Writer $writer): void {
         $writer->write([
             Schema::CBC.'IdentificationCode' => $this->identificationCode,
         ]);

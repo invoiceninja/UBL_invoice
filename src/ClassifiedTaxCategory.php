@@ -8,15 +8,14 @@
 
 namespace CleverIt\UBL\Invoice;
 
+
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
-class TaxCategory extends BaseInvoice implements XmlSerializable {
-    
-    private $id = null;
-    private $percent = null;
-    private $taxScheme = null;
-    private $name = null;
+class ClassifiedTaxCategory  extends BaseInvoice implements XmlSerializable {
+    private $id;
+    private $percent;
+    private $taxScheme;
 
     /**
      * @return mixed
@@ -27,7 +26,7 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
 
     /**
      * @param mixed $id
-     * @return TaxCategory
+     * @return ClassifiedTaxCategory
      */
     public function setId($id) {
         $this->id = $id;
@@ -43,7 +42,7 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
 
     /**
      * @param mixed $percent
-     * @return TaxCategory
+     * @return ClassifiedTaxCategory
      */
     public function setPercent($percent) {
         $this->percent = $percent;
@@ -59,7 +58,7 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
 
     /**
      * @param mixed $taxScheme
-     * @return TaxCategory
+     * @return ClassifiedTaxCategory
      */
     public function setTaxScheme($taxScheme) {
         $this->taxScheme = $taxScheme;
@@ -67,46 +66,19 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
     }
 
     /**
-     * @return mixed
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     * @return TaxCategory
-     */
-    public function setName($name) {
-        $this->name = $name;
-        return $this;
-    }
-
-
-    public function validate() {
-        if ($this->id === null) {
-            throw new \InvalidArgumentException('Missing taxcategory id');
-        }
-
-        if ($this->percent === null) {
-            throw new \InvalidArgumentException('Missing taxcategory percent');
-        }
-    }
-    
-    /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
     function xmlSerialize(Writer $writer): void {
-        $this->validate();
 
         $this->setProps([
             Schema::CBC.'ID' => $this->id,
-            Schema::CBC.'Name' => $this->name,
             Schema::CBC.'Percent' => $this->percent,
-            Schema::CAC.'TaxScheme' => $this->taxScheme
+            Schema::CAC.'TaxScheme' =>[
+                Schema::CBC.'ID' => $this->taxScheme
+            ],
         ]);
 
         $writer->write($this->getProps());
