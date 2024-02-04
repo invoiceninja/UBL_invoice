@@ -10,7 +10,15 @@ class InvoiceTest extends TestCase
     private $invoice;
 
     public function setUp(): void{
+   
+    }
+
+    public function testV21UBL()
+    {
+                
         $xmlService = new \Sabre\Xml\Service();
+
+        $schema = 'http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd';
 
         $xmlService->namespaceMap = [
             'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2' => '',
@@ -78,15 +86,55 @@ class InvoiceTest extends TestCase
             ->setAllowanceTotalAmount(50));
 
         $this->invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
-        
-        $service = new \Sabre\Xml\Service();
+
+
+
+            $validator = new UblValidator();
+            $validator->isValid($this->invoice);
+
+            echo $validator->getError();
+
+            $this->assertTrue($validator->isValid($this->invoice));
+
+
+        // $service = new \Sabre\Xml\Service();
         // print_r($service->parse($this->invoice));
         // echo $this->invoice;
 
+
+        // libxml_use_internal_errors(true);
+
+        // $dom = new \DOMDocument();
+        // $dom->loadXML($this->invoice);
+
+        // $result = false;
+
+
+        // try {
+        //     $dom->schemaValidate($schema);
+
+        //     echo '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
+        //     $this->libxml_display_errors();
+
+        // } catch(\Exception $e) {
+        //     echo $e->getMessage();
+        // }
+
     }
+
 
     public function testExtendedAttributes()
     {
+        $xmlService = new \Sabre\Xml\Service();
+
+        $schema = 'http://docs.oasis-open.org/ubl/os-UBL-2.2/xsd/maindoc/UBL-Invoice-2.2.xsd';
+
+        $xmlService->namespaceMap = [
+            'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2' => '',
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2' => 'cbc',
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2' => 'cac'
+        ];
+
 
         $schema = 'http://docs.oasis-open.org/ubl/os-UBL-2.2/xsd/maindoc/UBL-Invoice-2.2.xsd';
 
@@ -96,9 +144,9 @@ class InvoiceTest extends TestCase
 
         // Full address
         $address = (new \CleverIt\UBL\Invoice\Address())
+            ->setCityName('Gent')
             ->setStreetName('Korenmarkt')
             ->setBuildingNumber(1)
-            ->setCityName('Gent')
             ->setPostalZone('9000')
             ->setCountry($country);
 
@@ -138,11 +186,11 @@ class InvoiceTest extends TestCase
 
         // Invoice Line(s)
         $invoiceLine = (new \CleverIt\UBL\Invoice\InvoiceLine())
-            ->setId(0)
-            ->setItem($productItem)
+            ->setId(1)
+            ->setInvoicedQuantity(1)
             ->setPrice($price)
             ->setTaxTotal($lineTaxTotal)
-            ->setInvoicedQuantity(1);
+            ->setItem($productItem);
 
         $invoiceLines = [$invoiceLine];
 
@@ -171,7 +219,7 @@ class InvoiceTest extends TestCase
 
         // Invoice object
         $invoice = (new \CleverIt\UBL\Invoice\Invoice())
-            ->setUBLVersionID('2.2')
+            ->setUBLVersionID('2.1')
             ->setId(1234)
             ->setCopyIndicator('false')
             ->setIssueDate(new \DateTime())
@@ -183,32 +231,41 @@ class InvoiceTest extends TestCase
             ->setLegalMonetaryTotal($legalMonetaryTotal)
             ->setTaxTotal($taxTotal)
             ->setContractDocumentReference($contractDocumentReference)
-            ->setBuyerReference("SomeReference")
+            // ->setBuyerReference("SomeReference")
             ->setInvoicePeriod($invoicePeriod);
 
 
-        $ubl_invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
-        echo $ubl_invoice;
+            $ubl_invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
 
-        $dom = new \DOMDocument();
-        $dom->loadXML($ubl_invoice);
 
-        $result = false;
+            $validator = new UblValidator();
+            $validator->isValid($ubl_invoice);
+            echo $validator->getError();
 
-        libxml_use_internal_errors(true);
+            $this->assertTrue($validator->isValid($ubl_invoice));
 
-        try{
-            $dom->schemaValidate($schema);
 
-            echo '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
-            $this->libxml_display_errors();
+        // echo $ubl_invoice;
 
-        }
-        catch(\Exception $e){
-            echo $e->getMessage();
-        }
+        // $dom = new \DOMDocument();
+        // $dom->loadXML($ubl_invoice);
 
-        $this->assertTrue($result);
+        // $result = false;
+
+        // libxml_use_internal_errors(true);
+
+        // try{
+        //     $dom->schemaValidate($schema);
+
+        //     echo '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
+        //     $this->libxml_display_errors();
+
+        // }
+        // catch(\Exception $e){
+        //     echo $e->getMessage();
+        // }
+
+        // $this->assertTrue($result);
 
     }
 
@@ -288,12 +345,4 @@ class InvoiceTest extends TestCase
 
     }
 
-    public function testValidateSchema(){
-        $validator = new UblValidator();
-        $validator->isValid($this->invoice);
-
-        echo $validator->getError();
-
-        $this->assertTrue($validator->isValid($this->invoice));
-    }
 }

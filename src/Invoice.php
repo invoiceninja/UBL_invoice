@@ -711,20 +711,20 @@ class Invoice extends BaseInvoice implements XmlSerializable
             
             $this->getAllowanceCharges(), 
             
-            // Schema::CBC . 'BuyerReference' => $this->buyerReference,
-            // Schema::CAC . 'InvoicePeriod' => $this->invoicePeriod,
-            // Schema::CAC . 'OrderReference' => $this->orderReference,
-            // Schema::CAC . 'ContractDocumentReference' => $this->contractDocumentReference,
+            Schema::CBC . 'BuyerReference' => $this->buyerReference,
+            Schema::CAC . 'InvoicePeriod' => $this->invoicePeriod,
+            Schema::CAC . 'OrderReference' => $this->orderReference,
+            Schema::CAC . 'ContractDocumentReference' => $this->contractDocumentReference,
 
-            // $this->getAdditionalDocumentReferences(),
+            $this->getAdditionalDocumentReferences(),
 
-            // Schema::CAC . 'TaxTotal' => $this->taxTotal,
-            // Schema::CAC . 'LegalMonetaryTotal' => $this->legalMonetaryTotal,
+            Schema::CAC . 'TaxTotal' => $this->taxTotal,
+            Schema::CAC . 'LegalMonetaryTotal' => $this->legalMonetaryTotal,
         ];
 
 
-        // foreach ($this->invoiceLines ?? []as $invoiceLine) 
-        //     $data[] = [Schema::CAC . 'InvoiceLine' => $invoiceLine];
+        foreach ($this->invoiceLines ?? []as $invoiceLine) 
+            $data[] = [Schema::CAC . 'InvoiceLine' => $invoiceLine];
 
         $this->setProps($data);
 

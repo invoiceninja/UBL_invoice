@@ -42,7 +42,7 @@ class InvoiceLine  extends BaseInvoice implements XmlSerializable {
      * @return mixed
      */
     public function getId() {
-        return $this->id;
+        return (string) $this->id;
     }
 
     /**
@@ -259,7 +259,7 @@ class InvoiceLine  extends BaseInvoice implements XmlSerializable {
     function xmlSerialize(Writer $writer): void {
         
         $this->setProps([
-            Schema::CBC . 'ID' => $this->id,
+            Schema::CBC . 'ID' => $this->getId(),
             [
                 'name' => Schema::CBC .
                     ($this->isCreditNoteLine ? 'CreditedQuantity' : 'InvoicedQuantity'),
