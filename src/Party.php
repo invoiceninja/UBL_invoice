@@ -118,7 +118,7 @@ class Party extends BaseInvoice implements XmlSerializable{
                     'attributes' => $partyIdentificationAttributes
                 ]
             ],
-        ] : $this->partyIdentificationId;
+        ] : [Schema::CAC . 'PartyIdentification' => $this->partyIdentificationId];
 
     }
 

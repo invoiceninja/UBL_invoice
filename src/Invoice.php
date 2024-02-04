@@ -31,6 +31,7 @@ class Invoice extends BaseInvoice implements XmlSerializable
     protected $invoiceTypeCode = Invoice::TYPE_INVOICE;
     private $copyIndicator = null;
     private $id;
+    private $profileID;
     private $issueDate;
     private $dueDate;
     private $additionalDocumentReference;
@@ -313,7 +314,13 @@ class Invoice extends BaseInvoice implements XmlSerializable
      */
     public function getAllowanceCharges()
     {
-        return $this->allowanceCharges;
+        $data = [];
+
+        foreach ($this->allowanceCharges ?? [] as $invoiceLine) {
+            $data[] = [Schema::CAC . 'AllowanceCharge' => $invoiceLine];
+        }
+
+        return $this->allowanceCharges ? $data : null;
     }
 
     /**
@@ -475,7 +482,15 @@ class Invoice extends BaseInvoice implements XmlSerializable
      */ 
     public function getAdditionalDocumentReferences()
     {
-        return $this->additionalDocumentReferences;
+                
+        $data = [];
+
+        foreach ($this->additionalDocumentReferences ?? [] as $additionalDocumentReference) {
+            $data[] = [Schema::CAC . 'AdditionalDocumentReference' => $additionalDocumentReference];
+        }
+
+        return $this->additionalDocumentReferences ? $data : null;
+
     }
 
     /**
@@ -590,13 +605,50 @@ class Invoice extends BaseInvoice implements XmlSerializable
         return $this;
     }
 
+    /**
+     * Get the value of UBLVersionID
+     */ 
+    public function getUBLVersionID()
+    {
+        return $this->UBLVersionID;
+    }
+
+    /**
+     * Set the value of UBLVersionID
+     *
+     * @return  self
+     */ 
+    public function setUBLVersionID($UBLVersionID)
+    {
+        $this->UBLVersionID = $UBLVersionID;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of profileID
+     */ 
+    public function getProfileID()
+    {
+        return $this->profileID;
+    }
+
+    /**
+     * Set the value of profileID
+     *
+     * @return  self
+     */ 
+    public function setProfileID($profileID)
+    {
+        $this->profileID = $profileID;
+
+        return $this;
+    }
 
     public function validate()
     {
-        if ($this->id === null) {
-            throw new \InvalidArgumentException('Missing invoice id');
-        }
-
+     
         if ($this->id === null) {
             throw new \InvalidArgumentException('Missing invoice id');
         }
@@ -604,7 +656,6 @@ class Invoice extends BaseInvoice implements XmlSerializable
         if (!$this->issueDate instanceof \DateTime) {
             throw new \InvalidArgumentException('Invalid invoice issueDate');
         }
-
 
         if ($this->invoiceTypeCode === null) {
             throw new \InvalidArgumentException('Missing invoice invoiceTypeCode');
@@ -635,6 +686,7 @@ class Invoice extends BaseInvoice implements XmlSerializable
         $data = [
             Schema::CBC . 'UBLVersionID' => $this->UBLVersionID,
             Schema::CBC . 'CustomizationID' => $this->getCustomizationID(),
+            Schema::CBC . 'ProfileID' => $this->profileID,
             Schema::CBC . 'ID' => $this->id,
             Schema::CBC . 'CopyIndicator' => $this->getCopyIndicator(),
             Schema::CBC . 'IssueDate' => $this->getIssueDate(),
@@ -643,11 +695,8 @@ class Invoice extends BaseInvoice implements XmlSerializable
             Schema::CBC . 'DocumentCurrencyCode' => $this->documentCurrencyCode,
             Schema::CBC . 'TaxCurrencyCode' => $this->taxCurrencyCode,
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
-            Schema::CAC . 'AccountingCustomerParty' => [Schema::CAC . "Party" => $this->accountingCustomerParty],
             Schema::CAC . 'PaymentMeans' => $this->paymentMeans,
             Schema::CAC . 'AdditionalDocumentReference' => $this->additionalDocumentReference,
-            Schema::CAC . 'TaxTotal' => $this->taxTotal,
-            Schema::CAC . 'LegalMonetaryTotal' => $this->legalMonetaryTotal,
             Schema::CBC . 'Note' => $this->note,
             Schema::CBC . 'TaxPointDate' => $this->taxPointDate,
             Schema::CAC . 'PaymentTerms' => $this->paymentTerms,
@@ -655,24 +704,27 @@ class Invoice extends BaseInvoice implements XmlSerializable
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
             Schema::CAC . 'AccountingCustomerParty' => [
                 Schema::CBC . 'SupplierAssignedAccountID' => $this->supplierAssignedAccountID,
-                Schema::CAC . "Party" => $this->accountingCustomerParty],
-            Schema::CBC . 'BuyerReference' => $this->buyerReference,
+                Schema::CAC . "Party" => $this->accountingCustomerParty
+            ],
             Schema::CBC . 'AccountingCostCode' => $this->accountingCostCode,
-            Schema::CAC . 'InvoicePeriod' => $this->invoicePeriod,
             Schema::CAC . 'Delivery' => $this->delivery,
-            Schema::CAC . 'OrderReference' => $this->orderReference,
-            Schema::CAC . 'ContractDocumentReference' => $this->contractDocumentReference,
+            
+            $this->getAllowanceCharges(), 
+            
+            // Schema::CBC . 'BuyerReference' => $this->buyerReference,
+            // Schema::CAC . 'InvoicePeriod' => $this->invoicePeriod,
+            // Schema::CAC . 'OrderReference' => $this->orderReference,
+            // Schema::CAC . 'ContractDocumentReference' => $this->contractDocumentReference,
+
+            // $this->getAdditionalDocumentReferences(),
+
+            // Schema::CAC . 'TaxTotal' => $this->taxTotal,
+            // Schema::CAC . 'LegalMonetaryTotal' => $this->legalMonetaryTotal,
         ];
 
 
-        foreach ($this->additionalDocumentReferences as $additionalDocumentReference) 
-            $data[] = [Schema::CAC . 'AdditionalDocumentReference' => $additionalDocumentReference];
-
-        foreach ($this->allowanceCharges ?? [] as $invoiceLine) 
-            $data[] = [Schema::CAC . 'AllowanceCharge' => $invoiceLine];
-    
-        foreach ($this->invoiceLines ?? []as $invoiceLine) 
-            $data[] = [Schema::CAC . 'InvoiceLine' => $invoiceLine];
+        // foreach ($this->invoiceLines ?? []as $invoiceLine) 
+        //     $data[] = [Schema::CAC . 'InvoiceLine' => $invoiceLine];
 
         $this->setProps($data);
 

@@ -15,7 +15,7 @@ use Sabre\Xml\XmlSerializable;
 class TaxSubTotal  extends BaseInvoice implements XmlSerializable {
     private $taxableAmount;
     private $taxAmount;
-
+    private $percent;
     /**
      * @var TaxCategory
      */
@@ -70,6 +70,26 @@ class TaxSubTotal  extends BaseInvoice implements XmlSerializable {
     }
 
 
+    /**
+     * Get the value of percent
+     */ 
+    public function getPercent()
+    {
+        return $this->percent;
+    }
+
+    /**
+     * Set the value of percent
+     *
+     * @return  self
+     */ 
+    public function setPercent($percent)
+    {
+        $this->percent = $percent;
+
+        return $this;
+    }
+
     public function validate() {
         if ($this->taxableAmount === null) {
             throw new \InvalidArgumentException('Missing taxsubtotal taxableAmount');
@@ -92,7 +112,7 @@ class TaxSubTotal  extends BaseInvoice implements XmlSerializable {
     function xmlSerialize(Writer $writer): void {
         $this->validate();
 
-        $writer->write([
+        $this->setProps([
                 [
                     'name' => Schema::CBC . 'TaxableAmount',
                     'value' => number_format($this->taxableAmount, 2, '.', ''),
@@ -109,8 +129,11 @@ class TaxSubTotal  extends BaseInvoice implements XmlSerializable {
                     ]
 
                 ],
-                Schema::CAC.'TaxCategory' => $this->taxCategory
-            ]
-        );
+                Schema::CAC.'TaxCategory' => $this->taxCategory,
+                Schema::CBC . 'Percent' => $this->percent
+            ]);
+
+        $writer->write($this->getProps());
     }
+
 }

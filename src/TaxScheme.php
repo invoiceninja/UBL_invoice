@@ -16,7 +16,9 @@ class TaxScheme  extends BaseInvoice implements XmlSerializable {
     private $id;
     private $companyId;
     private $taxScheme;
-
+    private $name;
+    private $taxTypeCode;
+    private $currencyCode;
     /**
      * @return mixed
      */
@@ -51,7 +53,6 @@ class TaxScheme  extends BaseInvoice implements XmlSerializable {
 
     private function setTaxScheme(): self {
 
-        
         $this->taxScheme = $this->companyId ? [
                 Schema::CBC.'CompanyID' => $this->companyId,
                 Schema::CAC.'TaxScheme' => [
@@ -68,11 +69,78 @@ class TaxScheme  extends BaseInvoice implements XmlSerializable {
         return $this->taxScheme;
     }
 
+    
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of taxTypeCode
+     */ 
+    public function getTaxTypeCode()
+    {
+        return $this->taxTypeCode;
+    }
+
+    /**
+     * Set the value of taxTypeCode
+     *
+     * @return  self
+     */ 
+    public function setTaxTypeCode($taxTypeCode)
+    {
+        $this->taxTypeCode = $taxTypeCode;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of currencyCode
+     */ 
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
+
+    /**
+     * Set the value of currencyCode
+     *
+     * @return  self
+     */ 
+    public function setCurrencyCode($currencyCode)
+    {
+        $this->currencyCode = $currencyCode;
+
+        return $this;
+    }
 
     function xmlSerialize(Writer $writer): void {
 
-        $this->setTaxScheme()->setProps($this->getTaxScheme());
+        $data = [            
+            Schema::CBC . 'Name' => $this->name,
+            Schema::CBC . 'TaxTypeCode' => $this->taxTypeCode,
+            Schema::CBC . 'CurrencyCode' => $this->currencyCode,
+        ];
+
+        $this->setTaxScheme()->setProps(array_merge($data,$this->getTaxScheme()));
         
         $writer->write($this->getProps());
     }
+
 }

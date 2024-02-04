@@ -81,9 +81,169 @@ class InvoiceTest extends TestCase
         
         $service = new \Sabre\Xml\Service();
         // print_r($service->parse($this->invoice));
-        echo $this->invoice;
+        // echo $this->invoice;
 
     }
+
+    public function testExtendedAttributes()
+    {
+
+        $schema = 'http://docs.oasis-open.org/ubl/os-UBL-2.2/xsd/maindoc/UBL-Invoice-2.2.xsd';
+
+        // Address country
+        $country = (new \CleverIt\UBL\Invoice\Country())
+            ->setIdentificationCode('BE');
+
+        // Full address
+        $address = (new \CleverIt\UBL\Invoice\Address())
+            ->setStreetName('Korenmarkt')
+            ->setBuildingNumber(1)
+            ->setCityName('Gent')
+            ->setPostalZone('9000')
+            ->setCountry($country);
+
+        // Supplier company node
+        $supplierCompany = (new \CleverIt\UBL\Invoice\Party())
+            ->setName('Supplier Company Name')
+            ->setPhysicalLocation($address)
+            ->setPostalAddress($address);
+
+        // Client company node
+        $clientCompany = (new \CleverIt\UBL\Invoice\Party())
+            ->setName('My client')
+            ->setPostalAddress($address);
+
+        $legalMonetaryTotal = (new \CleverIt\UBL\Invoice\LegalMonetaryTotal())
+            ->setPayableAmount(10 + 2)
+            ->setAllowanceTotalAmount(0);
+
+        // Tax scheme
+        $taxScheme = (new \CleverIt\UBL\Invoice\TaxScheme())
+            ->setId(0);
+
+        // Product
+        $productItem = (new \CleverIt\UBL\Invoice\Item())
+            ->setName('Product Name')
+            ->setDescription('Product Description');
+
+        // Price
+        $price = (new \CleverIt\UBL\Invoice\Price())
+            ->setBaseQuantity(1)
+            ->setUnitCode(\CleverIt\UBL\Invoice\UnitCode::UNIT)
+            ->setPriceAmount(10);
+
+        // Invoice Line tax totals
+        $lineTaxTotal = (new \CleverIt\UBL\Invoice\TaxTotal())
+            ->setTaxAmount(2.1);
+
+        // Invoice Line(s)
+        $invoiceLine = (new \CleverIt\UBL\Invoice\InvoiceLine())
+            ->setId(0)
+            ->setItem($productItem)
+            ->setPrice($price)
+            ->setTaxTotal($lineTaxTotal)
+            ->setInvoicedQuantity(1);
+
+        $invoiceLines = [$invoiceLine];
+
+        // Total Taxes
+        $taxCategory = (new \CleverIt\UBL\Invoice\TaxCategory())
+            ->setId(0)
+            ->setName('VAT21%')
+            ->setPercent(.21)
+            ->setTaxScheme($taxScheme);
+
+        $taxSubTotal = (new \CleverIt\UBL\Invoice\TaxSubTotal())
+            ->setTaxableAmount(10)
+            ->setTaxAmount(2.1)
+            ->setTaxCategory($taxCategory);
+
+        $taxTotal = (new \CleverIt\UBL\Invoice\TaxTotal())
+            ->addTaxSubTotal($taxSubTotal)
+            ->setTaxAmount(2.1);
+
+        $contractDocumentReference = (new \CleverIt\UBL\Invoice\ContractDocumentReference())
+            ->setId("123Test");
+
+        $invoicePeriod = (new \CleverIt\UBL\Invoice\InvoicePeriod())
+            ->setStartDate(new \DateTime('-31 days'))
+            ->setEndDate(new \DateTime());
+
+        // Invoice object
+        $invoice = (new \CleverIt\UBL\Invoice\Invoice())
+            ->setUBLVersionID('2.2')
+            ->setId(1234)
+            ->setCopyIndicator('false')
+            ->setIssueDate(new \DateTime())
+            ->setInvoiceTypeCode(\CleverIt\UBL\Invoice\Invoice::TYPE_INVOICE)
+            ->setDueDate(new \DateTime())
+            ->setAccountingSupplierParty($supplierCompany)
+            ->setAccountingCustomerParty($clientCompany)
+            ->setInvoiceLines($invoiceLines)
+            ->setLegalMonetaryTotal($legalMonetaryTotal)
+            ->setTaxTotal($taxTotal)
+            ->setContractDocumentReference($contractDocumentReference)
+            ->setBuyerReference("SomeReference")
+            ->setInvoicePeriod($invoicePeriod);
+
+
+        $ubl_invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
+        echo $ubl_invoice;
+
+        $dom = new \DOMDocument();
+        $dom->loadXML($ubl_invoice);
+
+        $result = false;
+
+        libxml_use_internal_errors(true);
+
+        try{
+            $dom->schemaValidate($schema);
+
+            echo '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
+            $this->libxml_display_errors();
+
+        }
+        catch(\Exception $e){
+            echo $e->getMessage();
+        }
+
+        $this->assertTrue($result);
+
+    }
+
+    private function libxml_display_errors()
+    {
+        $errors = libxml_get_errors();
+        foreach ($errors as $error) {
+            print $this->libxml_display_error($error);
+        }
+        libxml_clear_errors();
+    }
+
+    private function libxml_display_error($error)
+    {
+        $return = "<br/>\n";
+        switch ($error->level) {
+            case LIBXML_ERR_WARNING:
+                $return .= "<b>Warning $error->code</b>: ";
+                break;
+            case LIBXML_ERR_ERROR:
+                $return .= "<b>Error $error->code</b>: ";
+                break;
+            case LIBXML_ERR_FATAL:
+                $return .= "<b>Fatal Error $error->code</b>: ";
+                break;
+        }
+        $return .= trim($error->message);
+        if ($error->file) {
+            $return .=    " in <b>$error->file</b>";
+        }
+        $return .= " on line <b>$error->line</b>\n";
+
+        return $return;
+    }
+
 
     public function testFiltersUnsetProps()
     {
@@ -127,12 +287,6 @@ class InvoiceTest extends TestCase
 
 
     }
-
-    // public function testInvoiceIsGenerated()
-    // {
-
-    //     $this->assertXmlStringEqualsXmlFile(__DIR__ . "/ubl.xml", $this->invoice);
-    // }
 
     public function testValidateSchema(){
         $validator = new UblValidator();

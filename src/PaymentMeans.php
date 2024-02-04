@@ -12,7 +12,15 @@ use Sabre\Xml\XmlSerializable;
 class PaymentMeans  extends BaseInvoice implements XmlSerializable {
     private $paymentMeansCode;
     private $payeeFinancialAccount;
-
+    
+    private $paymentMeansCodeAttributes = [
+        'listID' => 'UN/ECE 4461',
+        'listName' => 'Payment Means',
+        'listURI' => 'http://docs.oasis-open.org/ubl/os-UBL-2.0-update/cl/gc/default/PaymentMeansCode-2.0.gc'];
+    private $paymentDueDate;
+    private $instructionId;
+    private $instructionNote;
+    private $paymentId;
 
     /**
      * @return mixed
@@ -47,6 +55,105 @@ class PaymentMeans  extends BaseInvoice implements XmlSerializable {
     }
 
 
+    /**
+     * Get the value of paymentMeansCodeAttributes
+     */ 
+    public function getPaymentMeansCodeAttributes()
+    {
+        return $this->paymentMeansCodeAttributes;
+    }
+
+    /**
+     * Set the value of paymentMeansCodeAttributes
+     *
+     * @return  self
+     */ 
+    public function setPaymentMeansCodeAttributes($paymentMeansCodeAttributes)
+    {
+        $this->paymentMeansCodeAttributes = $paymentMeansCodeAttributes;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of paymentDueDate
+     */ 
+    public function getPaymentDueDate(): ?\DateTime
+    {
+        return $this->paymentDueDate ? $this->paymentDueDate->format('Y-m-d') : null;
+    }
+
+    /**
+     * Set the value of paymentDueDate
+     *
+     * @return  self
+     */ 
+    public function setPaymentDueDate($paymentDueDate)
+    {
+        $this->paymentDueDate = $paymentDueDate;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of instructionId
+     */ 
+    public function getInstructionId()
+    {
+        return $this->instructionId;
+    }
+
+    /**
+     * Set the value of instructionId
+     *
+     * @return  self
+     */ 
+    public function setInstructionId($instructionId)
+    {
+        $this->instructionId = $instructionId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of instructionNote
+     */ 
+    public function getInstructionNote()
+    {
+        return $this->instructionNote;
+    }
+
+    /**
+     * Set the value of instructionNote
+     *
+     * @return  self
+     */ 
+    public function setInstructionNote($instructionNote)
+    {
+        $this->instructionNote = $instructionNote;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of paymentId
+     */ 
+    public function getPaymentId()
+    {
+        return $this->paymentId;
+    }
+
+    /**
+     * Set the value of paymentId
+     *
+     * @return  self
+     */ 
+    public function setPaymentId($paymentId)
+    {
+        $this->paymentId = $paymentId;
+
+        return $this;
+    }
 
 
     /**
@@ -56,11 +163,24 @@ class PaymentMeans  extends BaseInvoice implements XmlSerializable {
      * @return void
      */
     function xmlSerialize(Writer $writer): void {
-        $writer->write([
-            Schema::CBC.'PaymentMeansCode' => $this->paymentMeansCode,
-            Schema::CAC.'PayeeFinancialAccount' => $this->payeeFinancialAccount
+        $this->setProps([
+            [
+                 'name' => Schema::CBC . 'PaymentMeansCode',
+                 'value' => $this->paymentMeansCode,
+                 'attributes' => $this->paymentMeansCodeAttributes
+            ],
+            // Schema::CBC.'PaymentMeansCode' => $this->paymentMeansCode,
+            Schema::CAC.'PayeeFinancialAccount' => $this->payeeFinancialAccount,
+            Schema::CBC . 'PaymentDueDate' => $this->getPaymentDueDate(),
+            Schema::CBC . 'InstructionID' => $this->getInstructionId(),
+            Schema::CBC . 'InstructionNote' => $this->getInstructionNote(),
+            Schema::CBC . 'PaymentID' => $this->getPaymentId(),
+            Schema::CAC . 'PayeeFinancialAccount' => $this->getPayeeFinancialAccount(),
             ]
 
         );
+
+        $writer->write($this->getProps());
     }
+
 }
