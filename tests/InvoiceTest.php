@@ -4,6 +4,7 @@ namespace CleverIt\UBL\Invoice\Tests;
 
 use Greenter\Ubl\UblValidator;
 use PHPUnit\Framework\TestCase;
+use Greenter\Ubl\Resolver\UblPathResolver;
 
 class InvoiceTest extends TestCase
 {
@@ -127,16 +128,11 @@ class InvoiceTest extends TestCase
     {
         $xmlService = new \Sabre\Xml\Service();
 
-        $schema = 'http://docs.oasis-open.org/ubl/os-UBL-2.2/xsd/maindoc/UBL-Invoice-2.2.xsd';
-
         $xmlService->namespaceMap = [
             'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2' => '',
             'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2' => 'cbc',
             'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2' => 'cac'
         ];
-
-
-        $schema = 'http://docs.oasis-open.org/ubl/os-UBL-2.2/xsd/maindoc/UBL-Invoice-2.2.xsd';
 
         // Address country
         $country = (new \CleverIt\UBL\Invoice\Country())
@@ -167,7 +163,7 @@ class InvoiceTest extends TestCase
 
         // Tax scheme
         $taxScheme = (new \CleverIt\UBL\Invoice\TaxScheme())
-            ->setId(0);
+            ->setId(1);
 
         // Product
         $productItem = (new \CleverIt\UBL\Invoice\Item())
@@ -219,9 +215,10 @@ class InvoiceTest extends TestCase
 
         // Invoice object
         $invoice = (new \CleverIt\UBL\Invoice\Invoice())
-            ->setUBLVersionID('2.1')
+            ->setUBLVersionID('2.2')
             ->setId(1234)
             ->setCopyIndicator('false')
+            ->setDocumentCurrencyCode('EUR')
             ->setIssueDate(new \DateTime())
             ->setInvoiceTypeCode(\CleverIt\UBL\Invoice\Invoice::TYPE_INVOICE)
             ->setDueDate(new \DateTime())
@@ -229,76 +226,19 @@ class InvoiceTest extends TestCase
             ->setAccountingCustomerParty($clientCompany)
             ->setInvoiceLines($invoiceLines)
             ->setLegalMonetaryTotal($legalMonetaryTotal)
-            ->setTaxTotal($taxTotal)
-            ->setContractDocumentReference($contractDocumentReference)
-            // ->setBuyerReference("SomeReference")
-            ->setInvoicePeriod($invoicePeriod);
-
+            // ->setContractDocumentReference($contractDocumentReference)
+            // ->setInvoicePeriod($invoicePeriod)
+            ->setTaxTotal($taxTotal);
 
             $ubl_invoice = \CleverIt\UBL\Invoice\Generator::invoice($invoice, 'EUR');
 
+            $validator = new UblValidator();      
+            
+            $result = $validator->isValid($ubl_invoice);
 
-            $validator = new UblValidator();
-            $validator->isValid($ubl_invoice);
             echo $validator->getError();
 
-            $this->assertTrue($validator->isValid($ubl_invoice));
-
-
-        // echo $ubl_invoice;
-
-        // $dom = new \DOMDocument();
-        // $dom->loadXML($ubl_invoice);
-
-        // $result = false;
-
-        // libxml_use_internal_errors(true);
-
-        // try{
-        //     $dom->schemaValidate($schema);
-
-        //     echo '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
-        //     $this->libxml_display_errors();
-
-        // }
-        // catch(\Exception $e){
-        //     echo $e->getMessage();
-        // }
-
-        // $this->assertTrue($result);
-
-    }
-
-    private function libxml_display_errors()
-    {
-        $errors = libxml_get_errors();
-        foreach ($errors as $error) {
-            print $this->libxml_display_error($error);
-        }
-        libxml_clear_errors();
-    }
-
-    private function libxml_display_error($error)
-    {
-        $return = "<br/>\n";
-        switch ($error->level) {
-            case LIBXML_ERR_WARNING:
-                $return .= "<b>Warning $error->code</b>: ";
-                break;
-            case LIBXML_ERR_ERROR:
-                $return .= "<b>Error $error->code</b>: ";
-                break;
-            case LIBXML_ERR_FATAL:
-                $return .= "<b>Fatal Error $error->code</b>: ";
-                break;
-        }
-        $return .= trim($error->message);
-        if ($error->file) {
-            $return .=    " in <b>$error->file</b>";
-        }
-        $return .= " on line <b>$error->line</b>\n";
-
-        return $return;
+            $this->assertTrue($result);
     }
 
 

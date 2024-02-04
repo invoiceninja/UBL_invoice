@@ -23,7 +23,7 @@ class TaxScheme  extends BaseInvoice implements XmlSerializable {
      * @return mixed
      */
     public function getId() {
-        return $this->id;
+        return (string)$this->id;
     }
 
     /**

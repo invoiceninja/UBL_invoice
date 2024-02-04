@@ -359,6 +359,8 @@ class Invoice extends BaseInvoice implements XmlSerializable
 
     /**
      * Get the value of contractDocumentReference
+     * 
+     * http://www.datypic.com/sc/ubl22/e-cac_ContractDocumentReference.html
      */ 
     public function getContractDocumentReference()
     {
@@ -468,6 +470,7 @@ class Invoice extends BaseInvoice implements XmlSerializable
     /**
      * Set the value of buyerReference
      *
+     * [languageID,languageLocaleID]
      * @return  self
      */ 
     public function setBuyerReference($buyerReference)
