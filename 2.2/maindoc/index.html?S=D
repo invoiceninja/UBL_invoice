@@ -1,0 +1,425 @@
+<HTML>
+        <HEAD>
+                <TITLE>Index of /ubl/os-UBL-2.2/xsd/maindoc/</TITLE>
+        </HEAD>
+        <BODY BGCOLOR="#ffffff" text="#000000">
+        <H1>Index of /ubl/os-UBL-2.2/xsd/maindoc/</H1>
+        <TABLE BORDER="0">
+                <TR BGCOLOR="#DDDDDD">
+			<TH><A HREF="/ubl/os-UBL-2.2/xsd/maindoc/?N=A">Name</A></TH>
+			<TH><A HREF="/ubl/os-UBL-2.2/xsd/maindoc/?D=A">Last Modified</A></TH>
+			<TH><A HREF="/ubl/os-UBL-2.2/xsd/maindoc/?S=A">Size</A></TH>
+		</TR>
+		<TR>
+			<TD STYLE="padding-right: 1em;"><A HREF="/ubl/os-UBL-2.2/xsd/">Parent Directory</A></TD>
+			<TD></TD><TD></TD>
+		</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-SelfBilledCreditNote-2.2.xsd">UBL-SelfBilledCreditNote-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">61k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-SelfBilledInvoice-2.2.xsd">UBL-SelfBilledInvoice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">60k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CreditNote-2.2.xsd">UBL-CreditNote-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">59k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Invoice-2.2.xsd">UBL-Invoice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">59k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-OrderResponse-2.2.xsd">UBL-OrderResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">58k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-DebitNote-2.2.xsd">UBL-DebitNote-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">55k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-FreightInvoice-2.2.xsd">UBL-FreightInvoice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">55k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Order-2.2.xsd">UBL-Order-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">52k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-OrderChange-2.2.xsd">UBL-OrderChange-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">52k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportExecutionPlan-2.2.xsd">UBL-TransportExecutionPlan-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">48k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Reminder-2.2.xsd">UBL-Reminder-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">45k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportExecutionPlanRequest-2.2.xsd">UBL-TransportExecutionPlanRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">44k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Statement-2.2.xsd">UBL-Statement-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">35k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-QualificationApplicationResponse-2.2.xsd">UBL-QualificationApplicationResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">35k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TenderStatus-2.2.xsd">UBL-TenderStatus-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">35k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CatalogueRequest-2.2.xsd">UBL-CatalogueRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">34k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-BillOfLading-2.2.xsd">UBL-BillOfLading-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">34k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportationStatus-2.2.xsd">UBL-TransportationStatus-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">34k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Quotation-2.2.xsd">UBL-Quotation-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">34k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ForwardingInstructions-2.2.xsd">UBL-ForwardingInstructions-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">34k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-RemittanceAdvice-2.2.xsd">UBL-RemittanceAdvice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">34k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Catalogue-2.2.xsd">UBL-Catalogue-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">33k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CatalogueItemSpecificationUpdate-2.2.xsd">UBL-CatalogueItemSpecificationUpdate-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">33k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CallForTenders-2.2.xsd">UBL-CallForTenders-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">33k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CataloguePricingUpdate-2.2.xsd">UBL-CataloguePricingUpdate-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">32k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-QualificationApplicationRequest-2.2.xsd">UBL-QualificationApplicationRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">32k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-RequestForQuotation-2.2.xsd">UBL-RequestForQuotation-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">31k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ContractAwardNotice-2.2.xsd">UBL-ContractAwardNotice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">31k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Waybill-2.2.xsd">UBL-Waybill-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">30k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-OrderResponseSimple-2.2.xsd">UBL-OrderResponseSimple-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">30k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-RetailEvent-2.2.xsd">UBL-RetailEvent-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">30k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TenderContract-2.2.xsd">UBL-TenderContract-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">30k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-UtilityStatement-2.2.xsd">UBL-UtilityStatement-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">29k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportationStatusRequest-2.2.xsd">UBL-TransportationStatusRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">29k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ContractNotice-2.2.xsd">UBL-ContractNotice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">29k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ReceiptAdvice-2.2.xsd">UBL-ReceiptAdvice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">29k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-GuaranteeCertificate-2.2.xsd">UBL-GuaranteeCertificate-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">28k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-DespatchAdvice-2.2.xsd">UBL-DespatchAdvice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">28k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-PriorInformationNotice-2.2.xsd">UBL-PriorInformationNotice-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">28k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Tender-2.2.xsd">UBL-Tender-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">28k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-FulfilmentCancellation-2.2.xsd">UBL-FulfilmentCancellation-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">28k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CatalogueDeletion-2.2.xsd">UBL-CatalogueDeletion-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">27k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ForecastRevision-2.2.xsd">UBL-ForecastRevision-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">27k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Forecast-2.2.xsd">UBL-Forecast-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">26k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ExpressionOfInterestRequest-2.2.xsd">UBL-ExpressionOfInterestRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">26k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportServiceDescription-2.2.xsd">UBL-TransportServiceDescription-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">26k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-GoodsItemItinerary-2.2.xsd">UBL-GoodsItemItinerary-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">26k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-PackingList-2.2.xsd">UBL-PackingList-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">26k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ExpressionOfInterestResponse-2.2.xsd">UBL-ExpressionOfInterestResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-DigitalAgreement-2.2.xsd">UBL-DigitalAgreement-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-CertificateOfOrigin-2.2.xsd">UBL-CertificateOfOrigin-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-AwardedNotification-2.2.xsd">UBL-AwardedNotification-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TradeItemLocationProfile-2.2.xsd">UBL-TradeItemLocationProfile-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ExceptionCriteria-2.2.xsd">UBL-ExceptionCriteria-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-UnawardedNotification-2.2.xsd">UBL-UnawardedNotification-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-OrderCancellation-2.2.xsd">UBL-OrderCancellation-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">25k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-StockAvailabilityReport-2.2.xsd">UBL-StockAvailabilityReport-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-AttachedDocument-2.2.xsd">UBL-AttachedDocument-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TendererQualificationResponse-2.2.xsd">UBL-TendererQualificationResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ExceptionNotification-2.2.xsd">UBL-ExceptionNotification-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-InventoryReport-2.2.xsd">UBL-InventoryReport-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportProgressStatus-2.2.xsd">UBL-TransportProgressStatus-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ItemInformationRequest-2.2.xsd">UBL-ItemInformationRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TendererQualification-2.2.xsd">UBL-TendererQualification-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-BusinessCard-2.2.xsd">UBL-BusinessCard-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TenderWithdrawal-2.2.xsd">UBL-TenderWithdrawal-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">24k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TenderReceipt-2.2.xsd">UBL-TenderReceipt-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">23k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-UnsubscribeFromProcedureResponse-2.2.xsd">UBL-UnsubscribeFromProcedureResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">23k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-InstructionForReturns-2.2.xsd">UBL-InstructionForReturns-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">23k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ProductActivity-2.2.xsd">UBL-ProductActivity-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">23k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TenderStatusRequest-2.2.xsd">UBL-TenderStatusRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">22k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-Enquiry-2.2.xsd">UBL-Enquiry-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">22k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportServiceDescriptionRequest-2.2.xsd">UBL-TransportServiceDescriptionRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">22k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-UnsubscribeFromProcedureRequest-2.2.xsd">UBL-UnsubscribeFromProcedureRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">22k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-WeightStatement-2.2.xsd">UBL-WeightStatement-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">22k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-EnquiryResponse-2.2.xsd">UBL-EnquiryResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">22k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-ApplicationResponse-2.2.xsd">UBL-ApplicationResponse-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">21k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-TransportProgressStatusRequest-2.2.xsd">UBL-TransportProgressStatusRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">21k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-DocumentStatusRequest-2.2.xsd">UBL-DocumentStatusRequest-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">20k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-DigitalCapability-2.2.xsd">UBL-DigitalCapability-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">20k</TD>
+	</TR>
+	<TR>
+		<TD STYLE="padding-right: 1em;"><A HREF="UBL-DocumentStatus-2.2.xsd">UBL-DocumentStatus-2.2.xsd</A></TD>
+		<TD STYLE="padding-left: 1em;">09-Jul-2018 16:00</TD>
+		<TD STYLE="padding-left: 1em;" ALIGN="right">20k</TD>
+	</TR>
+        </TABLE>
+        </BODY>
+</HTML>
+     
