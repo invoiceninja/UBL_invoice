@@ -13,13 +13,14 @@ use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
 class AdditionalDocumentReference extends BaseInvoice implements XmlSerializable {
-	private $id = null;
-	private $attachment = null;
-	private $filename = null;
+	private $id;
+	private $attachment;
+	private $filename;
+    private $documentType;
+    private $documentTypeCode;
+    private $documentDescription;
 
-	/**
-	 * @return mixed
-	 */
+    
 	public function getId() {
 		return $this->id;
 	}
@@ -77,9 +78,72 @@ class AdditionalDocumentReference extends BaseInvoice implements XmlSerializable
                     'mimeCode' => "application/pdf",
                     'filename' => $this->filename
                 ]]
-            ]
+            ],
+            Schema::CBC . 'DocumentType' => $this->documentType,
+            Schema::CBC . 'DocumentTypeCode' => $this->documentTypeCode,
+            Schema::CBC . 'DocumentDescription' => $this->documentDescription,
         ]);
         
 		$writer->write($this->getProps());
 	}
+
+    /**
+     * Get the value of documentDescription
+     */ 
+    public function getDocumentDescription()
+    {
+        return $this->documentDescription;
+    }
+
+    /**
+     * Set the value of documentDescription
+     *
+     * @return  self
+     */ 
+    public function setDocumentDescription($documentDescription)
+    {
+        $this->documentDescription = $documentDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of documentTypeCode
+     */ 
+    public function getDocumentTypeCode()
+    {
+        return $this->documentTypeCode;
+    }
+
+    /**
+     * Set the value of documentTypeCode
+     *
+     * @return  self
+     */ 
+    public function setDocumentTypeCode($documentTypeCode)
+    {
+        $this->documentTypeCode = $documentTypeCode;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of documentType
+     */ 
+    public function getDocumentType()
+    {
+        return $this->documentType;
+    }
+
+    /**
+     * Set the value of documentType
+     *
+     * @return  self
+     */ 
+    public function setDocumentType($documentType)
+    {
+        $this->documentType = $documentType;
+
+        return $this;
+    }
 }

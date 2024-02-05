@@ -14,9 +14,17 @@ use Sabre\Xml\XmlSerializable;
 
 class InvoiceLine  extends BaseInvoice implements XmlSerializable {
     private $id;
-    private $invoicedQuantity;
+    protected $invoicedQuantity;
     private $lineExtensionAmount;
-    private $unitCode = 'MON';
+    private $unitCode = UnitCode::MONTH;
+
+    private $unitCodeListId;
+    private $invoicePeriod;
+    private $note;
+    private $accountingCostCode;
+    private $accountingCost;
+    protected $isCreditNoteLine = false;
+
     /**
      * @var TaxTotal
      */
@@ -34,7 +42,7 @@ class InvoiceLine  extends BaseInvoice implements XmlSerializable {
      * @return mixed
      */
     public function getId() {
-        return $this->id;
+        return (string) $this->id;
     }
 
     /**
@@ -82,7 +90,7 @@ class InvoiceLine  extends BaseInvoice implements XmlSerializable {
      * @return TaxTotal
      */
     public function getTaxTotal() {
-        return $this->taxTotal;
+        return $this->taxTotal ?: null;
     }
 
     /**
@@ -142,6 +150,106 @@ class InvoiceLine  extends BaseInvoice implements XmlSerializable {
         return $this;
     }
 
+    
+    /**
+     * Get the value of unitCodeListId
+     */ 
+    public function getUnitCodeListId()
+    {
+        return $this->unitCodeListId;
+    }
+
+    /**
+     * Set the value of unitCodeListId
+     *
+     * @return  self
+     */ 
+    public function setUnitCodeListId($unitCodeListId)
+    {
+        $this->unitCodeListId = $unitCodeListId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of invoicePeriod
+     */ 
+    public function getInvoicePeriod()
+    {
+        return $this->invoicePeriod;
+    }
+
+    /**
+     * Set the value of invoicePeriod
+     *
+     * @return  self
+     */ 
+    public function setInvoicePeriod($invoicePeriod)
+    {
+        $this->invoicePeriod = $invoicePeriod;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of note
+     */ 
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set the value of note
+     *
+     * @return  self
+     */ 
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of accountingCostCode
+     */ 
+    public function getAccountingCostCode()
+    {
+        return $this->accountingCostCode;
+    }
+
+    /**
+     * Set the value of accountingCostCode
+     *
+     * @return  self
+     */ 
+    public function setAccountingCostCode($accountingCostCode)
+    {
+        $this->accountingCostCode = $accountingCostCode;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of accountingCost
+     */ 
+    public function getAccountingCost()
+    {
+        return $this->accountingCost;
+    }
+
+    /**
+     * Set the value of accountingCost
+     *
+     * @return  self
+     */ 
+    public function setAccountingCost($accountingCost)
+    {
+        $this->accountingCost = $accountingCost;
+
+        return $this;
+    }
 
     /**
      * The xmlSerialize method is called during xml writing.
@@ -151,28 +259,34 @@ class InvoiceLine  extends BaseInvoice implements XmlSerializable {
     function xmlSerialize(Writer $writer): void {
         
         $this->setProps([
-            Schema::CBC . 'ID' => $this->id,
+            Schema::CBC . 'ID' => $this->getId(),
             [
-                'name' => Schema::CBC . 'InvoicedQuantity',
-                'value' => $this->invoicedQuantity,
+                'name' => Schema::CBC .
+                    ($this->isCreditNoteLine ? 'CreditedQuantity' : 'InvoicedQuantity'),
+                'value' => number_format($this->invoicedQuantity ?? 0, 2, '.', ''),
                 'attributes' => [
-                    'unitCode' => $this->unitCode
+                    'unitCode' => $this->unitCode,
+                    'unitCodeListID' => $this->getUnitCodeListId()
                 ]
             ],
             [
                 'name' => Schema::CBC . 'LineExtensionAmount',
-                'value' => number_format($this->lineExtensionAmount, 2, '.', ''),
+                'value' => number_format($this->lineExtensionAmount ?? 0, 2, '.', ''),
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
                 ]
             ],
             Schema::CAC . 'TaxTotal' => $this->taxTotal,
             Schema::CAC . 'Item' => $this->item,
-            Schema::CAC . 'Price' => $this->price
+            Schema::CAC . 'Price' => $this->price,
+            Schema::CBC . 'Note' => $this->getNote(),
+            Schema::CAC . 'InvoicePeriod' => $this->invoicePeriod,
+            Schema::CBC . 'AccountingCostCode' => $this->accountingCostCode,
+            Schema::CBC . 'AccountingCost' => $this->accountingCost,
         ]);
 
         $writer->write($this->getProps());
                 
-        
     }
+
 }

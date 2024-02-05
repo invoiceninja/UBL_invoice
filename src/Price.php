@@ -15,7 +15,9 @@ use Sabre\Xml\XmlSerializable;
 class Price  extends BaseInvoice implements XmlSerializable {
     private $priceAmount;
     private $baseQuantity;
-    private $unitCode;
+    private $unitCode = UnitCode::UNIT;
+    private $unitCodeListId;
+    private $allowanceCharge;
 
     /**
      * @return mixed
@@ -65,7 +67,45 @@ class Price  extends BaseInvoice implements XmlSerializable {
         return $this;
     }
 
+    /**
+     * Get the value of unitCodeListId
+     */ 
+    public function getUnitCodeListId()
+    {
+        return $this->unitCodeListId;
+    }
 
+    /**
+     * Set the value of unitCodeListId
+     *
+     * @return  self
+     */ 
+    public function setUnitCodeListId($unitCodeListId)
+    {
+        $this->unitCodeListId = $unitCodeListId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of allowanceCharge
+     */ 
+    public function getAllowanceCharge()
+    {
+        return $this->allowanceCharge;
+    }
+
+    /**
+     * Set the value of allowanceCharge
+     *
+     * @return  self
+     */ 
+    public function setAllowanceCharge($allowanceCharge)
+    {
+        $this->allowanceCharge = $allowanceCharge;
+
+        return $this;
+    }
 
     /**
      * The xmlSerialize method is called during xml writing.
@@ -74,15 +114,27 @@ class Price  extends BaseInvoice implements XmlSerializable {
      * @return void
      */
     function xmlSerialize(Writer $writer): void {
-        $writer->write([
+        $this->setProps([
             [
                 'name' => Schema::CBC.'PriceAmount',
                 'value' => $this->priceAmount,
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
                 ]
-            ]
+            ],
+            [
+                'name' => Schema::CBC . 'BaseQuantity',
+                'value' => number_format($this->baseQuantity, 2, '.', ''),
+                'attributes' => [
+                    'unitCode' => $this->unitCode,
+                    'unitCodeListID' => $this->getUnitCodeListId(),
+                ]
+            ],
+             Schema::CAC . 'AllowanceCharge' => $this->allowanceCharge,
 
         ]);
+
+        $writer->write($this->getProps());
     }
+
 }

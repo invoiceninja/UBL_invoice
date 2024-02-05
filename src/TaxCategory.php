@@ -13,16 +13,21 @@ use Sabre\Xml\XmlSerializable;
 
 class TaxCategory extends BaseInvoice implements XmlSerializable {
     
-    private $id = null;
-    private $percent = null;
-    private $taxScheme = null;
-    private $name = null;
-
+    private $id;
+    private $percent;
+    private $taxScheme;
+    private $name;
+    private $idAttributes = [
+        'schemeID'   => UNCL5305::UNCL5305,
+        'schemeName' => 'Duty or tax or fee category'
+    ];
+    private $taxExemptionReason;
+    private $taxExemptionReasonCode;
     /**
      * @return mixed
      */
     public function getId() {
-        return $this->id;
+        return (string)$this->id;
     }
 
     /**
@@ -94,6 +99,46 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
     }
     
     /**
+     * Get the value of taxExemptionReason
+     */ 
+    public function getTaxExemptionReason()
+    {
+        return $this->taxExemptionReason;
+    }
+
+    /**
+     * Set the value of taxExemptionReason
+     *
+     * @return  self
+     */ 
+    public function setTaxExemptionReason($taxExemptionReason)
+    {
+        $this->taxExemptionReason = $taxExemptionReason;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of taxExemptionReasonCode
+     */ 
+    public function getTaxExemptionReasonCode()
+    {
+        return $this->taxExemptionReasonCode;
+    }
+
+    /**
+     * Set the value of taxExemptionReasonCode
+     *
+     * @return  self
+     */ 
+    public function setTaxExemptionReasonCode($taxExemptionReasonCode)
+    {
+        $this->taxExemptionReasonCode = $taxExemptionReasonCode;
+
+        return $this;
+    }
+
+    /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
@@ -103,12 +148,20 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
         $this->validate();
 
         $this->setProps([
-            Schema::CBC.'ID' => $this->id,
-            Schema::CBC.'Name' => $this->name,
-            Schema::CBC.'Percent' => $this->percent,
-            Schema::CAC.'TaxScheme' => $this->taxScheme
+            [
+                'name' => Schema::CBC . 'ID',
+                'value' => $this->getId(),
+                'attributes' => $this->idAttributes,
+            ],
+            Schema::CBC . 'Name' => $this->name,
+            Schema::CBC . 'Percent' => number_format($this->percent ?? 0, 2, '.', ''),
+            Schema::CBC . 'TaxExemptionReasonCode' => $this->taxExemptionReasonCode,
+            Schema::CBC . 'TaxExemptionReason' => $this->taxExemptionReason,
+            Schema::CAC . 'TaxScheme' => $this->taxScheme,
+
         ]);
 
         $writer->write($this->getProps());
     }
+
 }

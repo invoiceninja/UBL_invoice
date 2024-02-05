@@ -12,11 +12,13 @@ use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
 class Address extends BaseInvoice implements XmlSerializable{
-    private $streetName = null;
-    private $buildingNumber = null;
-    private $cityName = null;
-    private $postalZone = null;
-    private $countrySubentity = null;
+    private $streetName;
+    private $buildingNumber;
+    private $cityName;
+    private $postalZone;
+    private $countrySubentity;
+    private $additionalStreetName;
+
     /**
      * @var Country
      */
@@ -139,5 +141,25 @@ class Address extends BaseInvoice implements XmlSerializable{
         ]);
 
         $writer->write($this->getProps());
+    }
+
+    /**
+     * Get the value of additionalStreetName
+     */ 
+    public function getAdditionalStreetName()
+    {
+        return $this->additionalStreetName;
+    }
+
+    /**
+     * Set the value of additionalStreetName
+     *
+     * @return  self
+     */ 
+    public function setAdditionalStreetName($additionalStreetName)
+    {
+        $this->additionalStreetName = $additionalStreetName;
+
+        return $this;
     }
 }

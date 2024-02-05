@@ -13,44 +13,25 @@ use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
 class Party extends BaseInvoice implements XmlSerializable{
-    private $name = null;
-    /**
-     * @var Address
-     */
-    private $postalAddress = null;
-    /**
-     * @var Address
-     */
-    private $physicalLocation = null;
-    /**
-     * @var Contact
-     */
-    private $contact = null;
 
-	/**
-	 * @var string
-	 */
-    private $companyId = null;
+    private $name;
+    private $postalAddress;
+    private $physicalLocation;
+    private $contact;
+    private $companyId;
+    private $id;
+    private $partyIdentification;
+    private $taxScheme;
+    private $legalEntity;
 
-    	/**
-	 * @var string
-	 */
-    private $id = null;
+    private $partyIdentificationId;
+    private $partyIdentificationSchemeId;
+    private $partyIdentificationSchemeName;
+    private $partyTaxScheme;
+    private $endpointID;
+    private $endpointID_schemeID;
 
-    	/**
-	 * @var mixed
-	 */
-    private $partyIdentification = null;
 
-	/**
-	 * @var TaxScheme
-	 */
-    private $taxScheme = null;
-
-	/**
-	 * @var LegalEntity
-	 */
-    private $legalEntity = null;
 
     /**
      * @return mixed
@@ -118,7 +99,27 @@ class Party extends BaseInvoice implements XmlSerializable{
 	 * @return mixed
 	 */
     public function getPartyIdentification() {
-    	return $this->partyIdentification;
+
+        $partyIdentificationAttributes = [];
+
+        if (!empty($this->getPartyIdentificationSchemeId())) {
+            $partyIdentificationAttributes['schemeID'] = $this->getPartyIdentificationSchemeId();
+        }
+
+        if (!empty($this->getPartyIdentificationSchemeName())) {
+            $partyIdentificationAttributes['schemeName'] = $this->getPartyIdentificationSchemeName();
+        }
+
+        return $this->partyIdentificationId && isset($partyIdentificationAttributes['schemeID']) ? [
+            Schema::CAC . 'PartyIdentification' => [
+                [
+                    'name' => Schema::CBC . 'ID',
+                    'value' => $this->partyIdentificationId,
+                    'attributes' => $partyIdentificationAttributes
+                ]
+            ],
+        ] : [Schema::CAC . 'PartyIdentification' => $this->partyIdentificationId];
+
     }
 
 	/**
@@ -192,6 +193,139 @@ class Party extends BaseInvoice implements XmlSerializable{
         return $this;
     }
 
+    
+    /**
+     * Get the value of partyIdentificationId
+     */ 
+    public function getPartyIdentificationId()
+    {
+        return $this->partyIdentificationId;
+    }
+
+    /**
+     * Set the value of partyIdentificationId
+     *
+     * @return  self
+     */ 
+    public function setPartyIdentificationId($partyIdentificationId)
+    {
+        $this->partyIdentificationId = $partyIdentificationId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of partyIdentificationSchemeId
+     */ 
+    public function getPartyIdentificationSchemeId()
+    {
+        return $this->partyIdentificationSchemeId;
+    }
+
+    /**
+     * Set the value of partyIdentificationSchemeId
+     *
+     * @return  self
+     */ 
+    public function setPartyIdentificationSchemeId($partyIdentificationSchemeId)
+    {
+        $this->partyIdentificationSchemeId = $partyIdentificationSchemeId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of partyIdentificationSchemeName
+     */ 
+    public function getPartyIdentificationSchemeName()
+    {
+        return $this->partyIdentificationSchemeName;
+    }
+
+    /**
+     * Set the value of partyIdentificationSchemeName
+     *
+     * @return  self
+     */ 
+    public function setPartyIdentificationSchemeName($partyIdentificationSchemeName)
+    {
+        $this->partyIdentificationSchemeName = $partyIdentificationSchemeName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of partyTaxScheme
+     */ 
+    public function getPartyTaxScheme()
+    {
+        return $this->partyTaxScheme;
+    }
+
+    /**
+     * Set the value of partyTaxScheme
+     *
+     * @return  self
+     */ 
+    public function setPartyTaxScheme($partyTaxScheme)
+    {
+        $this->partyTaxScheme = $partyTaxScheme;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of endpointID
+     */ 
+    public function getEndpointID()
+    {
+
+        return $this->endpointID !== null && $this->endpointID_schemeID ?
+            [
+                'name' => Schema::CBC . 'EndpointID',
+                'value' => $this->endpointID,
+                'attributes' => [
+                    'schemeID' => is_numeric($this->endpointID_schemeID)
+                        ? sprintf('%04d', +$this->endpointID_schemeID)
+                        : $this->endpointID_schemeID
+                ]
+            ]
+             : $this->endpointID;
+
+    }
+
+    /**
+     * Set the value of endpointID
+     *
+     * @return  self
+     */ 
+    public function setEndpointID($endpointID)
+    {
+        $this->endpointID = $endpointID;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of endpointID_schemeID
+     */ 
+    public function getEndpointID_schemeID()
+    {
+        return $this->endpointID_schemeID;
+    }
+
+    /**
+     * Set the value of endpointID_schemeID
+     *
+     * @return  self
+     */ 
+    public function setEndpointID_schemeID($endpointID_schemeID)
+    {
+        $this->endpointID_schemeID = $endpointID_schemeID;
+
+        return $this;
+    }
+
     public function build(): self {
 
         //calculate taxScheme (if companyId exists => set it in an array with the taxScheme)
@@ -205,9 +339,10 @@ class Party extends BaseInvoice implements XmlSerializable{
     }
 
     function xmlSerialize(Writer $writer): void {
+        
+        $this->build();
 
-        $this->build()
-            ->setProps([
+        $data = [
             Schema::CAC . 'PartyName' => [
                 Schema::CBC . 'Name' => $this->name
             ],
@@ -215,13 +350,16 @@ class Party extends BaseInvoice implements XmlSerializable{
             Schema::CAC . 'PhysicalLocation' => [Schema::CAC . 'Address' => $this->physicalLocation],
             Schema::CAC . 'PartyTaxScheme' => $this->taxScheme,
             Schema::CAC . 'Contact' => $this->contact,
-            Schema::CAC.'PartyIdentification' => [
-                Schema::CBC.'ID' => $this->partyIdentification
-            ],
-            Schema::CAC.'PartyLegalEntity' => $this->legalEntity
-        ]);
+            $this->getPartyIdentification(),
+            Schema::CAC . 'PartyLegalEntity' => $this->legalEntity
+        ];
+            
+        $data[] = $this->getEndpointID();
 
+        $this->setProps($data);
+                    
         $writer->write($this->getProps());
 
     }
+
 }

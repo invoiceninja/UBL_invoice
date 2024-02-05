@@ -13,9 +13,10 @@ use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
 class PayeeFinancialAccount  extends BaseInvoice implements XmlSerializable {
-    private $bankId;
 
+    private $bankId;
     private $bankName;
+    private $financialInstitutionBranch;
 
     /**
      * @return mixed
@@ -49,10 +50,36 @@ class PayeeFinancialAccount  extends BaseInvoice implements XmlSerializable {
         return $this;
     }
 
+    
+    /**
+     * Get the value of financialInstitutionBranch
+     */ 
+    public function getFinancialInstitutionBranch()
+    {
+        return $this->financialInstitutionBranch;
+    }
+
+    /**
+     * Set the value of financialInstitutionBranch
+     *
+     * @return  self
+     */ 
+    public function setFinancialInstitutionBranch($financialInstitutionBranch)
+    {
+        $this->financialInstitutionBranch = $financialInstitutionBranch;
+
+        return $this;
+    }
+
     function xmlSerialize(Writer $writer): void {
-        $writer->write([
+        $this->setProps([
             Schema::CBC . 'ID' => $this->bankId,
             Schema::CBC . 'Name' => $this->bankName,
+            Schema::CAC . 'FinancialInstitutionBranch' => $this->getFinancialInstitutionBranch()
+
         ]);
+
+        $writer->write($this->getProps());
     }
+
 }
