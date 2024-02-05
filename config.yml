@@ -1,0 +1,33 @@
+# config.yml
+# Linux Users: PHP Namespaces use back slash \ rather than a forward slash /
+# So for destinations_php, the namespace would be TestNs\MyApp
+
+xsd2php:
+  namespaces:
+    'http://www.w3.org/2000/09/xmldsig#': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2': 'CleverIt\UBL\Invoice'
+    'urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:CommonSignatureComponents-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2': 'CleverIt\UBL\Invoice'
+    'urn:oasis:names:specification:ubl:schema:xsd:SignatureBasicComponents-2': 'CleverIt\UBL\Invoice'
+  destinations_php: 
+    'CleverIt\UBL\Invoice\': soap/src
+  destinations_jms:
+    'CleverIt\UBL\Invoice\': soap/metadata
+#  known_locations: # optional
+#    "http://docs.oasis-open.org/ubl/os-UBL-2.2/xsd/maindoc/UBL-Invoice-2.1.xsd": ./UBL-Invoice-2.1.xsd
+
+#
+#  Uncomment this section if you want to have also symfony/validator metadata to be generated from XSD    
+#  destinations_validation:
+#    'TestNs\MyApp': soap/validation
+#    'TestNs\MyApp': soap\validation  #  on Windows
+    
+ 
+
