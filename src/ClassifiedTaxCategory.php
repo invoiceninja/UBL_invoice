@@ -181,7 +181,7 @@ class ClassifiedTaxCategory  extends BaseInvoice implements XmlSerializable {
             ],
             Schema::CBC . 'TaxExemptionReasonCode' => $this->taxExemptionReasonCode,
             Schema::CBC . 'TaxExemptionReason' => $this->taxExemptionReason,
-            Schema::CAC . 'TaxScheme' => $this->taxScheme
+            // Schema::CAC . 'TaxScheme' => $this->taxScheme
         ]);
 
         $writer->write($this->getProps());

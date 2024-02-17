@@ -704,7 +704,6 @@ class Invoice extends BaseInvoice implements XmlSerializable
             Schema::CBC . 'TaxPointDate' => $this->taxPointDate,
             Schema::CAC . 'PaymentTerms' => $this->paymentTerms,
             Schema::CAC . 'PayeeParty' => $this->payeeParty,
-            Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
             Schema::CAC . 'AccountingCustomerParty' => [
                 Schema::CBC . 'SupplierAssignedAccountID' => $this->supplierAssignedAccountID,
                 Schema::CAC . "Party" => $this->accountingCustomerParty

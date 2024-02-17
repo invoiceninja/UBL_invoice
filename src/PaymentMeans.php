@@ -175,7 +175,6 @@ class PaymentMeans  extends BaseInvoice implements XmlSerializable {
             Schema::CBC . 'InstructionID' => $this->getInstructionId(),
             Schema::CBC . 'InstructionNote' => $this->getInstructionNote(),
             Schema::CBC . 'PaymentID' => $this->getPaymentId(),
-            Schema::CAC . 'PayeeFinancialAccount' => $this->getPayeeFinancialAccount(),
             ]
 
         );
