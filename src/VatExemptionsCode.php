@@ -7,7 +7,7 @@ namespace CleverIt\UBL\Invoice;
  * To extend, see also:
  *     https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/
  */
-class VatExemptionCode
+class VatExemptionsCode
 {
     /*
      * Exempt based on article 79, point c of Council Directive 2006/112/EC
