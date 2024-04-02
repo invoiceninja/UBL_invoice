@@ -2,6 +2,8 @@
 
 namespace CleverIt\UBL\Invoice\Codes\V21\Interfaces;
 
+use CleverIt\UBL\Invoice\Codes\V21\Interfaces\Agency;
+
 class Identification
 {
     public string $shortName;
