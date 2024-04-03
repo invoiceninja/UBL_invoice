@@ -571,7 +571,7 @@ class UnitCode
     public const RÃ¶NTGEN_PER_SECOND  = 'D6';
     public const WEBER_PER_MILLIMETRE  = 'D60';
     public const MINUTE  = 'D61';
-    public const SECOND  = 'D62';
+    public const SECOND_D62  = 'D62';
     public const BOOK  = 'D63';
     public const BLOCK  = 'D64';
     public const ROUND  = 'D65';
@@ -852,7 +852,6 @@ class UnitCode
     public const MEGAHERTZ  = 'MHZ';
     public const SQUARE_MILE  = 'MIK';
     public const THOUSAND  = 'MIL';
-    public const MINUTE  = 'MIN';
     public const MILLION  = 'MIO';
     public const MILLION_INTERNATIONAL_UNIT  = 'MIU';
     public const MILLIGRAM_PER_SQUARE_INCH  = 'MK';
