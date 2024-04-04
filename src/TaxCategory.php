@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bram.vaneijk
- * Date: 25-10-2016
- * Time: 15:40
- */
 
 namespace CleverIt\UBL\Invoice;
 
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
+use CleverIt\UBL\Invoice\Codes\V21\UNCL5305;
 
 class TaxCategory extends BaseInvoice implements XmlSerializable {
     

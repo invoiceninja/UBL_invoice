@@ -5,6 +5,7 @@ namespace CleverIt\UBL\Invoice\Tests;
 use Greenter\Ubl\UblValidator;
 use PHPUnit\Framework\TestCase;
 use Greenter\Ubl\Resolver\UblPathResolver;
+use \CleverIt\UBL\Invoice\Codes\V21\UnitCode;
 
 class InvoiceTest extends TestCase
 {
@@ -173,7 +174,7 @@ class InvoiceTest extends TestCase
         // Price
         $price = (new \CleverIt\UBL\Invoice\Price())
             ->setBaseQuantity(1)
-            ->setUnitCode(\CleverIt\UBL\Invoice\UnitCode::UNIT)
+            ->setUnitCode(UnitCode::UNIT)
             ->setPriceAmount(10);
 
         // Invoice Line tax totals

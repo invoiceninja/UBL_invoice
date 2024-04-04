@@ -11,6 +11,9 @@ namespace CleverIt\UBL\Invoice;
 
 use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
+use CleverIt\UBL\Invoice\Schema;
+use CleverIt\UBL\Invoice\BaseInvoice;
+use CleverIt\UBL\Invoice\Codes\V21\UnitCode;
 
 class InvoiceLine  extends BaseInvoice implements XmlSerializable {
     private $id;
