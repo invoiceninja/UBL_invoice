@@ -1098,7 +1098,5 @@ class UnitCode
     public const NEWSPAGE_AGATE_LINE  = 'Z8';
     public const PAGE  = 'ZP';
     public const MUTUALLY_DEFINED  = 'ZZ';
-
-
     
 }
