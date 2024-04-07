@@ -61,7 +61,7 @@ class LegalEntity  extends BaseInvoice implements XmlSerializable {
 
 	function xmlSerialize(Writer $writer): void {
 		
-		$this->setProps(array_merge($this->getCompanyId(), [Schema::CBC.'RegistrationName' => $this->registrationName]));
+		$this->setProps(array_merge([Schema::CBC.'RegistrationName' => $this->registrationName], $this->getCompanyId()));
 				
 		$writer->write($this->getProps());
 	}
