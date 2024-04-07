@@ -10,7 +10,7 @@ use Sabre\Xml\Writer;
 use Sabre\Xml\XmlSerializable;
 
 class PaymentMeans  extends BaseInvoice implements XmlSerializable {
-    private $paymentMeansCode;
+    private $paymentMeansCode = '31';
     private $payeeFinancialAccount;
     
     private $paymentMeansCodeAttributes = [
