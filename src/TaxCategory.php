@@ -146,7 +146,7 @@ class TaxCategory extends BaseInvoice implements XmlSerializable {
             [
                 'name' => Schema::CBC . 'ID',
                 'value' => $this->getId(),
-                'attributes' => $this->idAttributes,
+                // 'attributes' => $this->idAttributes,
             ],
             Schema::CBC . 'Name' => $this->name,
             Schema::CBC . 'Percent' => number_format($this->percent ?? 0, 2, '.', ''),

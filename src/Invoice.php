@@ -741,7 +741,6 @@ class Invoice extends BaseInvoice implements XmlSerializable
             Schema::CBC . 'DocumentCurrencyCode' => $this->documentCurrencyCode,
             Schema::CBC . 'TaxCurrencyCode' => $this->taxCurrencyCode,
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
-            Schema::CAC . 'PaymentMeans' => $this->paymentMeans,
             Schema::CAC . 'AdditionalDocumentReference' => $this->additionalDocumentReference,
             Schema::CBC . 'Note' => $this->note,
             Schema::CBC . 'TaxPointDate' => $this->taxPointDate,
@@ -751,6 +750,7 @@ class Invoice extends BaseInvoice implements XmlSerializable
                 Schema::CBC . 'SupplierAssignedAccountID' => $this->supplierAssignedAccountID,
                 Schema::CAC . "Party" => $this->accountingCustomerParty
             ],
+            Schema::CAC . 'PaymentMeans' => $this->paymentMeans,
             Schema::CBC . 'AccountingCostCode' => $this->accountingCostCode,
             Schema::CAC . 'Delivery' => $this->delivery,
             
