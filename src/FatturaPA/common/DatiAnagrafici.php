@@ -14,7 +14,7 @@ class DatiAnagrafici extends BaseInvoice implements XmlSerializable
     public $RegimeFiscale; //String
     public $CodiceFiscale; //String
 
-
+    
     /**
      * Get the value of IdFiscaleIVA
      */ 

@@ -19,7 +19,7 @@ class FatturaElettronica extends BaseInvoice implements XmlSerializable
 
     public string $schemaLocation = 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd';
 
-    function __construct(public $fattura) {}
+    function __construct(public $fatturaHeader, public $fatturaBody) {}
 
     /**
      * The xmlSerialize method is called during xml writing.
@@ -38,7 +38,8 @@ class FatturaElettronica extends BaseInvoice implements XmlSerializable
         ];
 
         $writer->writeAttributes($root_attributes);
-        $writer->write($this->fattura);
+        $writer->write(['FatturaElettronicaHeader' => $this->fatturaHeader]);
+        $writer->write(['FatturaElettronicaBody' => $this->fatturaBody]);
 
     }
 
