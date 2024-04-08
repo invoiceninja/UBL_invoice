@@ -15,6 +15,7 @@ use CleverIt\UBL\Invoice\FatturaPA\common\CedentePrestatore;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronica;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaBody;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaHeader;
+use CleverIt\UBL\Invoice\FatturaPA\common\Sede;
 
 class FatturaTest extends TestCase
 {
@@ -86,8 +87,9 @@ class FatturaTest extends TestCase
 
         $cedentePrestatore->setDatiAnagrafici($datiAnagrafici);
         
+        $sede = new Sede(Indirizzo: "Via Roma", CAP: 12345, Comune: "Lanciano", Provincia: "CH");
         $fatturaHeader->setCedentePrestatore($cedentePrestatore);
-        
+
         $xmlService = new Service();
 
         $xml = $xmlService->write('p:FatturaElettronica', new FatturaElettronica($fatturaHeader));
