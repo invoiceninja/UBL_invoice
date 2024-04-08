@@ -88,6 +88,8 @@ class FatturaTest extends TestCase
         $cedentePrestatore->setDatiAnagrafici($datiAnagrafici);
         
         $sede = new Sede(Indirizzo: "Via Roma", CAP: 12345, Comune: "Lanciano", Provincia: "CH");
+        $cedentePrestatore->setSede($sede);
+        
         $fatturaHeader->setCedentePrestatore($cedentePrestatore);
 
         $xmlService = new Service();
