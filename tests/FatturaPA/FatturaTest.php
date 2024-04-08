@@ -2,10 +2,17 @@
 
 namespace CleverIt\UBL\Invoice\Tests\FatturaPA;
 
+use CleverIt\UBL\Invoice\FatturaPA\common\CedentePrestatore;
+use CleverIt\UBL\Invoice\FatturaPA\common\DatiAnagrafici;
+use CleverIt\UBL\Invoice\FatturaPA\common\DatiTrasmissione;
 use Generator;
 use Sabre\Xml\Service;
 use PHPUnit\Framework\TestCase;
+use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronica;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaBody;
+use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaHeader;
+use CleverIt\UBL\Invoice\FatturaPA\common\IdFiscaleIVA;
+use CleverIt\UBL\Invoice\FatturaPA\common\IdTrasmittente;
 
 class FatturaTest extends TestCase
 {
@@ -36,33 +43,48 @@ class FatturaTest extends TestCase
         $f = new FatturaElettronicaBody();
         $f->setDatiGenerali("2024-01-01");
 
-        $root_element = 'p:FatturaElettronica';
-
         $xmlService = new Service();
 
-        $xmlService->namespaceMap = [
-            'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2' => 'p',
-            //'{versione}:FPA12'=> '',
-            //'versione' => 'FPA12',
-            //'xmlns:ds' => 'http://www.w3.org/2000/09/xmldsig#',
-            //'xmlns:p' => 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2',
-            //'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-            //'xsi:schemaLocation' => 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd'
-        ];
-
+        $xml = $xmlService->write('p:FatturaElettronica', new FatturaElettronica($f));
         
-        $xml = $xmlService->write($root_element, $f);
-   
-        echo $xml;
+        // echo $xml;
 
         $this->assertIsString($xml);
     }
 
+    public function testInvoice()
+    {
+        $fatturaHeader = new FatturaElettronicaHeader();
+
+        $datiTrasmissione = new DatiTrasmissione();
+        $datiTrasmissione->setFormatoTrasmissione("FPR12");
+        $datiTrasmissione->setCodiceDestinatario("0000000");
+        $datiTrasmissione->setProgressivoInvio("0000000");
+
+        $idPaese = new IdTrasmittente();
+        $idPaese->setIdPaese("IT");
+        $idPaese->setIdCodice("12345678901");
+
+        $datiTrasmissione->setIdTrasmittente($idPaese);
+        $fatturaHeader->setDatiTrasmissione($datiTrasmissione);
+
+        $cedentePrestatore = new CedentePrestatore();
+
+        $datiAnagrafici = new DatiAnagrafici();
+        
+        $idFiscaleIVA = new IdFiscaleIVA(IdPaese: "IT", IdCodice: "12345678901");
+        $datiAnagrafici->setIdFiscaleIVA($idFiscaleIVA);
+        
+        $cedentePrestatore->setDatiAnagrafici($datiAnagrafici);
+        
+        $xmlService = new Service();
+
+        $xml = $xmlService->write('p:FatturaElettronica', new FatturaElettronica($fatturaHeader));
+
+        echo $xml;
+
+        $this->assertIsString($xml);
+
+
+    }
 }
-
-//<p:FatturaElettronica versione="FPA12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
-//xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" 
-//xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-//xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">
- // <FatturaElettronicaHeader>
-

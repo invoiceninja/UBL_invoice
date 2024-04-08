@@ -3,7 +3,8 @@ namespace CleverIt\UBL\Invoice\FatturaPA\common;
 
 class IdFiscaleIVA
 {
-    public $IdPaese; //String
-    public $IdCodice; //String
 
+    public function __construct(public $IdPaese, public $IdCodice)
+    {
+    }
 }
