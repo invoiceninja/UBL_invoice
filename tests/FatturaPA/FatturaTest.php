@@ -36,13 +36,14 @@ class FatturaTest extends TestCase
         $f = new FatturaElettronicaBody();
         $f->setDatiGenerali("2024-01-01");
 
-        $root_element = 'FatturaElettronicaHeader';
+        $root_element = 'p:FatturaElettronica';
 
         $xmlService = new Service();
 
         $xmlService->namespaceMap = [
-            'p:FatturaElettronica' => '',
-            'versione' => 'FPA12',
+            'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2' => 'p',
+            //'{versione}:FPA12'=> '',
+            //'versione' => 'FPA12',
             //'xmlns:ds' => 'http://www.w3.org/2000/09/xmldsig#',
             //'xmlns:p' => 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2',
             //'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
@@ -58,3 +59,10 @@ class FatturaTest extends TestCase
     }
 
 }
+
+//<p:FatturaElettronica versione="FPA12" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+//xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" 
+//xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+//xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd">
+ // <FatturaElettronicaHeader>
+
