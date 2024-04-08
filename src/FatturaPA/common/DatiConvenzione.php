@@ -1,6 +1,9 @@
 <?php
 
-class DatiRicezione
+
+namespace CleverIt\UBL\Invoice\FatturaPA\common;
+
+class DatiConvenzione
 {
     public $RiferimentoNumeroLinea; //String
     public $IdDocumento; //String

@@ -1,6 +1,6 @@
 <?php
 
-
+namespace CleverIt\UBL\Invoice\FatturaPA\common;
 
 
 class DatiRiepilogo

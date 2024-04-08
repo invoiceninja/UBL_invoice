@@ -1,4 +1,6 @@
 <?php
+
+namespace CleverIt\UBL\Invoice\FatturaPA\common;
 class Sede
 {
     public $Indirizzo; //Date
