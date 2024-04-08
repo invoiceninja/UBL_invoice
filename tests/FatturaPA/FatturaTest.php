@@ -2,17 +2,19 @@
 
 namespace CleverIt\UBL\Invoice\Tests\FatturaPA;
 
-use CleverIt\UBL\Invoice\FatturaPA\common\CedentePrestatore;
-use CleverIt\UBL\Invoice\FatturaPA\common\DatiAnagrafici;
-use CleverIt\UBL\Invoice\FatturaPA\common\DatiTrasmissione;
 use Generator;
 use Sabre\Xml\Service;
 use PHPUnit\Framework\TestCase;
+use CleverIt\UBL\Invoice\FatturaPA\common\Anagrafica;
+use CleverIt\UBL\Invoice\FatturaPA\common\IdFiscaleIVA;
+use CleverIt\UBL\Invoice\FatturaPA\common\RegimeFiscale;
+use CleverIt\UBL\Invoice\FatturaPA\common\DatiAnagrafici;
+use CleverIt\UBL\Invoice\FatturaPA\common\IdTrasmittente;
+use CleverIt\UBL\Invoice\FatturaPA\common\DatiTrasmissione;
+use CleverIt\UBL\Invoice\FatturaPA\common\CedentePrestatore;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronica;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaBody;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaHeader;
-use CleverIt\UBL\Invoice\FatturaPA\common\IdFiscaleIVA;
-use CleverIt\UBL\Invoice\FatturaPA\common\IdTrasmittente;
 
 class FatturaTest extends TestCase
 {
@@ -75,7 +77,16 @@ class FatturaTest extends TestCase
         $idFiscaleIVA = new IdFiscaleIVA(IdPaese: "IT", IdCodice: "12345678901");
         $datiAnagrafici->setIdFiscaleIVA($idFiscaleIVA);
         
+        $anagrafica = new Anagrafica(Denominazione: "Company Name");
+        $datiAnagrafici->setAnagrafica($anagrafica);
+
+        $regimaFiscale = new RegimeFiscale("RF19");
+
+        $datiAnagrafici->setRegimeFiscale($regimaFiscale);
+
         $cedentePrestatore->setDatiAnagrafici($datiAnagrafici);
+        
+        $fatturaHeader->setCedentePrestatore($cedentePrestatore);
         
         $xmlService = new Service();
 
