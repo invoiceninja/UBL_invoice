@@ -96,9 +96,9 @@ class FatturaTest extends TestCase
         $anagrafica = new Anagrafica(Denominazione: "Company Name");
         $datiAnagrafici->setAnagrafica($anagrafica);
 
-        $regimaFiscale = new RegimeFiscale("RF19");
+        // $regimaFiscale = new RegimeFiscale();
 
-        $datiAnagrafici->setRegimeFiscale($regimaFiscale);
+        $datiAnagrafici->setRegimeFiscale("RF19");
 
         $cedentePrestatore->setDatiAnagrafici($datiAnagrafici);
         
@@ -109,7 +109,10 @@ class FatturaTest extends TestCase
 
         //client deets
         $datiAnagrafici = new DatiAnagrafici();
-        $datiAnagrafici->setCodiceFiscale("09876543210");
+        
+        //for some reason the validation does not like codice fiscale for the client?
+        //perhaps it may need IdFiscaleIVA?
+        // $datiAnagrafici->setCodiceFiscale("09876543210");
 
         $anagrafica = new Anagrafica(Denominazione: "Client Name");
         $datiAnagrafici->setAnagrafica($anagrafica);
@@ -124,7 +127,7 @@ class FatturaTest extends TestCase
         $fatturaBody = new FatturaElettronicaBody();
 
         $datiGeneraliDocument = new DatiGeneraliDocumento();
-        $datiGeneraliDocument->setTipoDocumento("td01")
+        $datiGeneraliDocument->setTipoDocumento("TD01")
                              ->setDivisa("EUR")
                              ->setData("2024-01-01")
                              ->setNumero("123")
@@ -141,7 +144,7 @@ class FatturaTest extends TestCase
         $datiContratto = new DatiContratto(
             RiferimentoNumeroLinea: 1,
             IdDocumento: 6685, 
-            Data: 2024-01-01, 
+            Data: "2024-01-01", 
             NumItem: 5, 
             CodiceCUP: "123abc", 
             CodiceCIG: "456def", 
@@ -151,7 +154,7 @@ class FatturaTest extends TestCase
         $datiRicezione = new DatiRicezione(
             RiferimentoNumeroLinea: 1,
             IdDocumento: 6685,
-            Data: 2024 - 01 - 01,
+            Data: "2024-01-01",
             NumItem: 5,
             CodiceCUP: "123abc",
             CodiceCIG: "456def",
@@ -175,18 +178,18 @@ class FatturaTest extends TestCase
                      ->setDatiRicezione($datiRicezione);
 
         $dettaglioLinee = new DettaglioLinee(
-            NumeroLinea: 1, 
+            NumeroLinea: "1", 
             Descrizione: "Decrizione",
-            Quantita: 1,
-            PrezzoUniario: 1, 
-            PrezzoTotale: 5,
-            AliquotaIVA: 22.00,            
+            Quantita: "1.00",
+            PrezzoUnitario: "1.00", 
+            PrezzoTotale: "5.00",
+            AliquotaIVA: "22.00",            
         );
 
         $datiRiepilogo = new DatiRiepilogo(
-            AliquotaIVA: 22.00, 
-            ImponibileImporto: 5, 
-            Imposta: 1, 
+            AliquotaIVA: "22.00", 
+            ImponibileImporto: "5.00", 
+            Imposta: "1.00", 
             EsigibilitaIVA: "I",             
         );
 
@@ -197,7 +200,7 @@ class FatturaTest extends TestCase
         $dettalioPagament = new DettaglioPagamento(
             ModalitaPagamento: "MP01", //String
             DataScadenzaPagamento: "2017-02-18", //Date
-            ImportoPagamento: 6.10, //String            
+            ImportoPagamento: "6.00", //String            
         );
 
         $datiPagamento = new DatiPagamento();
@@ -213,10 +216,26 @@ class FatturaTest extends TestCase
 
         $xml = $xmlService->write('p:FatturaElettronica', new FatturaElettronica($fatturaHeader, $fatturaBody));
 
-        echo $xml;
+        // echo $xml;
 
         $this->assertIsString($xml);
 
+        $fattura_pa_xl = simplexml_load_string($xml);
+
+        // Check if xml schema is correct.
+        $domdoc = new \DOMDocument();
+        $domdoc->loadXML($xml);
+        
+        libxml_use_internal_errors(true);
+
+        $validation = $domdoc->schemaValidate("src/FatturaPA/Schema_del_file_xml_FatturaPA_v1.2.2.xsd");
+
+        $errors = libxml_get_errors(); //supposed to give back errors?
+        var_dump($errors);
+
+        $this->assertTrue($validation);
+
+        
 
     }
 }

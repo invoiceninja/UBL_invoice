@@ -87,7 +87,7 @@ class FatturaElettronicaHeader extends BaseInvoice implements XmlSerializable
             }
         }
 
-        $this->setProps(['FatturaElettronicaHeader' => $vars]);
+        $this->setProps($vars);
 
         $writer->write($this->getProps());
 

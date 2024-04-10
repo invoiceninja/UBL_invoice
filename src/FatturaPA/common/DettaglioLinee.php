@@ -12,7 +12,7 @@ class DettaglioLinee extends BaseInvoice implements XmlSerializable
         public string $NumeroLinea, 
         public string $Descrizione,
         public string $Quantita,
-        public string $PrezzoUniario, 
+        public string $PrezzoUnitario, 
         public string $PrezzoTotale,
         public string $AliquotaIVA,
     ){}

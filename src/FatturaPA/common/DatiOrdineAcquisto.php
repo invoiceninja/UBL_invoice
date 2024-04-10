@@ -8,7 +8,7 @@ use CleverIt\UBL\Invoice\BaseInvoice;
 
 class DatiOrdineAcquisto extends BaseInvoice implements XmlSerializable
 {
-    private array $protected = ['proteted'];
+    private array $protected = ['protected'];
     
     public $RiferimentoNumeroLinea; //String
     public $IdDocumento; //String
