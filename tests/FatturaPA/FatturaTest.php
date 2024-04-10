@@ -172,10 +172,10 @@ class FatturaTest extends TestCase
                       ->setDataOraConsegna("2017-01-10T16:46:12.000+02:00");
 
         $datiGenerali = new DatiGenerali();
-        $datiGenerali->setDatiGeneraliDocumento($datiGeneraliDocument)
-                     ->setDatiOrdineAcquisto($datiOrdineAcquisto)
-                     ->setDatiContratto($datiContratto)
-                     ->setDatiRicezione($datiRicezione);
+        $datiGenerali->setDatiGeneraliDocumento($datiGeneraliDocument);
+                    //  ->setDatiOrdineAcquisto($datiOrdineAcquisto)
+                    //  ->setDatiContratto($datiContratto)
+                    //  ->setDatiRicezione($datiRicezione);
 
         $dettaglioLinee = new DettaglioLinee(
             NumeroLinea: 1, 
