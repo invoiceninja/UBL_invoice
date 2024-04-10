@@ -9,7 +9,9 @@ use CleverIt\UBL\Invoice\BaseInvoice;
 
 class DatiBeniServizi extends BaseInvoice implements XmlSerializable
 {
-    public $DettaglioLinee; //array( DettaglioLinee )
+    private array $protected = ['protected', 'DettaglioLinee'];
+
+    public array $DettaglioLinee = []; //array( DettaglioLinee )
     public $DatiRiepilogo; //DatiRiepilogo
 
     /**
@@ -47,7 +49,7 @@ class DatiBeniServizi extends BaseInvoice implements XmlSerializable
      */ 
     public function setDettaglioLinee($DettaglioLinee)
     {
-        $this->DettaglioLinee = $DettaglioLinee;
+        $this->DettaglioLinee[] = $DettaglioLinee;
 
         return $this;
     }
@@ -57,12 +59,21 @@ class DatiBeniServizi extends BaseInvoice implements XmlSerializable
 
         $vars = [];
 
+        foreach($this->getDettaglioLinee() as $item) {
+            $vars[] = ['DettaglioLinee' => $item];
+        }
+
         foreach($this as $property => $value) {
+            
+            if(in_array($property, $this->protected)) {
+                continue;
+            }
 
             if($value !== null) {
                 $vars[$property] = $value;
             }
         }
+
 
         $this->setProps($vars);
 
