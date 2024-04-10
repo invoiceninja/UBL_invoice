@@ -178,13 +178,24 @@ class FatturaTest extends TestCase
                      ->setDatiRicezione($datiRicezione);
 
         $dettaglioLinee = new DettaglioLinee(
-            NumeroLinea: "1", 
+            NumeroLinea: 1, 
             Descrizione: "Decrizione",
             Quantita: "1.00",
             PrezzoUnitario: "1.00", 
             PrezzoTotale: "5.00",
             AliquotaIVA: "22.00",            
         );
+
+        
+        $dettaglioLinee2 = new DettaglioLinee(
+            NumeroLinea: 2,
+            Descrizione: "Decrizione",
+            Quantita: "1.00",
+            PrezzoUnitario: "1.00",
+            PrezzoTotale: "5.00",
+            AliquotaIVA: "22.00",
+        );
+
 
         $datiRiepilogo = new DatiRiepilogo(
             AliquotaIVA: "22.00", 
@@ -195,6 +206,7 @@ class FatturaTest extends TestCase
 
         $datiBeniServizi  = new DatiBeniServizi();
         $datiBeniServizi->setDettaglioLinee($dettaglioLinee)
+                        ->setDettaglioLinee($dettaglioLinee2)
                         ->setDatiRiepilogo($datiRiepilogo);
 
         $dettalioPagament = new DettaglioPagamento(
@@ -216,7 +228,7 @@ class FatturaTest extends TestCase
 
         $xml = $xmlService->write('p:FatturaElettronica', new FatturaElettronica($fatturaHeader, $fatturaBody));
 
-        // echo $xml;
+        echo $xml;
 
         $this->assertIsString($xml);
 
