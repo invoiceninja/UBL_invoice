@@ -29,6 +29,11 @@ use CleverIt\UBL\Invoice\FatturaPA\common\DettaglioLinee;
 use CleverIt\UBL\Invoice\FatturaPA\common\DettaglioPagamento;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaBody;
 use CleverIt\UBL\Invoice\FatturaPA\common\FatturaElettronicaHeader;
+use CleverIt\UBL\Invoice\Schema;
+use GoetasWebservices\XML\XSDReader\Schema\Inheritance\RestrictionType;
+use GoetasWebservices\XML\XSDReader\Schema\Type\ComplexType;
+use GoetasWebservices\XML\XSDReader\Schema\Type\SimpleType;
+use GoetasWebservices\XML\XSDReader\SchemaReader;
 
 class FatturaTest extends TestCase
 {
@@ -228,7 +233,7 @@ class FatturaTest extends TestCase
 
         $xml = $xmlService->write('p:FatturaElettronica', new FatturaElettronica($fatturaHeader, $fatturaBody));
 
-        echo $xml;
+        // echo $xml;
 
         $this->assertIsString($xml);
 
@@ -342,8 +347,123 @@ class FatturaTest extends TestCase
         $validation = $domdoc->schemaValidate("src/FatturaPA/Schema_del_file_xml_FatturaPA_v1.2.2.xsd");
 
         $errors = libxml_get_errors(); //supposed to give back errors?
-        var_dump($errors);
+        // var_dump($errors);
 
         $this->assertTrue($validation);
+    }
+
+    public function testParseXsd()
+    {
+
+        $reader = new SchemaReader();
+        $schema = $reader->readFile("src/FatturaPA/Schema_del_file_xml_FatturaPA_v1.2.2.xsd");
+
+        $this->assertInstanceOf(\GoetasWebservices\XML\XSDReader\Schema\Schema::class, $schema);
+        
+        // $tipo = $schema->findType("DatiCassaPrevidenzialeType");
+        // $tipo->getE
+        // $unions = $tipo->getUnions();
+
+
+        foreach ($schema->getSchemas() as $innerSchema) {
+            // foreach($innerSchema->getElements() as $innerElement) {
+            //     echo $innerElement->getName() . PHP_EOL;
+            // }
+        }
+
+        echo "types".PHP_EOL;
+        //types are defined by their restriction - each restriction has a set.
+        foreach ($schema->getTypes() as $type) {
+
+                echo $type->getName() .PHP_EOL;
+
+
+                if(method_exists($type, "getElements")) {
+                    foreach($type?->getElements() as $innerElement) {
+
+                        echo ">> ".$innerElement->getName() .PHP_EOL;
+                        $type = $innerElement->getType();
+                        $checks = $type->getRestriction()?->getChecks();
+
+                        echo print_r($checks,1) .PHP_EOL;
+                        $enumeration = &$checks['enumeration'];
+                        $type_list = [];
+
+                        foreach($enumeration as $enum) {
+                            $type_list[$enum['value']] = $enum['doc'];
+                        }
+
+                        echo print_r($type_list,1) .PHP_EOL;
+
+                    }
+                }
+
+                // echo print_r($type,1);
+                // exit;
+                // echo "name = " . $type->getRestriction()?->getBase()?->getName() . PHP_EOL;
+                // echo print_r($type->getRestriction()?->getChecks(), true) . PHP_EOL;
+                // echo "----------------------" . PHP_EOL;
+
+
+            // echo $type->getDoc() .PHP_EOL;
+            // echo $type->getSchema() .PHP_EOL;
+            // echo print_r($type->getRestriction()?->getChecks()) .PHP_EOL;
+
+            // echo print_r($type->getRestriction()?->getChecks(), true) . PHP_EOL;
+            // echo "enumeration ". PHP_EOL;
+            // echo print_r($type->getRestriction()?->getChecksByType(RestrictionType::ENUMERATION)) .PHP_EOL;
+            
+            // echo "min INCLUSIVE ". PHP_EOL;
+            // echo print_r($type->getRestriction()?->getChecksByType(RestrictionType::MIN_INCLUSIVE)) .PHP_EOL;
+            
+            // echo "max INCLUSIVE ". PHP_EOL;
+            // echo print_r($type->getRestriction()?->getChecksByType(RestrictionType::MAX_INCLUSIVE)) .PHP_EOL;
+
+            // echo print_r($type->getRestriction(),1) .PHP_EOL; not always a string
+        }
+
+        echo "elements".PHP_EOL;
+        echo count($schema->getElements()).PHP_EOL;
+        // echo $schema->getElements() . PHP_EOL;
+
+        foreach ($schema->getElements() as $element) {
+            echo $element->getName() .PHP_EOL;
+            // echo "MIN:". $element->getMin() . PHP_EOL;
+            // echo "MAX:".$element->getMax() . PHP_EOL;
+            // echo $element->getSchema() . PHP_EOL;
+
+        }
+
+        $e = $schema->getElement("FatturaElettronica");
+        echo $e->getName() .PHP_EOL;
+
+        echo "groups".PHP_EOL;
+
+        foreach ($schema->getGroups() as $group) {
+            // echo $group->getName() .PHP_EOL;
+        }
+
+        echo "atttributes".PHP_EOL;
+        foreach ($schema->getAttributes() as $attr) {
+            // $attr->get
+            // echo $attr->getName() .PHP_EOL;
+        }
+        echo "attribute groups" . PHP_EOL;
+        foreach ($schema->getAttributeGroups() as $attrGroup) {
+            // echo $attrGroup->getName() .PHP_EOL;
+            
+        }
+
+
+        // $tipo = $schema->getType('DatiCassaPrevidenzialeType');
+        // $this->assertInstanceOf(ComplexType::class, $tipo);
+        
+        // foreach($tipo->getElements() as $element) {
+        //     echo $element->getName() .PHP_EOL;
+        // }
+
+        // $schema->get
+        // $e->getSchema();
+        // echo print_r($e->getSchema(), true);
     }
 }
