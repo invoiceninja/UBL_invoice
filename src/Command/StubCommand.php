@@ -23,6 +23,22 @@ final class StubCommand extends Command
 {
     private array $schemas = [
         "FatturaPA" => "src/FatturaPA/Schema_del_file_xml_FatturaPA_v1.2.2.xsd",
+        "FACT1_Credit" => "src/FACT1/UBL-CreditNote-2.1.xsd",
+        "FACT1_Invoice" => "src/FACT1/UBL-Invoice-2.1.xsd",
+    ];
+
+    private array $exclusions = [
+        "FatturaPA" => [
+            "FatturaElettronicaType",
+            "FatturaElettronicaHeaderType",
+            "FatturaElettronicaBodyType",
+        ],
+        "FACT1_Credit" => [
+
+        ],
+        "FACT1_Invoice" => [
+
+        ],
     ];
 
     public $output;
@@ -146,6 +162,11 @@ final class StubCommand extends Command
         fwrite($fp, $validationString);
         fclose($fp);
 
+        $this->output->writeln([" >> Writing {$name}_exclusions to file"]);
+        $exclusionString = json_encode($this->exclusions[$name], JSON_PRETTY_PRINT);
+        $fp = fopen("./stubs/{$name}_exclusions.json", 'w');
+        fwrite($fp, $exclusionString);
+        fclose($fp);
 
         $this->output->writeln([" >> Writing {$name}_elements to file",'============',]);
         $elementsString = json_encode($elements_array, JSON_PRETTY_PRINT);
