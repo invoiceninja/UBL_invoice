@@ -39,17 +39,122 @@ final class UblRuleCommand extends Command
 
     }
 
+    private function tt()
+    {
+        $path = "src/FACT1/UBL-Invoice-2.1.xsd";
+
+        $reader = new SchemaReader();
+        $schema = $reader->readFile($path);
+
+        $this->document = new \DomDocument();
+        $this->document->load($path);
+    
+        foreach($schema->getTypes() as $type)
+        {
+
+            $name = str_replace("Type","", $type->getName());
+
+            $elements = $this->getXpathElements($name);
+
+            $data = [];
+
+            foreach($elements as $element)
+            {
+                if($element->nodeValue == $name)
+                {
+                   
+                    $ee = $element->parentNode->parentNode->parentNode->parentNode;
+                    $ref = $ee->getAttribute("ref");
+
+                    if(strlen($ref ?? '') > 1)
+                    {
+                        
+                        $minOccurs = $ee->getAttribute("minOccurs");
+
+                        $maxOccurs = $ee->getAttribute("maxOccurs") == 'unbounded' ? -1 : $ee->getAttribute("maxOccurs");
+
+                        $data[] = [
+                            "name" => $ref,
+                            "min" => $minOccurs,
+                            "max" => $maxOccurs,
+                        ];
+                        
+                        
+                    }
+
+                }
+
+            }
+
+            //do this inside out, group by object class, and then iterate through all props that way... simples.
+            foreach($data as $type)
+            {
+                $element = $this->getElement($type['name']);
+                echo $element->getAttribute("ref")."\n";
+
+                //  echo print_r($element->getAttributeNames());
+
+                foreach($element->childNodes as $key =>$node)
+                {
+                    echo $key . " " .$node->nodeName."\n";
+                }
+                // $object = $element->getAttribute("ccts:ObjectClass");
+                // echo $object."\n";
+
+
+            }
+
+            // echo print_r($data);
+
+            exit;
+        }
+
+
+    }
+
+    private function getElement(string $name)
+    {
+        $elements = $this->document->getElementsByTagName("element");
+        foreach($elements as $element)
+        {
+            if($element->getAttribute("ref") == $name){
+                return $element;
+            }
+        }
+    }
+
+    private function getXpathElements($path)
+    {
+
+        $xpath = new \DOMXPath($this->document);
+
+        // Define the tag name you want to search for
+        $tagName = "ccts:ObjectClass";
+
+        // Define the XPath query to select elements with the specified tag name
+        $query = "//{$tagName}";
+
+        // Execute the XPath query
+        $elements = $xpath->query($query);
+
+        return $elements;
+    }
+
     /**
      * Here all logic happens
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        $this->tt();
+        return self::SUCCESS;
+
         $this->document = new \DomDocument();
         $this->document->load('src/FACT1/common/Validation-Invoice_v1.0.8.sch');
 
         $this->extractGlobals()
              ->extractRules()
+             ->createSet()
              ->write();
      
         return self::SUCCESS;
@@ -64,21 +169,27 @@ final class UblRuleCommand extends Command
 
             $data = [];
 
-            $data['name'] = str_replace(["cbc:","cac:"],"", $rule->getAttribute("context")) . PHP_EOL;
-            $data['flag'] =  $rule->getAttribute("flag"). PHP_EOL;
+            $data['name'] = $this->cleanTags($rule->getAttribute("context"));
+            $data['flag'] =  $this->cleanTags($rule->getAttribute("flag"));
 
             $assertion = $rule->getElementsByTagName("assert");
+            
+            $assert_rule = [];
 
-            foreach($assertion as $key  =>$assert)
+            foreach($assertion as $key => $assert)
             {
 
-                $data[$key ]['rule'] =  str_replace(["cbc:","cac:"],"",$assert->getAttribute("test"));
-                $data[$key ]['rule_flag'] =  str_replace(["cbc:","cac:"],"",$assert->getAttribute("flag"));
-                $data[$key ]['rule_id'] =  str_replace(["cbc:","cac:"],"",$assert->getAttribute("id"));
-                $data[$key ]['description'] =  str_replace(["cbc:","cac:"],"",$assert->textContent);
-
-                $this->rules[] = $data;
+                $assert_rule[] = [    
+                'rule' =>  $this->cleanRuleTags($assert->getAttribute("test")),
+                'rule_flag' =>  $this->cleanTags($assert->getAttribute("flag")),
+                'rule_id' =>  $this->cleanTags($assert->getAttribute("id")),
+                'description' =>  $this->cleanTags($assert->textContent),
+                ];
+                
             }
+
+            $data['rules'] = $assert_rule;
+            $this->rules[] = $data;
 
         }
 
@@ -103,11 +214,17 @@ final class UblRuleCommand extends Command
 
         }
 
-
         return $this;
 
     }
 
+    private function createSet(): self
+    {
+
+
+        return $this;
+
+    }
     private function write(): void
     {
 
@@ -116,6 +233,56 @@ final class UblRuleCommand extends Command
         fwrite($fp, $elementsString);
         fclose($fp);
 
+    }
+
+    private function buildValidation(array $rule): array
+    {
+        $name = $this->harvestName($rule['rule']);
+
+        return [
+            'name' => $name,
+            'base_type' => $base_type,
+            'resource' => $type_list,
+            'length' => $length,
+            'fraction_digits' => $fraction_digits,
+            'total_digits' => $total_digits,
+            'max_exclusive' => $max_exclusive,
+            'min_exclusive' => $min_exclusive,
+            'max_inclusive' => $max_inclusive,
+            'min_inclusive' => $min_inclusive,
+            'max_length' => $max_length,
+            'min_length' => $min_length,
+            'pattern' => $pattern,
+            'whitespace' => $whitespace,
+        ];
+
+    }
+
+    private function harvestName(string $rule): string
+    {
+        
+        if (preg_match('/\b[A-Z][a-z]*\b/', $rule, $matches)) {
+            return $matches[0];
+        }
+
+        // return explode(" ", str_replace("(", "", $rule));
+    }
+
+    private function extractRule(string $string): array 
+    {
+        $data =[];
+
+
+        return $data;
+    }
+    
+    private function cleanRuleTags(string $string): string
+    {
+        return str_replace(["self::","cbc:","cac:"],"", $string);
+    }
+    private function cleanTags(string $string): string
+    {
+        return str_replace(["//","self::","(",")","concat(",",",'$RO-MAJOR-MINOR-PATCH-VERSION)',"cbc:","cac:","/ubl:", "/cn:"], "", $string);
     }
 
 }
