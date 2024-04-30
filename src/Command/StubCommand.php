@@ -77,9 +77,39 @@ final class StubCommand extends Command
     private function buildSchema(string $name, string $path)
     {
 
+        if($name == 'FACT1_Invoice'){
+
+$reader = new SchemaReader();
+$schema = $reader->readFile($path);
+
+
+$reader->addKnownNamespaceSchemaLocation(
+    "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+    "src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"
+);
+$reader->addKnownNamespaceSchemaLocation(
+    "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+    "src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"
+);
+$reader->addKnownNamespaceSchemaLocation(
+    "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+    "src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd"
+);
+
+$CommonAggregateComponents = $reader->readFile("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
+$CommonBasicComponents = $reader->readFile("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd");
+$CommonExtensionComponents = $reader->readFile("src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd");
+
+$schema->addSchema($CommonAggregateComponents);
+$schema->addSchema($CommonBasicComponents);
+$schema->addSchema($CommonExtensionComponents);
+
+        }
+        
+else {
         $reader = new SchemaReader();
         $schema = $reader->readFile($path);
-        $validation = [];
+}        $validation = [];
 
         foreach ($schema->getTypes() as $type) 
         {

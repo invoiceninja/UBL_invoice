@@ -34,6 +34,10 @@ use GoetasWebservices\XML\XSDReader\Schema\Inheritance\RestrictionType;
 use GoetasWebservices\XML\XSDReader\Schema\Type\ComplexType;
 use GoetasWebservices\XML\XSDReader\Schema\Type\SimpleType;
 use GoetasWebservices\XML\XSDReader\SchemaReader;
+// use Genkgo\Xsl\XsltProcessor;
+// use Genkgo\Xsl\Cache\NullCache;
+
+use Milo\Schematron;
 
 class ROEinvoiceTest extends TestCase
 {
@@ -41,37 +45,112 @@ class ROEinvoiceTest extends TestCase
     public function setUp(): void{
     }
 
+
+function tExists($xpathExpression, $xmlDocument)
+{
+    return $this->evaluateXPath($xpathExpression, $xmlDocument) !== false;
+}
+
+// Function to check string length
+function tStringLength($xpathExpression, $maxLength, $xmlDocument)
+{
+    $length = $this->evaluateXPath("string-length($xpathExpression)", $xmlDocument);
+    return $length <= $maxLength;
+}
+
+// Function to check pattern matching
+function tPatternMatch($xpathExpression, $pattern, $xmlDocument)
+{
+    $value = $this->evaluateXPath($xpathExpression, $xmlDocument);
+    return preg_match($pattern, $value);
+}
+
+function evaluateXPath($xpathExpression, $xmlDocument)
+{
+    $xpath = new \DOMXPath($xmlDocument);
+    return $xpath->evaluate($xpathExpression);
+}
+
+    public function tXpathValidation()
+    {
+        
+        // Load the XML document you want to validate
+        $xmlDocument = new \DOMDocument();
+        $xmlDocument->load('tests/ROEinvoice/ro.xml');
+
+        // Example usage
+        $xpathExpression = "normalize-space(cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cbc:PostalZone)";
+        $maxLength = 20;
+        $pattern = '/^[0-9]{5}$/';
+
+        if (!$this->tExists($xpathExpression, $xmlDocument)) {
+            echo "Element does not exist\n";
+        }
+
+        if (!$this->tStringLength($xpathExpression, $maxLength, $xmlDocument)) {
+            echo "String length exceeds $maxLength characters\n";
+        }
+
+        if (!$this->tPatternMatch($xpathExpression, $pattern, $xmlDocument)) {
+            echo "Pattern does not match\n";
+        }
+
+    }
+
+    public function testSchemaTronValidation()
+    {
+        
+            //if i hack the xslt file and downgrade it to xslt (not xslt2) it parses fine!
+            $schematron = new Schematron();
+            $schematron->load('src/FACT1/common/Validation-Invoice_v1.0.8.sch');
+
+            $document = new \DOMDocument();
+            $document->load('tests/ROEinvoice/ro.xml');
+            $result = $schematron->validate($document);
+
+            echo print_r($result,1);
+
+    }
+
     public function testParseXsd()
     {
 
         $reader = new SchemaReader();
+
         $reader->addKnownNamespaceSchemaLocation(
-        "https://docs.oasis-open.org/ubl/prd1-UBL-2.1/xsd/common/CommonBasicComponents-2",
-        "common/UBL-CommonAggregateComponents-2.1.xsd");
+        "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+        "src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
         $reader->addKnownNamespaceSchemaLocation(
-        "https://docs.oasis-open.org/ubl/prd1-UBL-2.1/xsd/common/CommonBasicComponents-2.xsd",
-        "common/UBL-CommonBasicComponents-2.1.xsd"
+        "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+        "src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"
         );
         $reader->addKnownNamespaceSchemaLocation(
-        "https://docs.oasis-open.org/ubl/prd1-UBL-2.1/xsd/common/CommonExtensionComponents-2.xsd",
-        "common/UBL-CommonExtensionComponents-2.1.xsd"
+        "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+        "src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd"
         );
 
         $schema = $reader->readFile("src/FACT1/UBL-Invoice-2.1.xsd");
-        
+        $CommonAggregateComponents = $reader->readFile("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
+        $CommonBasicComponents = $reader->readFile("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd");
+        $CommonExtensionComponents = $reader->readFile("src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd");
 
-        // foreach ($schema->getElements() as $element) {
-        // }
+        $schema->addSchema($CommonAggregateComponents);
+        $schema->addSchema($CommonBasicComponents);
+        $schema->addSchema($CommonExtensionComponents);
 
-        // $e = $schema->getElement("FatturaElettronica");
+        //         foreach ($schema->getElements() as $element) {
+        // echo $element->getName().PHP_EOL;
+        //         }
+        // $e = $schema->getElement("InvoiceTypeCode");
+        // echo var_dump($e);
+
         // foreach ($schema->getGroups() as $group) {
         // }
 
                 // echo "attr" . PHP_EOL;
-        foreach ($schema->getAttributes() as $attr) {
-
+        // foreach ($schema->getAttributes() as $attr) {
             // echo $attr->getName().PHP_EOL;
-        }
+        // }
 
         // foreach ($schema->getAttributeGroups() as $attrGroup) {
         // }
@@ -79,7 +158,7 @@ class ROEinvoiceTest extends TestCase
         $r = [];
 
         foreach ($schema->getTypes() as $type) {
-            echo $type->getName(). PHP_EOL;
+            // echo $type->getName(). PHP_EOL;
         }
 
         $elements_array = [];
@@ -89,10 +168,23 @@ class ROEinvoiceTest extends TestCase
             $data = [];
             $data['type'] = $type->getName();
 
+            // $schema2 = $type->getSchema();
+            // foreach($schema2->getTypes() as $tt)
+            // {
+            //     echo $tt->getName().PHP_EOL;
+            // }
+
+
             $elements = [];
 
             if(method_exists($type, "getElements")) {
                 foreach($type?->getElements() as $innerElement) {
+
+//                     echo print_r(get_class_methods($type)) . PHP_EOL;
+
+// echo print_r($type->getExtension(), 1). PHP_EOL;
+
+// echo print_r($type->getRestriction(), 1). PHP_EOL;
 
                     $elements[] = [
                         'name' => $innerElement->getName(),
@@ -100,6 +192,11 @@ class ROEinvoiceTest extends TestCase
                         'max' => $innerElement->getMax(),
                     ];
 
+                    
+
+                    // if($innerElement->getName() == 'InvoiceTypeCode') {
+                    //     $innerElement->ge
+                    // }
                 }
             }
 
@@ -108,6 +205,12 @@ class ROEinvoiceTest extends TestCase
             $elements_array[] = $data;
         }
 
+
+$x = $schema->getType('UBLExtensions');
+
+echo "xx" . PHP_EOL;
+echo $x;
+echo isset($x);
 
         // echo print_r($elements_array);
         // echo json_encode($r);

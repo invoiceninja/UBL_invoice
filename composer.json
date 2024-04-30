@@ -34,7 +34,9 @@
         "greenter/ubl-validator": "^2",
         "phpstan/phpstan": "^1.10",
         "goetas-webservices/xsd-reader": "^0.4.4",
-        "symfony/console": "^6.4"
+        "symfony/console": "^6.4",
+        "milo/schematron": "^1.0",
+        "genkgo/xsl": "^1.3"
     },
 
     "autoload-dev": {
