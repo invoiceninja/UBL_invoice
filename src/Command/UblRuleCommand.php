@@ -29,7 +29,7 @@ final class UblRuleCommand extends Command
     private string $RO_TELEPHONE_REGEX = ''; 
     private array $ISO_3166_RO_CODES = []; 
     private array $SECTOR_RO_CODES = []; 
-
+    private string $yaml_path = "./src/RO/metadata/";
     private array $rules = [];
     /**
      * In this method setup command, description, and its parameters
@@ -48,13 +48,22 @@ final class UblRuleCommand extends Command
 
         $this->document = new \DomDocument();
         $this->document->load($path);
-    
+            
+        $cbc_path = "src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd";
+        $cac_path = "src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd";
+
+        $cbc = new \DomDocument();
+        $cbc->load($cbc_path);
+
+        $cac = new \DomDocument();
+        $cac->load($cac_path);
+
         foreach($schema->getTypes() as $type)
         {
 
             $name = str_replace("Type","", $type->getName());
 
-            $elements = $this->getXpathElements($name);
+            $elements = $this->getXpathElements($this->document, "ccts:ObjectClass");
 
             $data = [];
 
@@ -62,23 +71,27 @@ final class UblRuleCommand extends Command
             {
                 if($element->nodeValue == $name)
                 {
-                   
+                  
+
                     $ee = $element->parentNode->parentNode->parentNode->parentNode;
                     $ref = $ee->getAttribute("ref");
+
+                    if($ref == "cac:Signature") {
+                        continue;
+                    }
 
                     if(strlen($ref ?? '') > 1)
                     {
                         
                         $minOccurs = $ee->getAttribute("minOccurs");
-
                         $maxOccurs = $ee->getAttribute("maxOccurs") == 'unbounded' ? -1 : $ee->getAttribute("maxOccurs");
 
                         $data[] = [
-                            "name" => $ref,
+                            "name" => str_replace(['cbc:','cac:'], "",$ref),
                             "min" => $minOccurs,
                             "max" => $maxOccurs,
-                        ];
-                        
+                            "prefix" => explode(":", $ee->getAttribute('ref'))[0] ?? '',
+                        ];                        
                         
                     }
 
@@ -86,32 +99,129 @@ final class UblRuleCommand extends Command
 
             }
 
+            $child_data = [];
+
             //do this inside out, group by object class, and then iterate through all props that way... simples.
             foreach($data as $type)
             {
-                $element = $this->getElement($type['name']);
-                echo $element->getAttribute("ref")."\n";
 
-                //  echo print_r($element->getAttributeNames());
+                $dom_name = $type['name'];
 
-                foreach($element->childNodes as $key =>$node)
-                {
-                    echo $key . " " .$node->nodeName."\n";
+                $debug = 0;
+
+                try {
+                    $yaml = \Dallgoot\Yaml\Yaml::parseFile("{$this->yaml_path}{$dom_name}Type.yml", 0, $debug);
+                } catch(\Exception $e) {
+                    // echo $e->getMessage();
+                    
+
+//try getting the type
+
+$domdoc = new \DomDocument();
+match($type['prefix']) {
+    'cac' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
+    'cbc' => $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"),
+};
+
+$xpath = new \DOMXPath($domdoc);
+$xtype = $xpath->query('//xsd:element [@name="'.$dom_name.'"]');
+
+if($xtype->count() == 1) {
+    $parent = $xtype->item(0)->getAttribute('type');
+    $yaml = \Dallgoot\Yaml\Yaml::parseFile("{$this->yaml_path}{$parent}.yml", 0, $debug);
+}
+
+
                 }
-                // $object = $element->getAttribute("ccts:ObjectClass");
-                // echo $object."\n";
+               
+                $elements = [];
 
+                foreach($yaml->properties as $key => $value) {
+
+                    if(in_array($key, ["SignatureType","__value"])){
+                        continue;
+                    }
+
+                        $key_namespace = $value->namespace ?? '';
+
+                        // try{
+                            
+                            $min_max = $this->harvestMinMax($type['prefix'].":".$type['name'], $key, $key_namespace);
+                        // }
+                        // catch(\Exception $e){
+
+                        // echo print_r($type);
+                        // exit;
+                        // }
+
+
+                    $elements[] = [
+                        'name' => $value->serialized_name,
+                        'min' => $min_max[0],
+                        'max' => $min_max[1],
+                    ];
+
+                }
+
+                $child_data[] = [
+                    'type' => $dom_name."Type",
+                    'elements' => $elements
+                ];
 
             }
 
-            // echo print_r($data);
+            $data = array_merge($data, $child_data);
+            echo print_r($data);
 
-            exit;
+$elementsString = json_encode($data, JSON_PRETTY_PRINT);
+$fp = fopen("./stubs/tt.json", 'w');
+fwrite($fp, $elementsString);
+fclose($fp);
+
         }
 
 
     }
 
+    private function harvestMinMax(string $prefix, $key, string $key_namespace): array 
+    {
+        
+        $domdoc = new \DomDocument();
+
+        match(explode(":",$prefix)[0]){
+            'cac' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
+            'cbc' => $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"),
+            '' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
+            default => throw new \Exception(" no cac or cbc found in {$prefix}"),
+        };
+
+        if(stripos($key_namespace, "CommonAggregateComponents") !== false){
+            // $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
+            $key = "cac:".ucfirst($key);
+            $parent_prefix = "cac:";
+
+        }
+        elseif(stripos($key_namespace, "CommonBasicComponents") !== false) {
+            // $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd");
+            $key = "cbc:".ucfirst($key);
+            $parent_prefix = "cbc:";
+        }
+
+        $parent = str_replace(["cac:","cbc:"],  "", $prefix)."Type";
+        $xpath = new \DOMXPath($domdoc);
+        $type = $xpath->query('//xsd:element [@name="'.str_replace(["cac:","cbc:"],  "", $prefix).'"]');
+
+        if($type->count() == 1){
+            $parent = $type->item(0)->getAttribute('type');
+        }
+        $val = $xpath->query('//xsd:complexType [@name="'.$parent.'"]//xsd:sequence//xsd:element [@ref="'.$key.'"]');
+
+        if($val->count() == 1)
+            return [$val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs'), $val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs')];
+    
+        throw new \Exception("could not harvest min/max occurance for {$prefix} - {$parent} - {$key}");
+
+    }
     private function getElement(string $name)
     {
         $elements = $this->document->getElementsByTagName("element");
@@ -123,13 +233,13 @@ final class UblRuleCommand extends Command
         }
     }
 
-    private function getXpathElements($path)
+    private function getXpathElements($dom_document, $tagName)
     {
 
-        $xpath = new \DOMXPath($this->document);
+        $xpath = new \DOMXPath($dom_document);
 
         // Define the tag name you want to search for
-        $tagName = "ccts:ObjectClass";
+        // $tagName = "ccts:ObjectClass";
 
         // Define the XPath query to select elements with the specified tag name
         $query = "//{$tagName}";
