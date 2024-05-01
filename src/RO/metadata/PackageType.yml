@@ -1,0 +1,187 @@
+CleverIt\UBL\Invoice\RO\PackageType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: CleverIt\UBL\Invoice\RO\Quantity
+        returnableMaterialIndicator:
+            expose: true
+            access_type: public_method
+            serialized_name: ReturnableMaterialIndicator
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getReturnableMaterialIndicator
+                setter: setReturnableMaterialIndicator
+            type: bool
+        packageLevelCode:
+            expose: true
+            access_type: public_method
+            serialized_name: PackageLevelCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPackageLevelCode
+                setter: setPackageLevelCode
+            type: CleverIt\UBL\Invoice\RO\PackageLevelCode
+        packagingTypeCode:
+            expose: true
+            access_type: public_method
+            serialized_name: PackagingTypeCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPackagingTypeCode
+                setter: setPackagingTypeCode
+            type: CleverIt\UBL\Invoice\RO\PackagingTypeCode
+        packingMaterial:
+            expose: true
+            access_type: public_method
+            serialized_name: PackingMaterial
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPackingMaterial
+                setter: setPackingMaterial
+            xml_list:
+                inline: true
+                entry_name: PackingMaterial
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\PackingMaterial>
+        traceID:
+            expose: true
+            access_type: public_method
+            serialized_name: TraceID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTraceID
+                setter: setTraceID
+            type: CleverIt\UBL\Invoice\RO\TraceID
+        containedPackage:
+            expose: true
+            access_type: public_method
+            serialized_name: ContainedPackage
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getContainedPackage
+                setter: setContainedPackage
+            xml_list:
+                inline: true
+                entry_name: ContainedPackage
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\ContainedPackage>
+        containingTransportEquipment:
+            expose: true
+            access_type: public_method
+            serialized_name: ContainingTransportEquipment
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getContainingTransportEquipment
+                setter: setContainingTransportEquipment
+            type: CleverIt\UBL\Invoice\RO\ContainingTransportEquipment
+        goodsItem:
+            expose: true
+            access_type: public_method
+            serialized_name: GoodsItem
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getGoodsItem
+                setter: setGoodsItem
+            xml_list:
+                inline: true
+                entry_name: GoodsItem
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\GoodsItem>
+        measurementDimension:
+            expose: true
+            access_type: public_method
+            serialized_name: MeasurementDimension
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getMeasurementDimension
+                setter: setMeasurementDimension
+            xml_list:
+                inline: true
+                entry_name: MeasurementDimension
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\MeasurementDimension>
+        deliveryUnit:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryUnit
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeliveryUnit
+                setter: setDeliveryUnit
+            xml_list:
+                inline: true
+                entry_name: DeliveryUnit
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\DeliveryUnit>
+        delivery:
+            expose: true
+            access_type: public_method
+            serialized_name: Delivery
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDelivery
+                setter: setDelivery
+            type: CleverIt\UBL\Invoice\RO\Delivery
+        pickup:
+            expose: true
+            access_type: public_method
+            serialized_name: Pickup
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getPickup
+                setter: setPickup
+            type: CleverIt\UBL\Invoice\RO\Pickup
+        despatch:
+            expose: true
+            access_type: public_method
+            serialized_name: Despatch
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDespatch
+                setter: setDespatch
+            type: CleverIt\UBL\Invoice\RO\Despatch

@@ -1,0 +1,253 @@
+CleverIt\UBL\Invoice\RO\TelecommunicationsServiceType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        callDate:
+            expose: true
+            access_type: public_method
+            serialized_name: CallDate
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCallDate
+                setter: setCallDate
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\Date
+        callTime:
+            expose: true
+            access_type: public_method
+            serialized_name: CallTime
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCallTime
+                setter: setCallTime
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\Time
+        serviceNumberCalled:
+            expose: true
+            access_type: public_method
+            serialized_name: ServiceNumberCalled
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getServiceNumberCalled
+                setter: setServiceNumberCalled
+            type: CleverIt\UBL\Invoice\RO\ServiceNumberCalled
+        telecommunicationsServiceCategory:
+            expose: true
+            access_type: public_method
+            serialized_name: TelecommunicationsServiceCategory
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTelecommunicationsServiceCategory
+                setter: setTelecommunicationsServiceCategory
+            type: CleverIt\UBL\Invoice\RO\TelecommunicationsServiceCategory
+        telecommunicationsServiceCategoryCode:
+            expose: true
+            access_type: public_method
+            serialized_name: TelecommunicationsServiceCategoryCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTelecommunicationsServiceCategoryCode
+                setter: setTelecommunicationsServiceCategoryCode
+            type: CleverIt\UBL\Invoice\RO\TelecommunicationsServiceCategoryCode
+        movieTitle:
+            expose: true
+            access_type: public_method
+            serialized_name: MovieTitle
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMovieTitle
+                setter: setMovieTitle
+            type: CleverIt\UBL\Invoice\RO\MovieTitle
+        roamingPartnerName:
+            expose: true
+            access_type: public_method
+            serialized_name: RoamingPartnerName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getRoamingPartnerName
+                setter: setRoamingPartnerName
+            type: CleverIt\UBL\Invoice\RO\RoamingPartnerName
+        payPerView:
+            expose: true
+            access_type: public_method
+            serialized_name: PayPerView
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPayPerView
+                setter: setPayPerView
+            type: CleverIt\UBL\Invoice\RO\PayPerView
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: CleverIt\UBL\Invoice\RO\Quantity
+        telecommunicationsServiceCall:
+            expose: true
+            access_type: public_method
+            serialized_name: TelecommunicationsServiceCall
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTelecommunicationsServiceCall
+                setter: setTelecommunicationsServiceCall
+            type: CleverIt\UBL\Invoice\RO\TelecommunicationsServiceCall
+        telecommunicationsServiceCallCode:
+            expose: true
+            access_type: public_method
+            serialized_name: TelecommunicationsServiceCallCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTelecommunicationsServiceCallCode
+                setter: setTelecommunicationsServiceCallCode
+            type: CleverIt\UBL\Invoice\RO\TelecommunicationsServiceCallCode
+        callBaseAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: CallBaseAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCallBaseAmount
+                setter: setCallBaseAmount
+            type: CleverIt\UBL\Invoice\RO\CallBaseAmount
+        callExtensionAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: CallExtensionAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCallExtensionAmount
+                setter: setCallExtensionAmount
+            type: CleverIt\UBL\Invoice\RO\CallExtensionAmount
+        price:
+            expose: true
+            access_type: public_method
+            serialized_name: Price
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getPrice
+                setter: setPrice
+            type: CleverIt\UBL\Invoice\RO\Price
+        country:
+            expose: true
+            access_type: public_method
+            serialized_name: Country
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getCountry
+                setter: setCountry
+            type: CleverIt\UBL\Invoice\RO\Country
+        exchangeRate:
+            expose: true
+            access_type: public_method
+            serialized_name: ExchangeRate
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getExchangeRate
+                setter: setExchangeRate
+            xml_list:
+                inline: true
+                entry_name: ExchangeRate
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\ExchangeRate>
+        allowanceCharge:
+            expose: true
+            access_type: public_method
+            serialized_name: AllowanceCharge
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getAllowanceCharge
+                setter: setAllowanceCharge
+            xml_list:
+                inline: true
+                entry_name: AllowanceCharge
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\AllowanceCharge>
+        taxTotal:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxTotal
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTaxTotal
+                setter: setTaxTotal
+            xml_list:
+                inline: true
+                entry_name: TaxTotal
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\TaxTotal>
+        callDuty:
+            expose: true
+            access_type: public_method
+            serialized_name: CallDuty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getCallDuty
+                setter: setCallDuty
+            xml_list:
+                inline: true
+                entry_name: CallDuty
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\CallDuty>
+        timeDuty:
+            expose: true
+            access_type: public_method
+            serialized_name: TimeDuty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTimeDuty
+                setter: setTimeDuty
+            xml_list:
+                inline: true
+                entry_name: TimeDuty
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\TimeDuty>

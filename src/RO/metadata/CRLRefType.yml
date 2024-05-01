@@ -1,0 +1,24 @@
+CleverIt\UBL\Invoice\RO\CRLRefType:
+    properties:
+        digestAlgAndValue:
+            expose: true
+            access_type: public_method
+            serialized_name: DigestAlgAndValue
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getDigestAlgAndValue
+                setter: setDigestAlgAndValue
+            type: CleverIt\UBL\Invoice\RO\DigestAlgAndValueType
+        cRLIdentifier:
+            expose: true
+            access_type: public_method
+            serialized_name: CRLIdentifier
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getCRLIdentifier
+                setter: setCRLIdentifier
+            type: CleverIt\UBL\Invoice\RO\CRLIdentifierType

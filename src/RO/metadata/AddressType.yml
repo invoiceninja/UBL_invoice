@@ -1,0 +1,307 @@
+CleverIt\UBL\Invoice\RO\AddressType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        addressTypeCode:
+            expose: true
+            access_type: public_method
+            serialized_name: AddressTypeCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAddressTypeCode
+                setter: setAddressTypeCode
+            type: CleverIt\UBL\Invoice\RO\AddressTypeCode
+        addressFormatCode:
+            expose: true
+            access_type: public_method
+            serialized_name: AddressFormatCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAddressFormatCode
+                setter: setAddressFormatCode
+            type: CleverIt\UBL\Invoice\RO\AddressFormatCode
+        postbox:
+            expose: true
+            access_type: public_method
+            serialized_name: Postbox
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPostbox
+                setter: setPostbox
+            type: CleverIt\UBL\Invoice\RO\Postbox
+        floor:
+            expose: true
+            access_type: public_method
+            serialized_name: Floor
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getFloor
+                setter: setFloor
+            type: CleverIt\UBL\Invoice\RO\Floor
+        room:
+            expose: true
+            access_type: public_method
+            serialized_name: Room
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getRoom
+                setter: setRoom
+            type: CleverIt\UBL\Invoice\RO\Room
+        streetName:
+            expose: true
+            access_type: public_method
+            serialized_name: StreetName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getStreetName
+                setter: setStreetName
+            type: CleverIt\UBL\Invoice\RO\StreetName
+        additionalStreetName:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalStreetName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAdditionalStreetName
+                setter: setAdditionalStreetName
+            type: CleverIt\UBL\Invoice\RO\AdditionalStreetName
+        blockName:
+            expose: true
+            access_type: public_method
+            serialized_name: BlockName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getBlockName
+                setter: setBlockName
+            type: CleverIt\UBL\Invoice\RO\BlockName
+        buildingName:
+            expose: true
+            access_type: public_method
+            serialized_name: BuildingName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getBuildingName
+                setter: setBuildingName
+            type: CleverIt\UBL\Invoice\RO\BuildingName
+        buildingNumber:
+            expose: true
+            access_type: public_method
+            serialized_name: BuildingNumber
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getBuildingNumber
+                setter: setBuildingNumber
+            type: CleverIt\UBL\Invoice\RO\BuildingNumber
+        inhouseMail:
+            expose: true
+            access_type: public_method
+            serialized_name: InhouseMail
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getInhouseMail
+                setter: setInhouseMail
+            type: CleverIt\UBL\Invoice\RO\InhouseMail
+        department:
+            expose: true
+            access_type: public_method
+            serialized_name: Department
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getDepartment
+                setter: setDepartment
+            type: CleverIt\UBL\Invoice\RO\Department
+        markAttention:
+            expose: true
+            access_type: public_method
+            serialized_name: MarkAttention
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMarkAttention
+                setter: setMarkAttention
+            type: CleverIt\UBL\Invoice\RO\MarkAttention
+        markCare:
+            expose: true
+            access_type: public_method
+            serialized_name: MarkCare
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMarkCare
+                setter: setMarkCare
+            type: CleverIt\UBL\Invoice\RO\MarkCare
+        plotIdentification:
+            expose: true
+            access_type: public_method
+            serialized_name: PlotIdentification
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPlotIdentification
+                setter: setPlotIdentification
+            type: CleverIt\UBL\Invoice\RO\PlotIdentification
+        citySubdivisionName:
+            expose: true
+            access_type: public_method
+            serialized_name: CitySubdivisionName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCitySubdivisionName
+                setter: setCitySubdivisionName
+            type: CleverIt\UBL\Invoice\RO\CitySubdivisionName
+        cityName:
+            expose: true
+            access_type: public_method
+            serialized_name: CityName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCityName
+                setter: setCityName
+            type: CleverIt\UBL\Invoice\RO\CityName
+        postalZone:
+            expose: true
+            access_type: public_method
+            serialized_name: PostalZone
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPostalZone
+                setter: setPostalZone
+            type: CleverIt\UBL\Invoice\RO\PostalZone
+        countrySubentity:
+            expose: true
+            access_type: public_method
+            serialized_name: CountrySubentity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCountrySubentity
+                setter: setCountrySubentity
+            type: CleverIt\UBL\Invoice\RO\CountrySubentity
+        countrySubentityCode:
+            expose: true
+            access_type: public_method
+            serialized_name: CountrySubentityCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCountrySubentityCode
+                setter: setCountrySubentityCode
+            type: CleverIt\UBL\Invoice\RO\CountrySubentityCode
+        region:
+            expose: true
+            access_type: public_method
+            serialized_name: Region
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getRegion
+                setter: setRegion
+            type: CleverIt\UBL\Invoice\RO\Region
+        district:
+            expose: true
+            access_type: public_method
+            serialized_name: District
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getDistrict
+                setter: setDistrict
+            type: CleverIt\UBL\Invoice\RO\District
+        timezoneOffset:
+            expose: true
+            access_type: public_method
+            serialized_name: TimezoneOffset
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTimezoneOffset
+                setter: setTimezoneOffset
+            type: CleverIt\UBL\Invoice\RO\TimezoneOffset
+        addressLine:
+            expose: true
+            access_type: public_method
+            serialized_name: AddressLine
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getAddressLine
+                setter: setAddressLine
+            xml_list:
+                inline: true
+                entry_name: AddressLine
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\AddressLine>
+        country:
+            expose: true
+            access_type: public_method
+            serialized_name: Country
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getCountry
+                setter: setCountry
+            type: CleverIt\UBL\Invoice\RO\Country
+        locationCoordinate:
+            expose: true
+            access_type: public_method
+            serialized_name: LocationCoordinate
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getLocationCoordinate
+                setter: setLocationCoordinate
+            xml_list:
+                inline: true
+                entry_name: LocationCoordinate
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\LocationCoordinate>

@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\ReceiptTransportEvent:
+    xml_root_name: ReceiptTransportEvent
+    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

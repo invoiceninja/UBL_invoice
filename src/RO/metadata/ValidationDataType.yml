@@ -1,0 +1,42 @@
+CleverIt\UBL\Invoice\RO\ValidationDataType:
+    properties:
+        id:
+            expose: true
+            access_type: public_method
+            serialized_name: Id
+            accessor:
+                getter: getId
+                setter: setId
+            xml_attribute: true
+            type: string
+        uR:
+            expose: true
+            access_type: public_method
+            serialized_name: UR
+            accessor:
+                getter: getUR
+                setter: setUR
+            xml_attribute: true
+            type: string
+        certificateValues:
+            expose: true
+            access_type: public_method
+            serialized_name: CertificateValues
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getCertificateValues
+                setter: setCertificateValues
+            type: CleverIt\UBL\Invoice\RO\CertificateValues
+        revocationValues:
+            expose: true
+            access_type: public_method
+            serialized_name: RevocationValues
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getRevocationValues
+                setter: setRevocationValues
+            type: CleverIt\UBL\Invoice\RO\RevocationValues

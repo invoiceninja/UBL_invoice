@@ -1,0 +1,46 @@
+CleverIt\UBL\Invoice\RO\EnergyTaxReportType:
+    properties:
+        taxEnergyAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxEnergyAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTaxEnergyAmount
+                setter: setTaxEnergyAmount
+            type: CleverIt\UBL\Invoice\RO\TaxEnergyAmount
+        taxEnergyOnAccountAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxEnergyOnAccountAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTaxEnergyOnAccountAmount
+                setter: setTaxEnergyOnAccountAmount
+            type: CleverIt\UBL\Invoice\RO\TaxEnergyOnAccountAmount
+        taxEnergyBalanceAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxEnergyBalanceAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTaxEnergyBalanceAmount
+                setter: setTaxEnergyBalanceAmount
+            type: CleverIt\UBL\Invoice\RO\TaxEnergyBalanceAmount
+        taxScheme:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxScheme
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTaxScheme
+                setter: setTaxScheme
+            type: CleverIt\UBL\Invoice\RO\TaxScheme

@@ -1,0 +1,50 @@
+CleverIt\UBL\Invoice\RO\PhysicalAttributeType:
+    properties:
+        attributeID:
+            expose: true
+            access_type: public_method
+            serialized_name: AttributeID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAttributeID
+                setter: setAttributeID
+            type: CleverIt\UBL\Invoice\RO\AttributeID
+        positionCode:
+            expose: true
+            access_type: public_method
+            serialized_name: PositionCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPositionCode
+                setter: setPositionCode
+            type: CleverIt\UBL\Invoice\RO\PositionCode
+        descriptionCode:
+            expose: true
+            access_type: public_method
+            serialized_name: DescriptionCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getDescriptionCode
+                setter: setDescriptionCode
+            type: CleverIt\UBL\Invoice\RO\DescriptionCode
+        description:
+            expose: true
+            access_type: public_method
+            serialized_name: Description
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getDescription
+                setter: setDescription
+            xml_list:
+                inline: true
+                entry_name: Description
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Description>

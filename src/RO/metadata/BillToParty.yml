@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\BillToParty:
+    xml_root_name: BillToParty
+    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

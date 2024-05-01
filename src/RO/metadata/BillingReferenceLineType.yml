@@ -1,0 +1,39 @@
+CleverIt\UBL\Invoice\RO\BillingReferenceLineType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        amount:
+            expose: true
+            access_type: public_method
+            serialized_name: Amount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAmount
+                setter: setAmount
+            type: CleverIt\UBL\Invoice\RO\Amount
+        allowanceCharge:
+            expose: true
+            access_type: public_method
+            serialized_name: AllowanceCharge
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getAllowanceCharge
+                setter: setAllowanceCharge
+            xml_list:
+                inline: true
+                entry_name: AllowanceCharge
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\AllowanceCharge>

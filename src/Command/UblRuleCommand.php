@@ -90,7 +90,12 @@ final class UblRuleCommand extends Command
 
             }
 
+            
             $child_data = [];
+            $child_data[] = [
+                "type" => "InvoiceType",
+                "elements" => $data
+            ];
 
             foreach($data as $k => $type)
             {
@@ -147,14 +152,21 @@ final class UblRuleCommand extends Command
                         'type' => $dom_name."Type",
                         'elements' => $elements
                     ];
-                }
                 
+                }
+
                 unset($data[$k]['prefix']);
+
+            }
+            
+            // $data = array_merge($data, array_values($child_data));
+            foreach($child_data as $keyp => $child){
+                foreach($child['elements'] as $key => $data) {
+                    unset($child_data[$keyp]['elements'][$key]['prefix']);
+                }
             }
 
-            $data = array_merge($data, $child_data);
-
-            $elementsString = json_encode($data, JSON_PRETTY_PRINT);
+            $elementsString = json_encode($child_data, JSON_PRETTY_PRINT);
             $fp = fopen("./stubs/FACT1_Invoice_elements.json", 'w');
             fwrite($fp, $elementsString);
             fclose($fp);

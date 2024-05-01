@@ -1,0 +1,71 @@
+CleverIt\UBL\Invoice\RO\SignedSignaturePropertiesType:
+    properties:
+        id:
+            expose: true
+            access_type: public_method
+            serialized_name: Id
+            accessor:
+                getter: getId
+                setter: setId
+            xml_attribute: true
+            type: string
+        signingTime:
+            expose: true
+            access_type: public_method
+            serialized_name: SigningTime
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSigningTime
+                setter: setSigningTime
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\DateTime
+        signingCertificate:
+            expose: true
+            access_type: public_method
+            serialized_name: SigningCertificate
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSigningCertificate
+                setter: setSigningCertificate
+            type: array<CleverIt\UBL\Invoice\RO\CertIDType>
+            xml_list:
+                inline: false
+                entry_name: Cert
+                skip_when_empty: true
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+        signaturePolicyIdentifier:
+            expose: true
+            access_type: public_method
+            serialized_name: SignaturePolicyIdentifier
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSignaturePolicyIdentifier
+                setter: setSignaturePolicyIdentifier
+            type: CleverIt\UBL\Invoice\RO\SignaturePolicyIdentifierType
+        signatureProductionPlace:
+            expose: true
+            access_type: public_method
+            serialized_name: SignatureProductionPlace
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSignatureProductionPlace
+                setter: setSignatureProductionPlace
+            type: CleverIt\UBL\Invoice\RO\SignatureProductionPlaceType
+        signerRole:
+            expose: true
+            access_type: public_method
+            serialized_name: SignerRole
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSignerRole
+                setter: setSignerRole
+            type: CleverIt\UBL\Invoice\RO\SignerRoleType

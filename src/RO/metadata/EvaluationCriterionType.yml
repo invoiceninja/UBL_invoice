@@ -1,0 +1,102 @@
+CleverIt\UBL\Invoice\RO\EvaluationCriterionType:
+    properties:
+        evaluationCriterionTypeCode:
+            expose: true
+            access_type: public_method
+            serialized_name: EvaluationCriterionTypeCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getEvaluationCriterionTypeCode
+                setter: setEvaluationCriterionTypeCode
+            type: CleverIt\UBL\Invoice\RO\EvaluationCriterionTypeCode
+        description:
+            expose: true
+            access_type: public_method
+            serialized_name: Description
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getDescription
+                setter: setDescription
+            xml_list:
+                inline: true
+                entry_name: Description
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Description>
+        thresholdAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: ThresholdAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getThresholdAmount
+                setter: setThresholdAmount
+            type: CleverIt\UBL\Invoice\RO\ThresholdAmount
+        thresholdQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: ThresholdQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getThresholdQuantity
+                setter: setThresholdQuantity
+            type: CleverIt\UBL\Invoice\RO\ThresholdQuantity
+        expressionCode:
+            expose: true
+            access_type: public_method
+            serialized_name: ExpressionCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getExpressionCode
+                setter: setExpressionCode
+            type: CleverIt\UBL\Invoice\RO\ExpressionCode
+        expression:
+            expose: true
+            access_type: public_method
+            serialized_name: Expression
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getExpression
+                setter: setExpression
+            xml_list:
+                inline: true
+                entry_name: Expression
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Expression>
+        durationPeriod:
+            expose: true
+            access_type: public_method
+            serialized_name: DurationPeriod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDurationPeriod
+                setter: setDurationPeriod
+            type: CleverIt\UBL\Invoice\RO\DurationPeriod
+        suggestedEvidence:
+            expose: true
+            access_type: public_method
+            serialized_name: SuggestedEvidence
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getSuggestedEvidence
+                setter: setSuggestedEvidence
+            xml_list:
+                inline: true
+                entry_name: SuggestedEvidence
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\SuggestedEvidence>

@@ -1,0 +1,176 @@
+CleverIt\UBL\Invoice\RO\QualifyingPartyType:
+    properties:
+        participationPercent:
+            expose: true
+            access_type: public_method
+            serialized_name: ParticipationPercent
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getParticipationPercent
+                setter: setParticipationPercent
+            type: CleverIt\UBL\Invoice\RO\ParticipationPercent
+        personalSituation:
+            expose: true
+            access_type: public_method
+            serialized_name: PersonalSituation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPersonalSituation
+                setter: setPersonalSituation
+            xml_list:
+                inline: true
+                entry_name: PersonalSituation
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\PersonalSituation>
+        operatingYearsQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: OperatingYearsQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getOperatingYearsQuantity
+                setter: setOperatingYearsQuantity
+            type: CleverIt\UBL\Invoice\RO\OperatingYearsQuantity
+        employeeQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: EmployeeQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getEmployeeQuantity
+                setter: setEmployeeQuantity
+            type: CleverIt\UBL\Invoice\RO\EmployeeQuantity
+        businessClassificationEvidenceID:
+            expose: true
+            access_type: public_method
+            serialized_name: BusinessClassificationEvidenceID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getBusinessClassificationEvidenceID
+                setter: setBusinessClassificationEvidenceID
+            type: CleverIt\UBL\Invoice\RO\BusinessClassificationEvidenceID
+        businessIdentityEvidenceID:
+            expose: true
+            access_type: public_method
+            serialized_name: BusinessIdentityEvidenceID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getBusinessIdentityEvidenceID
+                setter: setBusinessIdentityEvidenceID
+            type: CleverIt\UBL\Invoice\RO\BusinessIdentityEvidenceID
+        tendererRoleCode:
+            expose: true
+            access_type: public_method
+            serialized_name: TendererRoleCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTendererRoleCode
+                setter: setTendererRoleCode
+            type: CleverIt\UBL\Invoice\RO\TendererRoleCode
+        businessClassificationScheme:
+            expose: true
+            access_type: public_method
+            serialized_name: BusinessClassificationScheme
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getBusinessClassificationScheme
+                setter: setBusinessClassificationScheme
+            type: CleverIt\UBL\Invoice\RO\BusinessClassificationScheme
+        technicalCapability:
+            expose: true
+            access_type: public_method
+            serialized_name: TechnicalCapability
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTechnicalCapability
+                setter: setTechnicalCapability
+            xml_list:
+                inline: true
+                entry_name: TechnicalCapability
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\TechnicalCapability>
+        financialCapability:
+            expose: true
+            access_type: public_method
+            serialized_name: FinancialCapability
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getFinancialCapability
+                setter: setFinancialCapability
+            xml_list:
+                inline: true
+                entry_name: FinancialCapability
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\FinancialCapability>
+        completedTask:
+            expose: true
+            access_type: public_method
+            serialized_name: CompletedTask
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getCompletedTask
+                setter: setCompletedTask
+            xml_list:
+                inline: true
+                entry_name: CompletedTask
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\CompletedTask>
+        declaration:
+            expose: true
+            access_type: public_method
+            serialized_name: Declaration
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeclaration
+                setter: setDeclaration
+            xml_list:
+                inline: true
+                entry_name: Declaration
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Declaration>
+        party:
+            expose: true
+            access_type: public_method
+            serialized_name: Party
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getParty
+                setter: setParty
+            type: CleverIt\UBL\Invoice\RO\Party
+        economicOperatorRole:
+            expose: true
+            access_type: public_method
+            serialized_name: EconomicOperatorRole
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getEconomicOperatorRole
+                setter: setEconomicOperatorRole
+            type: CleverIt\UBL\Invoice\RO\EconomicOperatorRole

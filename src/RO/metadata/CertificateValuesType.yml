@@ -1,0 +1,33 @@
+CleverIt\UBL\Invoice\RO\CertificateValuesType:
+    properties:
+        id:
+            expose: true
+            access_type: public_method
+            serialized_name: Id
+            accessor:
+                getter: getId
+                setter: setId
+            xml_attribute: true
+            type: string
+        encapsulatedX509Certificate:
+            expose: true
+            access_type: public_method
+            serialized_name: EncapsulatedX509Certificate
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getEncapsulatedX509Certificate
+                setter: setEncapsulatedX509Certificate
+            type: CleverIt\UBL\Invoice\RO\EncapsulatedPKIDataType
+        otherCertificate:
+            expose: true
+            access_type: public_method
+            serialized_name: OtherCertificate
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getOtherCertificate
+                setter: setOtherCertificate
+            type: CleverIt\UBL\Invoice\RO\AnyType

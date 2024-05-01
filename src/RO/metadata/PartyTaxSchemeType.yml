@@ -1,0 +1,83 @@
+CleverIt\UBL\Invoice\RO\PartyTaxSchemeType:
+    properties:
+        registrationName:
+            expose: true
+            access_type: public_method
+            serialized_name: RegistrationName
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getRegistrationName
+                setter: setRegistrationName
+            type: CleverIt\UBL\Invoice\RO\RegistrationName
+        companyID:
+            expose: true
+            access_type: public_method
+            serialized_name: CompanyID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCompanyID
+                setter: setCompanyID
+            type: CleverIt\UBL\Invoice\RO\CompanyID
+        taxLevelCode:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxLevelCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTaxLevelCode
+                setter: setTaxLevelCode
+            type: CleverIt\UBL\Invoice\RO\TaxLevelCode
+        exemptionReasonCode:
+            expose: true
+            access_type: public_method
+            serialized_name: ExemptionReasonCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getExemptionReasonCode
+                setter: setExemptionReasonCode
+            type: CleverIt\UBL\Invoice\RO\ExemptionReasonCode
+        exemptionReason:
+            expose: true
+            access_type: public_method
+            serialized_name: ExemptionReason
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getExemptionReason
+                setter: setExemptionReason
+            xml_list:
+                inline: true
+                entry_name: ExemptionReason
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\ExemptionReason>
+        registrationAddress:
+            expose: true
+            access_type: public_method
+            serialized_name: RegistrationAddress
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getRegistrationAddress
+                setter: setRegistrationAddress
+            type: CleverIt\UBL\Invoice\RO\RegistrationAddress
+        taxScheme:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxScheme
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTaxScheme
+                setter: setTaxScheme
+            type: CleverIt\UBL\Invoice\RO\TaxScheme

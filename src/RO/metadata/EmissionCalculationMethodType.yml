@@ -1,0 +1,46 @@
+CleverIt\UBL\Invoice\RO\EmissionCalculationMethodType:
+    properties:
+        calculationMethodCode:
+            expose: true
+            access_type: public_method
+            serialized_name: CalculationMethodCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCalculationMethodCode
+                setter: setCalculationMethodCode
+            type: CleverIt\UBL\Invoice\RO\CalculationMethodCode
+        fullnessIndicationCode:
+            expose: true
+            access_type: public_method
+            serialized_name: FullnessIndicationCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getFullnessIndicationCode
+                setter: setFullnessIndicationCode
+            type: CleverIt\UBL\Invoice\RO\FullnessIndicationCode
+        measurementFromLocation:
+            expose: true
+            access_type: public_method
+            serialized_name: MeasurementFromLocation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getMeasurementFromLocation
+                setter: setMeasurementFromLocation
+            type: CleverIt\UBL\Invoice\RO\MeasurementFromLocation
+        measurementToLocation:
+            expose: true
+            access_type: public_method
+            serialized_name: MeasurementToLocation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getMeasurementToLocation
+                setter: setMeasurementToLocation
+            type: CleverIt\UBL\Invoice\RO\MeasurementToLocation

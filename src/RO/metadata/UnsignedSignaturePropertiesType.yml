@@ -1,0 +1,154 @@
+CleverIt\UBL\Invoice\RO\UnsignedSignaturePropertiesType:
+    properties:
+        id:
+            expose: true
+            access_type: public_method
+            serialized_name: Id
+            accessor:
+                getter: getId
+                setter: setId
+            xml_attribute: true
+            type: string
+        counterSignature:
+            expose: true
+            access_type: public_method
+            serialized_name: CounterSignature
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getCounterSignature
+                setter: setCounterSignature
+            type: CleverIt\UBL\Invoice\RO\CounterSignatureType
+        signatureTimeStamp:
+            expose: true
+            access_type: public_method
+            serialized_name: SignatureTimeStamp
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSignatureTimeStamp
+                setter: setSignatureTimeStamp
+            type: CleverIt\UBL\Invoice\RO\XAdESTimeStampType
+        completeCertificateRefs:
+            expose: true
+            access_type: public_method
+            serialized_name: CompleteCertificateRefs
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getCompleteCertificateRefs
+                setter: setCompleteCertificateRefs
+            type: CleverIt\UBL\Invoice\RO\CompleteCertificateRefsType
+        completeRevocationRefs:
+            expose: true
+            access_type: public_method
+            serialized_name: CompleteRevocationRefs
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getCompleteRevocationRefs
+                setter: setCompleteRevocationRefs
+            type: CleverIt\UBL\Invoice\RO\CompleteRevocationRefsType
+        attributeCertificateRefs:
+            expose: true
+            access_type: public_method
+            serialized_name: AttributeCertificateRefs
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getAttributeCertificateRefs
+                setter: setAttributeCertificateRefs
+            type: CleverIt\UBL\Invoice\RO\CompleteCertificateRefsType
+        attributeRevocationRefs:
+            expose: true
+            access_type: public_method
+            serialized_name: AttributeRevocationRefs
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getAttributeRevocationRefs
+                setter: setAttributeRevocationRefs
+            type: CleverIt\UBL\Invoice\RO\CompleteRevocationRefsType
+        sigAndRefsTimeStamp:
+            expose: true
+            access_type: public_method
+            serialized_name: SigAndRefsTimeStamp
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getSigAndRefsTimeStamp
+                setter: setSigAndRefsTimeStamp
+            type: CleverIt\UBL\Invoice\RO\XAdESTimeStampType
+        refsOnlyTimeStamp:
+            expose: true
+            access_type: public_method
+            serialized_name: RefsOnlyTimeStamp
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getRefsOnlyTimeStamp
+                setter: setRefsOnlyTimeStamp
+            type: CleverIt\UBL\Invoice\RO\XAdESTimeStampType
+        certificateValues:
+            expose: true
+            access_type: public_method
+            serialized_name: CertificateValues
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getCertificateValues
+                setter: setCertificateValues
+            type: CleverIt\UBL\Invoice\RO\CertificateValuesType
+        revocationValues:
+            expose: true
+            access_type: public_method
+            serialized_name: RevocationValues
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getRevocationValues
+                setter: setRevocationValues
+            type: CleverIt\UBL\Invoice\RO\RevocationValuesType
+        attrAuthoritiesCertValues:
+            expose: true
+            access_type: public_method
+            serialized_name: AttrAuthoritiesCertValues
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getAttrAuthoritiesCertValues
+                setter: setAttrAuthoritiesCertValues
+            type: CleverIt\UBL\Invoice\RO\CertificateValuesType
+        attributeRevocationValues:
+            expose: true
+            access_type: public_method
+            serialized_name: AttributeRevocationValues
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getAttributeRevocationValues
+                setter: setAttributeRevocationValues
+            type: CleverIt\UBL\Invoice\RO\RevocationValuesType
+        archiveTimeStamp:
+            expose: true
+            access_type: public_method
+            serialized_name: ArchiveTimeStamp
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getArchiveTimeStamp
+                setter: setArchiveTimeStamp
+            type: CleverIt\UBL\Invoice\RO\XAdESTimeStampType

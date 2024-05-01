@@ -1,0 +1,17 @@
+CleverIt\UBL\Invoice\RO\UBLDocumentSignaturesType:
+    properties:
+        signatureInformation:
+            expose: true
+            access_type: public_method
+            serialized_name: SignatureInformation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2'
+            accessor:
+                getter: getSignatureInformation
+                setter: setSignatureInformation
+            xml_list:
+                inline: true
+                entry_name: SignatureInformation
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\SignatureInformation>

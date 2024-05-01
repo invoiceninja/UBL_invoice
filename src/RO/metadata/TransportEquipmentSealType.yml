@@ -1,0 +1,57 @@
+CleverIt\UBL\Invoice\RO\TransportEquipmentSealType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        sealIssuerTypeCode:
+            expose: true
+            access_type: public_method
+            serialized_name: SealIssuerTypeCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getSealIssuerTypeCode
+                setter: setSealIssuerTypeCode
+            type: CleverIt\UBL\Invoice\RO\SealIssuerTypeCode
+        condition:
+            expose: true
+            access_type: public_method
+            serialized_name: Condition
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCondition
+                setter: setCondition
+            type: CleverIt\UBL\Invoice\RO\Condition
+        sealStatusCode:
+            expose: true
+            access_type: public_method
+            serialized_name: SealStatusCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getSealStatusCode
+                setter: setSealStatusCode
+            type: CleverIt\UBL\Invoice\RO\SealStatusCode
+        sealingPartyType:
+            expose: true
+            access_type: public_method
+            serialized_name: SealingPartyType
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getSealingPartyType
+                setter: setSealingPartyType
+            type: CleverIt\UBL\Invoice\RO\SealingPartyType

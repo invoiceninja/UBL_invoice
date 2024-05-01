@@ -1,0 +1,274 @@
+CleverIt\UBL\Invoice\RO\DeliveryType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: CleverIt\UBL\Invoice\RO\Quantity
+        minimumQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: MinimumQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMinimumQuantity
+                setter: setMinimumQuantity
+            type: CleverIt\UBL\Invoice\RO\MinimumQuantity
+        maximumQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: MaximumQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMaximumQuantity
+                setter: setMaximumQuantity
+            type: CleverIt\UBL\Invoice\RO\MaximumQuantity
+        actualDeliveryDate:
+            expose: true
+            access_type: public_method
+            serialized_name: ActualDeliveryDate
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getActualDeliveryDate
+                setter: setActualDeliveryDate
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\Date
+        actualDeliveryTime:
+            expose: true
+            access_type: public_method
+            serialized_name: ActualDeliveryTime
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getActualDeliveryTime
+                setter: setActualDeliveryTime
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\Time
+        latestDeliveryDate:
+            expose: true
+            access_type: public_method
+            serialized_name: LatestDeliveryDate
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLatestDeliveryDate
+                setter: setLatestDeliveryDate
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\Date
+        latestDeliveryTime:
+            expose: true
+            access_type: public_method
+            serialized_name: LatestDeliveryTime
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLatestDeliveryTime
+                setter: setLatestDeliveryTime
+            type: GoetasWebservices\Xsd\XsdToPhp\XMLSchema\Time
+        releaseID:
+            expose: true
+            access_type: public_method
+            serialized_name: ReleaseID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getReleaseID
+                setter: setReleaseID
+            type: CleverIt\UBL\Invoice\RO\ReleaseID
+        trackingID:
+            expose: true
+            access_type: public_method
+            serialized_name: TrackingID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTrackingID
+                setter: setTrackingID
+            type: CleverIt\UBL\Invoice\RO\TrackingID
+        deliveryAddress:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryAddress
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeliveryAddress
+                setter: setDeliveryAddress
+            type: CleverIt\UBL\Invoice\RO\DeliveryAddress
+        deliveryLocation:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryLocation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeliveryLocation
+                setter: setDeliveryLocation
+            type: CleverIt\UBL\Invoice\RO\DeliveryLocation
+        alternativeDeliveryLocation:
+            expose: true
+            access_type: public_method
+            serialized_name: AlternativeDeliveryLocation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getAlternativeDeliveryLocation
+                setter: setAlternativeDeliveryLocation
+            type: CleverIt\UBL\Invoice\RO\AlternativeDeliveryLocation
+        requestedDeliveryPeriod:
+            expose: true
+            access_type: public_method
+            serialized_name: RequestedDeliveryPeriod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getRequestedDeliveryPeriod
+                setter: setRequestedDeliveryPeriod
+            type: CleverIt\UBL\Invoice\RO\RequestedDeliveryPeriod
+        promisedDeliveryPeriod:
+            expose: true
+            access_type: public_method
+            serialized_name: PromisedDeliveryPeriod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getPromisedDeliveryPeriod
+                setter: setPromisedDeliveryPeriod
+            type: CleverIt\UBL\Invoice\RO\PromisedDeliveryPeriod
+        estimatedDeliveryPeriod:
+            expose: true
+            access_type: public_method
+            serialized_name: EstimatedDeliveryPeriod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getEstimatedDeliveryPeriod
+                setter: setEstimatedDeliveryPeriod
+            type: CleverIt\UBL\Invoice\RO\EstimatedDeliveryPeriod
+        carrierParty:
+            expose: true
+            access_type: public_method
+            serialized_name: CarrierParty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getCarrierParty
+                setter: setCarrierParty
+            type: CleverIt\UBL\Invoice\RO\CarrierParty
+        deliveryParty:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryParty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeliveryParty
+                setter: setDeliveryParty
+            type: CleverIt\UBL\Invoice\RO\DeliveryParty
+        notifyParty:
+            expose: true
+            access_type: public_method
+            serialized_name: NotifyParty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getNotifyParty
+                setter: setNotifyParty
+            xml_list:
+                inline: true
+                entry_name: NotifyParty
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\NotifyParty>
+        despatch:
+            expose: true
+            access_type: public_method
+            serialized_name: Despatch
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDespatch
+                setter: setDespatch
+            type: CleverIt\UBL\Invoice\RO\Despatch
+        deliveryTerms:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryTerms
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeliveryTerms
+                setter: setDeliveryTerms
+            xml_list:
+                inline: true
+                entry_name: DeliveryTerms
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\DeliveryTerms>
+        minimumDeliveryUnit:
+            expose: true
+            access_type: public_method
+            serialized_name: MinimumDeliveryUnit
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getMinimumDeliveryUnit
+                setter: setMinimumDeliveryUnit
+            type: CleverIt\UBL\Invoice\RO\MinimumDeliveryUnit
+        maximumDeliveryUnit:
+            expose: true
+            access_type: public_method
+            serialized_name: MaximumDeliveryUnit
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getMaximumDeliveryUnit
+                setter: setMaximumDeliveryUnit
+            type: CleverIt\UBL\Invoice\RO\MaximumDeliveryUnit
+        shipment:
+            expose: true
+            access_type: public_method
+            serialized_name: Shipment
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getShipment
+                setter: setShipment
+            type: CleverIt\UBL\Invoice\RO\Shipment

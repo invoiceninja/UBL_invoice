@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\GuaranteeDocumentReference:
+    xml_root_name: GuaranteeDocumentReference
+    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

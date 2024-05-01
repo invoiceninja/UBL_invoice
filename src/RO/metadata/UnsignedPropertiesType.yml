@@ -1,0 +1,33 @@
+CleverIt\UBL\Invoice\RO\UnsignedPropertiesType:
+    properties:
+        id:
+            expose: true
+            access_type: public_method
+            serialized_name: Id
+            accessor:
+                getter: getId
+                setter: setId
+            xml_attribute: true
+            type: string
+        unsignedSignatureProperties:
+            expose: true
+            access_type: public_method
+            serialized_name: UnsignedSignatureProperties
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getUnsignedSignatureProperties
+                setter: setUnsignedSignatureProperties
+            type: CleverIt\UBL\Invoice\RO\UnsignedSignaturePropertiesType
+        unsignedDataObjectProperties:
+            expose: true
+            access_type: public_method
+            serialized_name: UnsignedDataObjectProperties
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getUnsignedDataObjectProperties
+                setter: setUnsignedDataObjectProperties
+            type: CleverIt\UBL\Invoice\RO\UnsignedDataObjectPropertiesType

@@ -1,0 +1,35 @@
+CleverIt\UBL\Invoice\RO\ProcurementProjectLotType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        tenderingTerms:
+            expose: true
+            access_type: public_method
+            serialized_name: TenderingTerms
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTenderingTerms
+                setter: setTenderingTerms
+            type: CleverIt\UBL\Invoice\RO\TenderingTerms
+        procurementProject:
+            expose: true
+            access_type: public_method
+            serialized_name: ProcurementProject
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getProcurementProject
+                setter: setProcurementProject
+            type: CleverIt\UBL\Invoice\RO\ProcurementProject

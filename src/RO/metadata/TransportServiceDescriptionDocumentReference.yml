@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\TransportServiceDescriptionDocumentReference:
+    xml_root_name: TransportServiceDescriptionDocumentReference
+    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

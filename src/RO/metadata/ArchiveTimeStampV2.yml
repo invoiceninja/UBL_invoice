@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\ArchiveTimeStampV2:
+    xml_root_name: ArchiveTimeStampV2
+    xml_root_namespace: 'http://uri.etsi.org/01903/v1.4.1#'
+    namespace: 'http://uri.etsi.org/01903/v1.4.1#'

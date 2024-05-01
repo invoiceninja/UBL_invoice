@@ -1,0 +1,157 @@
+CleverIt\UBL\Invoice\RO\ItemPropertyType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        name:
+            expose: true
+            access_type: public_method
+            serialized_name: Name
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getName
+                setter: setName
+            type: CleverIt\UBL\Invoice\RO\Name
+        nameCode:
+            expose: true
+            access_type: public_method
+            serialized_name: NameCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getNameCode
+                setter: setNameCode
+            type: CleverIt\UBL\Invoice\RO\NameCode
+        testMethod:
+            expose: true
+            access_type: public_method
+            serialized_name: TestMethod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTestMethod
+                setter: setTestMethod
+            type: CleverIt\UBL\Invoice\RO\TestMethod
+        value:
+            expose: true
+            access_type: public_method
+            serialized_name: Value
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getValue
+                setter: setValue
+            type: CleverIt\UBL\Invoice\RO\Value
+        valueQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: ValueQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getValueQuantity
+                setter: setValueQuantity
+            type: CleverIt\UBL\Invoice\RO\ValueQuantity
+        valueQualifier:
+            expose: true
+            access_type: public_method
+            serialized_name: ValueQualifier
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getValueQualifier
+                setter: setValueQualifier
+            xml_list:
+                inline: true
+                entry_name: ValueQualifier
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\ValueQualifier>
+        importanceCode:
+            expose: true
+            access_type: public_method
+            serialized_name: ImportanceCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getImportanceCode
+                setter: setImportanceCode
+            type: CleverIt\UBL\Invoice\RO\ImportanceCode
+        listValue:
+            expose: true
+            access_type: public_method
+            serialized_name: ListValue
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getListValue
+                setter: setListValue
+            xml_list:
+                inline: true
+                entry_name: ListValue
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\ListValue>
+        usabilityPeriod:
+            expose: true
+            access_type: public_method
+            serialized_name: UsabilityPeriod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getUsabilityPeriod
+                setter: setUsabilityPeriod
+            type: CleverIt\UBL\Invoice\RO\UsabilityPeriod
+        itemPropertyGroup:
+            expose: true
+            access_type: public_method
+            serialized_name: ItemPropertyGroup
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getItemPropertyGroup
+                setter: setItemPropertyGroup
+            xml_list:
+                inline: true
+                entry_name: ItemPropertyGroup
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\ItemPropertyGroup>
+        rangeDimension:
+            expose: true
+            access_type: public_method
+            serialized_name: RangeDimension
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getRangeDimension
+                setter: setRangeDimension
+            type: CleverIt\UBL\Invoice\RO\RangeDimension
+        itemPropertyRange:
+            expose: true
+            access_type: public_method
+            serialized_name: ItemPropertyRange
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getItemPropertyRange
+                setter: setItemPropertyRange
+            type: CleverIt\UBL\Invoice\RO\ItemPropertyRange

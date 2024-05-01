@@ -1,0 +1,29 @@
+CleverIt\UBL\Invoice\RO\NoticeReferenceType:
+    properties:
+        organization:
+            expose: true
+            access_type: public_method
+            serialized_name: Organization
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getOrganization
+                setter: setOrganization
+            type: string
+        noticeNumbers:
+            expose: true
+            access_type: public_method
+            serialized_name: NoticeNumbers
+            xml_element:
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            namespace: 'http://uri.etsi.org/01903/v1.3.2#'
+            accessor:
+                getter: getNoticeNumbers
+                setter: setNoticeNumbers
+            type: array<int>
+            xml_list:
+                inline: false
+                entry_name: int
+                skip_when_empty: false
+                namespace: 'http://uri.etsi.org/01903/v1.3.2#'

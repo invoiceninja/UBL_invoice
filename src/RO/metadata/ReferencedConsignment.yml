@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\ReferencedConsignment:
+    xml_root_name: ReferencedConsignment
+    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

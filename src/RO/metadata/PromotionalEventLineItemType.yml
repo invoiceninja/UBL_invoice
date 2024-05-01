@@ -1,0 +1,24 @@
+CleverIt\UBL\Invoice\RO\PromotionalEventLineItemType:
+    properties:
+        amount:
+            expose: true
+            access_type: public_method
+            serialized_name: Amount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAmount
+                setter: setAmount
+            type: CleverIt\UBL\Invoice\RO\Amount
+        eventLineItem:
+            expose: true
+            access_type: public_method
+            serialized_name: EventLineItem
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getEventLineItem
+                setter: setEventLineItem
+            type: CleverIt\UBL\Invoice\RO\EventLineItem

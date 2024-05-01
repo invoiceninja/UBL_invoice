@@ -1,0 +1,35 @@
+CleverIt\UBL\Invoice\RO\FinancialInstitutionType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        name:
+            expose: true
+            access_type: public_method
+            serialized_name: Name
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getName
+                setter: setName
+            type: CleverIt\UBL\Invoice\RO\Name
+        address:
+            expose: true
+            access_type: public_method
+            serialized_name: Address
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getAddress
+                setter: setAddress
+            type: CleverIt\UBL\Invoice\RO\Address

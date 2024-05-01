@@ -1,0 +1,386 @@
+CleverIt\UBL\Invoice\RO\LineItemType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        salesOrderID:
+            expose: true
+            access_type: public_method
+            serialized_name: SalesOrderID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getSalesOrderID
+                setter: setSalesOrderID
+            type: CleverIt\UBL\Invoice\RO\SalesOrderID
+        uUID:
+            expose: true
+            access_type: public_method
+            serialized_name: UUID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getUUID
+                setter: setUUID
+            type: CleverIt\UBL\Invoice\RO\UUID
+        note:
+            expose: true
+            access_type: public_method
+            serialized_name: Note
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getNote
+                setter: setNote
+            xml_list:
+                inline: true
+                entry_name: Note
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Note>
+        lineStatusCode:
+            expose: true
+            access_type: public_method
+            serialized_name: LineStatusCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLineStatusCode
+                setter: setLineStatusCode
+            type: CleverIt\UBL\Invoice\RO\LineStatusCode
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: CleverIt\UBL\Invoice\RO\Quantity
+        lineExtensionAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: LineExtensionAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLineExtensionAmount
+                setter: setLineExtensionAmount
+            type: CleverIt\UBL\Invoice\RO\LineExtensionAmount
+        totalTaxAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TotalTaxAmount
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTotalTaxAmount
+                setter: setTotalTaxAmount
+            type: CleverIt\UBL\Invoice\RO\TotalTaxAmount
+        minimumQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: MinimumQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMinimumQuantity
+                setter: setMinimumQuantity
+            type: CleverIt\UBL\Invoice\RO\MinimumQuantity
+        maximumQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: MaximumQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMaximumQuantity
+                setter: setMaximumQuantity
+            type: CleverIt\UBL\Invoice\RO\MaximumQuantity
+        minimumBackorderQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: MinimumBackorderQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMinimumBackorderQuantity
+                setter: setMinimumBackorderQuantity
+            type: CleverIt\UBL\Invoice\RO\MinimumBackorderQuantity
+        maximumBackorderQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: MaximumBackorderQuantity
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getMaximumBackorderQuantity
+                setter: setMaximumBackorderQuantity
+            type: CleverIt\UBL\Invoice\RO\MaximumBackorderQuantity
+        inspectionMethodCode:
+            expose: true
+            access_type: public_method
+            serialized_name: InspectionMethodCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getInspectionMethodCode
+                setter: setInspectionMethodCode
+            type: CleverIt\UBL\Invoice\RO\InspectionMethodCode
+        partialDeliveryIndicator:
+            expose: true
+            access_type: public_method
+            serialized_name: PartialDeliveryIndicator
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPartialDeliveryIndicator
+                setter: setPartialDeliveryIndicator
+            type: bool
+        backOrderAllowedIndicator:
+            expose: true
+            access_type: public_method
+            serialized_name: BackOrderAllowedIndicator
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getBackOrderAllowedIndicator
+                setter: setBackOrderAllowedIndicator
+            type: bool
+        accountingCostCode:
+            expose: true
+            access_type: public_method
+            serialized_name: AccountingCostCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAccountingCostCode
+                setter: setAccountingCostCode
+            type: CleverIt\UBL\Invoice\RO\AccountingCostCode
+        accountingCost:
+            expose: true
+            access_type: public_method
+            serialized_name: AccountingCost
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAccountingCost
+                setter: setAccountingCost
+            type: CleverIt\UBL\Invoice\RO\AccountingCost
+        warrantyInformation:
+            expose: true
+            access_type: public_method
+            serialized_name: WarrantyInformation
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getWarrantyInformation
+                setter: setWarrantyInformation
+            xml_list:
+                inline: true
+                entry_name: WarrantyInformation
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\WarrantyInformation>
+        delivery:
+            expose: true
+            access_type: public_method
+            serialized_name: Delivery
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDelivery
+                setter: setDelivery
+            xml_list:
+                inline: true
+                entry_name: Delivery
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Delivery>
+        deliveryTerms:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryTerms
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getDeliveryTerms
+                setter: setDeliveryTerms
+            type: CleverIt\UBL\Invoice\RO\DeliveryTerms
+        originatorParty:
+            expose: true
+            access_type: public_method
+            serialized_name: OriginatorParty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getOriginatorParty
+                setter: setOriginatorParty
+            type: CleverIt\UBL\Invoice\RO\OriginatorParty
+        orderedShipment:
+            expose: true
+            access_type: public_method
+            serialized_name: OrderedShipment
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getOrderedShipment
+                setter: setOrderedShipment
+            xml_list:
+                inline: true
+                entry_name: OrderedShipment
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\OrderedShipment>
+        pricingReference:
+            expose: true
+            access_type: public_method
+            serialized_name: PricingReference
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getPricingReference
+                setter: setPricingReference
+            type: CleverIt\UBL\Invoice\RO\PricingReference
+        allowanceCharge:
+            expose: true
+            access_type: public_method
+            serialized_name: AllowanceCharge
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getAllowanceCharge
+                setter: setAllowanceCharge
+            xml_list:
+                inline: true
+                entry_name: AllowanceCharge
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\AllowanceCharge>
+        price:
+            expose: true
+            access_type: public_method
+            serialized_name: Price
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getPrice
+                setter: setPrice
+            type: CleverIt\UBL\Invoice\RO\Price
+        item:
+            expose: true
+            access_type: public_method
+            serialized_name: Item
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getItem
+                setter: setItem
+            type: CleverIt\UBL\Invoice\RO\Item
+        subLineItem:
+            expose: true
+            access_type: public_method
+            serialized_name: SubLineItem
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getSubLineItem
+                setter: setSubLineItem
+            xml_list:
+                inline: true
+                entry_name: SubLineItem
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\SubLineItem>
+        warrantyValidityPeriod:
+            expose: true
+            access_type: public_method
+            serialized_name: WarrantyValidityPeriod
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getWarrantyValidityPeriod
+                setter: setWarrantyValidityPeriod
+            type: CleverIt\UBL\Invoice\RO\WarrantyValidityPeriod
+        warrantyParty:
+            expose: true
+            access_type: public_method
+            serialized_name: WarrantyParty
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getWarrantyParty
+                setter: setWarrantyParty
+            type: CleverIt\UBL\Invoice\RO\WarrantyParty
+        taxTotal:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxTotal
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getTaxTotal
+                setter: setTaxTotal
+            xml_list:
+                inline: true
+                entry_name: TaxTotal
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\TaxTotal>
+        itemPriceExtension:
+            expose: true
+            access_type: public_method
+            serialized_name: ItemPriceExtension
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getItemPriceExtension
+                setter: setItemPriceExtension
+            type: CleverIt\UBL\Invoice\RO\ItemPriceExtension
+        lineReference:
+            expose: true
+            access_type: public_method
+            serialized_name: LineReference
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getLineReference
+                setter: setLineReference
+            xml_list:
+                inline: true
+                entry_name: LineReference
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\LineReference>

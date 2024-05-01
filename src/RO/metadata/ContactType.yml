@@ -1,0 +1,87 @@
+CleverIt\UBL\Invoice\RO\ContactType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        name:
+            expose: true
+            access_type: public_method
+            serialized_name: Name
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getName
+                setter: setName
+            type: CleverIt\UBL\Invoice\RO\Name
+        telephone:
+            expose: true
+            access_type: public_method
+            serialized_name: Telephone
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTelephone
+                setter: setTelephone
+            type: CleverIt\UBL\Invoice\RO\Telephone
+        telefax:
+            expose: true
+            access_type: public_method
+            serialized_name: Telefax
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTelefax
+                setter: setTelefax
+            type: CleverIt\UBL\Invoice\RO\Telefax
+        electronicMail:
+            expose: true
+            access_type: public_method
+            serialized_name: ElectronicMail
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getElectronicMail
+                setter: setElectronicMail
+            type: CleverIt\UBL\Invoice\RO\ElectronicMail
+        note:
+            expose: true
+            access_type: public_method
+            serialized_name: Note
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getNote
+                setter: setNote
+            xml_list:
+                inline: true
+                entry_name: Note
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\Note>
+        otherCommunication:
+            expose: true
+            access_type: public_method
+            serialized_name: OtherCommunication
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getOtherCommunication
+                setter: setOtherCommunication
+            xml_list:
+                inline: true
+                entry_name: OtherCommunication
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\OtherCommunication>

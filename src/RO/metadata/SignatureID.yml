@@ -1,0 +1,4 @@
+CleverIt\UBL\Invoice\RO\SignatureID:
+    xml_root_name: SignatureID
+    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'

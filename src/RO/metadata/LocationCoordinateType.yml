@@ -1,0 +1,90 @@
+CleverIt\UBL\Invoice\RO\LocationCoordinateType:
+    properties:
+        coordinateSystemCode:
+            expose: true
+            access_type: public_method
+            serialized_name: CoordinateSystemCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCoordinateSystemCode
+                setter: setCoordinateSystemCode
+            type: CleverIt\UBL\Invoice\RO\CoordinateSystemCode
+        latitudeDegreesMeasure:
+            expose: true
+            access_type: public_method
+            serialized_name: LatitudeDegreesMeasure
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLatitudeDegreesMeasure
+                setter: setLatitudeDegreesMeasure
+            type: CleverIt\UBL\Invoice\RO\LatitudeDegreesMeasure
+        latitudeMinutesMeasure:
+            expose: true
+            access_type: public_method
+            serialized_name: LatitudeMinutesMeasure
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLatitudeMinutesMeasure
+                setter: setLatitudeMinutesMeasure
+            type: CleverIt\UBL\Invoice\RO\LatitudeMinutesMeasure
+        latitudeDirectionCode:
+            expose: true
+            access_type: public_method
+            serialized_name: LatitudeDirectionCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLatitudeDirectionCode
+                setter: setLatitudeDirectionCode
+            type: CleverIt\UBL\Invoice\RO\LatitudeDirectionCode
+        longitudeDegreesMeasure:
+            expose: true
+            access_type: public_method
+            serialized_name: LongitudeDegreesMeasure
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLongitudeDegreesMeasure
+                setter: setLongitudeDegreesMeasure
+            type: CleverIt\UBL\Invoice\RO\LongitudeDegreesMeasure
+        longitudeMinutesMeasure:
+            expose: true
+            access_type: public_method
+            serialized_name: LongitudeMinutesMeasure
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLongitudeMinutesMeasure
+                setter: setLongitudeMinutesMeasure
+            type: CleverIt\UBL\Invoice\RO\LongitudeMinutesMeasure
+        longitudeDirectionCode:
+            expose: true
+            access_type: public_method
+            serialized_name: LongitudeDirectionCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getLongitudeDirectionCode
+                setter: setLongitudeDirectionCode
+            type: CleverIt\UBL\Invoice\RO\LongitudeDirectionCode
+        altitudeMeasure:
+            expose: true
+            access_type: public_method
+            serialized_name: AltitudeMeasure
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getAltitudeMeasure
+                setter: setAltitudeMeasure
+            type: CleverIt\UBL\Invoice\RO\AltitudeMeasure

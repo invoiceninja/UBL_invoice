@@ -1,0 +1,24 @@
+CleverIt\UBL\Invoice\RO\ContractingPartyTypeType:
+    properties:
+        partyTypeCode:
+            expose: true
+            access_type: public_method
+            serialized_name: PartyTypeCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPartyTypeCode
+                setter: setPartyTypeCode
+            type: CleverIt\UBL\Invoice\RO\PartyTypeCode
+        partyType:
+            expose: true
+            access_type: public_method
+            serialized_name: PartyType
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getPartyType
+                setter: setPartyType
+            type: CleverIt\UBL\Invoice\RO\PartyType

@@ -1,0 +1,61 @@
+CleverIt\UBL\Invoice\RO\TaxSchemeType:
+    properties:
+        iD:
+            expose: true
+            access_type: public_method
+            serialized_name: ID
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getID
+                setter: setID
+            type: CleverIt\UBL\Invoice\RO\ID
+        name:
+            expose: true
+            access_type: public_method
+            serialized_name: Name
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getName
+                setter: setName
+            type: CleverIt\UBL\Invoice\RO\Name
+        taxTypeCode:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxTypeCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getTaxTypeCode
+                setter: setTaxTypeCode
+            type: CleverIt\UBL\Invoice\RO\TaxTypeCode
+        currencyCode:
+            expose: true
+            access_type: public_method
+            serialized_name: CurrencyCode
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            accessor:
+                getter: getCurrencyCode
+                setter: setCurrencyCode
+            type: CleverIt\UBL\Invoice\RO\CurrencyCode
+        jurisdictionRegionAddress:
+            expose: true
+            access_type: public_method
+            serialized_name: JurisdictionRegionAddress
+            xml_element:
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            accessor:
+                getter: getJurisdictionRegionAddress
+                setter: setJurisdictionRegionAddress
+            xml_list:
+                inline: true
+                entry_name: JurisdictionRegionAddress
+                namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
+            type: array<CleverIt\UBL\Invoice\RO\JurisdictionRegionAddress>
