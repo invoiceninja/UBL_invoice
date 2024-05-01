@@ -49,15 +49,7 @@ final class UblRuleCommand extends Command
         $this->document = new \DomDocument();
         $this->document->load($path);
             
-        $cbc_path = "src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd";
-        $cac_path = "src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd";
-
-        $cbc = new \DomDocument();
-        $cbc->load($cbc_path);
-
-        $cac = new \DomDocument();
-        $cac->load($cac_path);
-
+        //Get all top level types
         foreach($schema->getTypes() as $type)
         {
 
@@ -72,7 +64,6 @@ final class UblRuleCommand extends Command
                 if($element->nodeValue == $name)
                 {
                   
-
                     $ee = $element->parentNode->parentNode->parentNode->parentNode;
                     $ref = $ee->getAttribute("ref");
 
@@ -101,8 +92,7 @@ final class UblRuleCommand extends Command
 
             $child_data = [];
 
-            //do this inside out, group by object class, and then iterate through all props that way... simples.
-            foreach($data as $type)
+            foreach($data as $k => $type)
             {
 
                 $dom_name = $type['name'];
@@ -112,24 +102,21 @@ final class UblRuleCommand extends Command
                 try {
                     $yaml = \Dallgoot\Yaml\Yaml::parseFile("{$this->yaml_path}{$dom_name}Type.yml", 0, $debug);
                 } catch(\Exception $e) {
-                    // echo $e->getMessage();
-                    
 
-//try getting the type
+                        //fallback - just in case
+                        $domdoc = new \DomDocument();
+                        match($type['prefix']) {
+                            'cac' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
+                            'cbc' => $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"),
+                        };
 
-$domdoc = new \DomDocument();
-match($type['prefix']) {
-    'cac' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
-    'cbc' => $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"),
-};
+                        $xpath = new \DOMXPath($domdoc);
+                        $xtype = $xpath->query('//xsd:element [@name="'.$dom_name.'"]');
 
-$xpath = new \DOMXPath($domdoc);
-$xtype = $xpath->query('//xsd:element [@name="'.$dom_name.'"]');
-
-if($xtype->count() == 1) {
-    $parent = $xtype->item(0)->getAttribute('type');
-    $yaml = \Dallgoot\Yaml\Yaml::parseFile("{$this->yaml_path}{$parent}.yml", 0, $debug);
-}
+                        if($xtype->count() == 1) {
+                            $parent = $xtype->item(0)->getAttribute('type');
+                            $yaml = \Dallgoot\Yaml\Yaml::parseFile("{$this->yaml_path}{$parent}.yml", 0, $debug);
+                        }
 
 
                 }
@@ -144,39 +131,33 @@ if($xtype->count() == 1) {
 
                         $key_namespace = $value->namespace ?? '';
 
-                        // try{
-                            
-                            $min_max = $this->harvestMinMax($type['prefix'].":".$type['name'], $key, $key_namespace);
-                        // }
-                        // catch(\Exception $e){
+                        $min_max = $this->harvestMinMax($type['prefix'].":".$type['name'], $key, $key_namespace);
 
-                        // echo print_r($type);
-                        // exit;
-                        // }
-
-
-                    $elements[] = [
-                        'name' => $value->serialized_name,
-                        'min' => $min_max[0],
-                        'max' => $min_max[1],
-                    ];
+                        $elements[] = [
+                            'name' => $value->serialized_name,
+                            'min' => $min_max[0],
+                            'max' => $min_max[1],
+                        ];
 
                 }
 
-                $child_data[] = [
-                    'type' => $dom_name."Type",
-                    'elements' => $elements
-                ];
-
+                if(count($elements) > 0)
+                { 
+                    $child_data[] = [
+                        'type' => $dom_name."Type",
+                        'elements' => $elements
+                    ];
+                }
+                
+                unset($data[$k]['prefix']);
             }
 
             $data = array_merge($data, $child_data);
-            echo print_r($data);
 
-$elementsString = json_encode($data, JSON_PRETTY_PRINT);
-$fp = fopen("./stubs/tt.json", 'w');
-fwrite($fp, $elementsString);
-fclose($fp);
+            $elementsString = json_encode($data, JSON_PRETTY_PRINT);
+            $fp = fopen("./stubs/FACT1_Invoice_elements.json", 'w');
+            fwrite($fp, $elementsString);
+            fclose($fp);
 
         }
 
@@ -196,15 +177,10 @@ fclose($fp);
         };
 
         if(stripos($key_namespace, "CommonAggregateComponents") !== false){
-            // $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
             $key = "cac:".ucfirst($key);
-            $parent_prefix = "cac:";
-
         }
         elseif(stripos($key_namespace, "CommonBasicComponents") !== false) {
-            // $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd");
             $key = "cbc:".ucfirst($key);
-            $parent_prefix = "cbc:";
         }
 
         $parent = str_replace(["cac:","cbc:"],  "", $prefix)."Type";
@@ -217,20 +193,10 @@ fclose($fp);
         $val = $xpath->query('//xsd:complexType [@name="'.$parent.'"]//xsd:sequence//xsd:element [@ref="'.$key.'"]');
 
         if($val->count() == 1)
-            return [$val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs'), $val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs')];
+            return [$val->item(0)->getAttribute('minOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('minOccurs'), $val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs')];
     
         throw new \Exception("could not harvest min/max occurance for {$prefix} - {$parent} - {$key}");
 
-    }
-    private function getElement(string $name)
-    {
-        $elements = $this->document->getElementsByTagName("element");
-        foreach($elements as $element)
-        {
-            if($element->getAttribute("ref") == $name){
-                return $element;
-            }
-        }
     }
 
     private function getXpathElements($dom_document, $tagName)
@@ -238,13 +204,8 @@ fclose($fp);
 
         $xpath = new \DOMXPath($dom_document);
 
-        // Define the tag name you want to search for
-        // $tagName = "ccts:ObjectClass";
-
-        // Define the XPath query to select elements with the specified tag name
         $query = "//{$tagName}";
 
-        // Execute the XPath query
         $elements = $xpath->query($query);
 
         return $elements;
@@ -257,7 +218,6 @@ fclose($fp);
     {
 
         $this->tt();
-        return self::SUCCESS;
 
         $this->document = new \DomDocument();
         $this->document->load('src/FACT1/common/Validation-Invoice_v1.0.8.sch');
@@ -290,10 +250,10 @@ fclose($fp);
             {
 
                 $assert_rule[] = [    
-                'rule' =>  $this->cleanRuleTags($assert->getAttribute("test")),
-                'rule_flag' =>  $this->cleanTags($assert->getAttribute("flag")),
-                'rule_id' =>  $this->cleanTags($assert->getAttribute("id")),
-                'description' =>  $this->cleanTags($assert->textContent),
+                    'rule' =>  $this->cleanRuleTags($assert->getAttribute("test")),
+                    'rule_flag' =>  $this->cleanTags($assert->getAttribute("flag")),
+                    'rule_id' =>  $this->cleanTags($assert->getAttribute("id")),
+                    'description' =>  $this->cleanTags($assert->textContent),
                 ];
                 
             }
@@ -338,10 +298,10 @@ fclose($fp);
     private function write(): void
     {
 
-        $elementsString = json_encode($this->rules, JSON_PRETTY_PRINT);
-        $fp = fopen("./stubs/rules_elements.json", 'w');
-        fwrite($fp, $elementsString);
-        fclose($fp);
+        // $elementsString = json_encode($this->rules, JSON_PRETTY_PRINT);
+        // $fp = fopen("./stubs/rules_elements.json", 'w');
+        // fwrite($fp, $elementsString);
+        // fclose($fp);
 
     }
 

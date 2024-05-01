@@ -23,8 +23,8 @@ final class StubCommand extends Command
 {
     private array $schemas = [
         "FatturaPA" => "src/FatturaPA/Schema_del_file_xml_FatturaPA_v1.2.2.xsd",
-        "FACT1_Credit" => "src/FACT1/UBL-CreditNote-2.1.xsd",
-        "FACT1_Invoice" => "https://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd",
+        // "FACT1_Credit" => "src/FACT1/UBL-CreditNote-2.1.xsd",
+        // "FACT1_Invoice" => "https://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd",
     ];
 
     private array $exclusions = [
@@ -33,12 +33,12 @@ final class StubCommand extends Command
             "FatturaElettronicaHeaderType",
             "FatturaElettronicaBodyType",
         ],
-        "FACT1_Credit" => [
+        // "FACT1_Credit" => [
 
-        ],
-        "FACT1_Invoice" => [
+        // ],
+        // "FACT1_Invoice" => [
 
-        ],
+        // ],
     ];
 
     public $output;
