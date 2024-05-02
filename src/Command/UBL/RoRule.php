@@ -12,6 +12,7 @@ class RoRule
 
     public mixed $rule;
 
+    public array $unmatched_rules = [];
     public function __construct(public string $parent, public string $key)
     {
         $this->rules = json_decode(file_get_contents($this->path));
@@ -107,6 +108,107 @@ class RoRule
         }
         
         return $data;
+
+    }
+
+    public function buildRules()
+    {
+
+        $d = [];
+        $this->unmatched_rules = [];
+        
+        foreach($this->splitRules() as $rule) 
+        {
+
+            $exists = &$rule[0];
+            
+
+            if($exists && in_array($rule[0], ["count","string-length","matches"])) {
+
+                $node = end($rule);
+
+                $parts = explode(" ", $node);
+
+                if(stripos("string-length", $rule[0]) !== false) {
+
+                    if(count($parts) != 3) {
+                        $length = str_replace(["<",">","="], "", ($parts[1] ?? ''));
+                        $operator = preg_replace('/[0-9]+/', '', ($parts[1] ?? ''));
+
+                    } else {
+                        $operator = $parts[1] ?? '';
+                        $length = $parts[2] ?? '';
+                    }
+
+                    $d[] = [
+                    "rule" => $rule[0],
+                    "field" => str_replace("))", "", $parts[0]),
+                    "operator" => $operator,
+                    "length" => $length,
+                    ];
+                } elseif(stripos("count", $parts[0]) !== false) {
+
+                    $field = str_replace(")", "", $parts[0]);
+                    
+                    if(count($parts) != 3){
+                        $length = str_replace(["<",">","="],"", ($parts[1] ?? ''));
+                        $operator = preg_replace('/[0-9]+/', '', ($parts[1] ?? ''));
+                    }
+                    else 
+                        $length = $parts[2] ?? '';
+
+                    $d[] = [
+                        "rule" => $rule[0],
+                        "field" => $field,
+                        "operator" => $operator,
+                        "length" => $length,
+                    ];
+                } 
+            }
+            else{
+                $this->unmatched_rules[] = $rule;
+            }                
+        }
+
+        return array_merge($d, $this->buildResourceRules());
+    }
+
+    
+    private function buildResourceRules()
+    {
+
+        $r = new \ReflectionClass(RoResources::class);
+        $r->getProperties();
+        $x = [];
+
+        $y = $r->getProperties()[0]->getAttributes()[0];
+        $y->getName();
+
+        foreach($r->getProperties() as $prop) {
+
+            $attr = $prop->getAttributes()[0];
+            $args = $attr->getArguments();
+
+            $x[] = [
+                    "name" => $attr->getName(),
+                    "base_type" => "string",
+                    "resource" => $args['resource'] ?? [],
+                    "length" => $args['length'] ?? '',
+                    "fraction_digits" => $args['fraction_digits'] ?? null,
+                    "total_digits" => $args['total_digits'] ?? null,
+                    "max_exclusive" => $args['max_exclusive'] ?? null,
+                    "min_exclusive" => $args['min_exclusive'] ?? null,
+                    "max_inclusive" => $args['max_inclusive'] ?? null,
+                    "min_inclusive" => $args['min_inclusive'] ?? null,
+                    "max_length" => $args['max_length'] ?? null,
+                    "min_length" => $args['min_length'] ?? null,
+                    "pattern" => $args['pattern'] ?? null,
+                    "whitespace" => $args['whitespace'] ?? null
+            ];
+
+        }
+
+        return $x;
 
     }
 }
