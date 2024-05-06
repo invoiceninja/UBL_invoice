@@ -27,6 +27,24 @@ final class StubCommand extends Command
         // "FACT1_Invoice" => "https://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd",
     ];
 
+    private array $stub_validation =
+    [
+       "name" => null,
+       "base_type" => null,
+       "resource" => null,
+       "length" => null,
+       "fraction_digits" => null,
+       "total_digits" => null,
+       "max_exclusive" => null,
+       "min_exclusive" => null,
+       "max_inclusive" => null,
+       "min_inclusive" => null,
+       "max_length" => null,
+       "min_length" => null,
+       "pattern" => null,
+       "whitespace" => null,
+   ];
+
     private array $exclusions = [
         "FatturaPA" => [
             "FatturaElettronicaType",
@@ -40,6 +58,8 @@ final class StubCommand extends Command
 
         // ],
     ];
+
+    private \DomDocument $document;
 
     public $output;
     /**
@@ -79,6 +99,9 @@ final class StubCommand extends Command
 
         $reader = new SchemaReader();
         $schema = $reader->readFile($path);
+        $this->document = new \DomDocument();
+        $this->document->load($path);
+
         $validation = [];
 
         foreach ($schema->getTypes() as $type) 
@@ -138,14 +161,13 @@ final class StubCommand extends Command
 
             if(method_exists($type, "getElements")) {
                 foreach($type?->getElements() as $innerElement) {
-
-                    // $this->output->writeln([$innerElement->getName()]);
                     
-                    $elements[] = [
+                $elements[] = array_merge($this->findType($innerElement->getName(), $validation),
+                    [
                         'name' => $innerElement->getName(),
-                        'min' => $innerElement->getMin(),
-                        'max' => $innerElement->getMax(),
-                    ];
+                        'minOccurs' => $innerElement->getMin(),
+                        'maxOccurs' => $innerElement->getMax(),
+                    ]);
 
                 }
             }
@@ -154,8 +176,35 @@ final class StubCommand extends Command
 
             $elements_array[] = $data;
         }
-
         
+        foreach($elements_array as $key => $element)
+        {
+            foreach($element['elements'] as $key2 => $node)
+            {
+                if(is_string($node['base_type'] ?? false))
+                    continue;                    
+
+                if(in_array($node['name']."Type", array_column($elements_array,'type')) || $node['name'] == 'Signature') {
+                    $elements_array[$key]['elements'][$key2]['base_type'] = $node['name']."Type";
+                    continue;
+                }
+
+                if(strlen($node['name']) == 0)
+                    continue;
+
+                try {
+                    echo $node['name']."!".PHP_EOL;
+                    $elements_array[$key]['elements'][$key2] = array_merge($this->getBaseType($node['name']), $elements_array[$key]['elements'][$key2]);
+                }
+                catch(\Exception $e){
+                    $elements_array[$key]['elements'][$key2]['base_type'] = $node['name']."Type";
+                }
+                
+
+            }
+
+        }
+
         $this->output->writeln([" >> Writing {$name}_validation to file"]);
         $validationString = json_encode($validation, JSON_PRETTY_PRINT);
         $fp = fopen("./stubs/{$name}_validation.json", 'w');
@@ -176,4 +225,104 @@ final class StubCommand extends Command
 
 
     }
+
+    // private function typeExists($name, $elements_array): bool
+    // {
+    //     foreach($elements_array as $array)
+    //     {
+    //         if($array['type'] == "{$name}Type")
+    //             return true;
+    //     }
+
+    //     return false;
+    // }
+
+    private function findType(string $name, array $validation): array
+    {
+        foreach($validation as $val){
+
+            if($name."Type" == $val['name'] ?? '') {
+                return $val;
+            }
+
+        }
+        
+        return $this->stub_validation;
+
+    }
+
+
+    private function getBaseType(string $type)
+    {
+        echo $type."2".PHP_EOL;
+        
+        if(in_array($type, ['xs:date', 'xs:dateTime', "xs:base64Binary"]))
+            return ['base_type' => str_replace("xs:", "", $type)];
+
+            echo $type."3".PHP_EOL;
+
+
+            $xpath = new \DOMXPath($this->document);
+            $xtype = $xpath->query('//xs:element [@name="'.$type.'"]');
+
+            $sub_type = $xtype->item(0)->getAttribute('type');
+
+            echo $sub_type.PHP_EOL;
+
+            if(in_array($sub_type, ['xs:date', 'xs:dateTime', "xs:base64Binary"]))
+                return ['base_type' => str_replace("xs:","", $sub_type)];
+
+            $restriction = $xpath->query('//xs:simpleType [@name="'.$sub_type.'"]//xs:restriction');
+
+            if($restriction->count() == 1){
+                return $this->extractRestriction($restriction->item(0));
+            }
+
+            if($restriction->count() == 0) {
+                //must be complex!
+                $restriction = $xpath->query('//xs:complexType [@name="'.$sub_type.'"]//xs:sequence//xs:element');
+
+                $type = $restriction->item(0)->getAttribute('type');
+
+                return ['base_type' => $type];
+
+            }
+
+
+            $restriction_type = $restriction->item(0)->getAttribute('base');
+
+            $pattern = $xpath->query('//xs:simpleType [@name="'.$sub_type.'"]//xs:restriction//xs:pattern');
+
+            $p = $pattern->item(0)->getAttribute('value');
+
+            return ['base_type' => $restriction_type, 'pattern' => $p];
+
+        
+    }
+
+    private function extractRestriction(\DomElement $restriction): array
+    {
+        match($restriction->getAttribute(('base')))
+        {
+            'xs:string' => $value = $this->harvestStringType($restriction),
+            default => $value = [],
+        };
+
+        return $value;
+    }
+
+    private function harvestStringType(\DomElement $element): array
+    {
+        $data = [];
+
+        $data['base_type'] = 'string';
+
+        foreach($element->childNodes as $childElement){
+            $data[str_replace("xs:", "", $childElement->nodeName)] = $childElement->nodeValue;
+        }
+        
+
+        return $data;
+    }
+
 }

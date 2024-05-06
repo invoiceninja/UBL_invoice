@@ -77,6 +77,10 @@ final class UblRuleCommand extends Command
                         $minOccurs = $ee->getAttribute("minOccurs");
                         $maxOccurs = $ee->getAttribute("maxOccurs") == 'unbounded' ? -1 : $ee->getAttribute("maxOccurs");
 
+                        //RO-CIUS specified limit
+                        if($ref == 'cac:BillingReference')
+                            $maxOccurs = 500;
+
                         $data[] = [
                             "name" => str_replace(['cbc:','cac:'], "",$ref),
                             "min" => $minOccurs,
@@ -181,7 +185,9 @@ final class UblRuleCommand extends Command
         
         $domdoc = new \DomDocument();
 
-        match(explode(":",$prefix)[0]){
+        $prefix_components = explode(":",$prefix);
+
+        match($prefix_components[0]){
             'cac' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
             'cbc' => $domdoc->load("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"),
             '' => $domdoc->load("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd"),
@@ -204,9 +210,15 @@ final class UblRuleCommand extends Command
         }
         $val = $xpath->query('//xsd:complexType [@name="'.$parent.'"]//xsd:sequence//xsd:element [@ref="'.$key.'"]');
 
-        if($val->count() == 1)
-            return [$val->item(0)->getAttribute('minOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('minOccurs'), $val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs')];
-    
+        if($val->count() == 1){
+            $min = $val->item(0)->getAttribute('minOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('minOccurs');
+            $max = $val->item(0)->getAttribute('maxOccurs') == 'unbounded' ? -1 : $val->item(0)->getAttribute('maxOccurs');
+
+            // if($prefix_components[1] == 'BillingReference')
+            //     $max = 500;
+
+            return [$min, $max];
+        }
         throw new \Exception("could not harvest min/max occurance for {$prefix} - {$parent} - {$key}");
 
     }
@@ -366,5 +378,6 @@ final class UblRuleCommand extends Command
     {
         return str_replace(["//","self::","(",")","concat(",",",'$RO-MAJOR-MINOR-PATCH-VERSION)',"cbc:","cac:","/ubl:", "/cn:"], "", $string);
     }
+
 
 }

@@ -141,10 +141,10 @@ class RoRule
                     }
 
                     $d[] = [
-                    "rule" => $rule[0],
-                    "field" => str_replace("))", "", $parts[0]),
-                    "operator" => $operator,
-                    "length" => $length,
+                        "rule" => $rule[0],
+                        "field" => str_replace("))", "", $parts[0]),
+                        "operator" => $operator,
+                        "length" => $length,
                     ];
                 } elseif(stripos("count", $parts[0]) !== false) {
 
@@ -170,45 +170,7 @@ class RoRule
             }                
         }
 
-        return array_merge($d, $this->buildResourceRules());
+        return $d;
     }
 
-    
-    private function buildResourceRules()
-    {
-
-        $r = new \ReflectionClass(RoResources::class);
-        $r->getProperties();
-        $x = [];
-
-        $y = $r->getProperties()[0]->getAttributes()[0];
-        $y->getName();
-
-        foreach($r->getProperties() as $prop) {
-
-            $attr = $prop->getAttributes()[0];
-            $args = $attr->getArguments();
-
-            $x[] = [
-                    "name" => $attr->getName(),
-                    "base_type" => "string",
-                    "resource" => $args['resource'] ?? [],
-                    "length" => $args['length'] ?? '',
-                    "fraction_digits" => $args['fraction_digits'] ?? null,
-                    "total_digits" => $args['total_digits'] ?? null,
-                    "max_exclusive" => $args['max_exclusive'] ?? null,
-                    "min_exclusive" => $args['min_exclusive'] ?? null,
-                    "max_inclusive" => $args['max_inclusive'] ?? null,
-                    "min_inclusive" => $args['min_inclusive'] ?? null,
-                    "max_length" => $args['max_length'] ?? null,
-                    "min_length" => $args['min_length'] ?? null,
-                    "pattern" => $args['pattern'] ?? null,
-                    "whitespace" => $args['whitespace'] ?? null
-            ];
-
-        }
-
-        return $x;
-
-    }
 }
