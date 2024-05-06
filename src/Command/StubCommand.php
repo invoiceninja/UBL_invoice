@@ -31,7 +31,7 @@ final class StubCommand extends Command
     [
        "name" => null,
        "base_type" => null,
-       "resource" => null,
+       "resource" => [],
        "length" => null,
        "fraction_digits" => null,
        "total_digits" => null,
@@ -162,14 +162,20 @@ final class StubCommand extends Command
             if(method_exists($type, "getElements")) {
                 foreach($type?->getElements() as $innerElement) {
                     
-                $elements[] = array_merge($this->findType($innerElement->getName(), $validation),
-                    [
-                        'name' => $innerElement->getName(),
-                        'minOccurs' => $innerElement->getMin(),
-                        'maxOccurs' => $innerElement->getMax(),
-                    ]);
+                // if($innerElement instanceof \DomElement)
+                // {
+                    if(strlen($innerElement->getName()) > 0 )
+                    {
+                    $elements[] = array_merge($this->findType($innerElement->getName(), $validation),
+                        [
+                            'name' => $innerElement->getName(),
+                            'minOccurs' => $innerElement->getMin(),
+                            'maxOccurs' => $innerElement->getMax(),
+                        ]);
 
+                    }
                 }
+                // }
             }
 
             $data['elements'] = $elements;
@@ -262,25 +268,21 @@ final class StubCommand extends Command
 
             $sub_type = $xtype->item(0)->getAttribute('type');
 
-            if($type == "TerzoIntermediarioOSoggettoEmittente")
-                echo $sub_type." sub " . PHP_EOL;
-
             if(in_array($sub_type, ['xs:date', 'xs:dateTime', "xs:base64Binary"]))
                 return ['base_type' => str_replace("xs:","", $sub_type)];
 
             $restriction = $xpath->query('//xs:simpleType [@name="'.$sub_type.'"]//xs:restriction');
 
-            if($type == "TerzoIntermediarioOSoggettoEmittente")
-            echo "1";
-
             if($restriction->count() == 1){
-                return $this->extractRestriction($restriction->item(0));
+
+                $meta = array_merge($this->extractChoice($restriction->item(0)), $this->extractHelp($restriction->item(0)));
+
+                $restriction = $this->extractRestriction($restriction->item(0));
+
+                return array_merge($restriction, $meta);
             }
 
             
-            if($type == "TerzoIntermediarioOSoggettoEmittente")
-            echo "2";
-
             if($restriction->count() == 0) {
                 //must be complex!
                 // $restriction = $xpath->query('//xs:complexType [@name="'.$sub_type.'"]//xs:sequence//xs:element');
@@ -289,20 +291,11 @@ final class StubCommand extends Command
                 return ['base_type' => $sub_type];
             }
 
-if($type == "TerzoIntermediarioOSoggettoEmittente") {
-    echo "3";
-}
-
-
             $restriction_type = $restriction->item(0)->getAttribute('base');
 
             $pattern = $xpath->query('//xs:simpleType [@name="'.$sub_type.'"]//xs:restriction//xs:pattern');
 
             $p = $pattern->item(0)->getAttribute('value');
-
-if($type == "TerzoIntermediarioOSoggettoEmittente") {
-    echo "4";
-}
 
             return ['base_type' => $restriction_type, 'pattern' => $p];
 
@@ -320,6 +313,7 @@ if($type == "TerzoIntermediarioOSoggettoEmittente") {
             'xs:decimal' => $value = $this->harvestDecimal($restriction),
             'xs:date' => $value = ['base_type' => 'date'],
             'xs:dateTime' => $value = ['base_type' => 'date'],
+            'String200LatinType' => $value = ['base_type' => 'string', 'length' => "200"],
             default => $value = [],
         };
 
@@ -354,5 +348,49 @@ if($type == "TerzoIntermediarioOSoggettoEmittente") {
         }
         
         return $data;
+
+    }
+
+    private function extractChoice(\DomElement $element)
+    {
+        
+        $xpath = new \DOMXPath($this->document);
+        $result = $xpath->query('./xs:choice', $element);
+
+        if($result->count() > 0){
+
+            $choice = [];
+
+            foreach($result as $key => $sequence)
+            {
+                $string = '';
+
+                foreach($sequence as $seq)
+                    $string .= $seq->getAttribute("name") . "/";
+
+                $string = rtrim($string, "/");
+                $choice[$seq[0]->getAttribute("name")] = $string;
+
+            }
+echo print_r($choice).PHP_EOL;
+            return ['choice' => $choice];
+        }
+        
+        return ['choice' => []];
+    }
+
+    private function extractHelp(\DomElement $element)
+    {
+        
+        $xpath = new \DOMXPath($this->document);
+        $result = $xpath->query('./xs:annotation//xs:documentation', $element);
+
+        if($result->count() > 0)
+        {
+            return ['help' => $result->item(0)->nodeValue];
+        }
+
+        return ['help' => ''];
+
     }
 }
