@@ -193,8 +193,7 @@ final class StubCommand extends Command
                     continue;
 
                 try {
-                    echo $node['name']."!".PHP_EOL;
-                    $elements_array[$key]['elements'][$key2] = array_merge($this->getBaseType($node['name']), $elements_array[$key]['elements'][$key2]);
+                    $elements_array[$key]['elements'][$key2] = array_merge($elements_array[$key]['elements'][$key2], $this->getBaseType($node['name']));
                 }
                 catch(\Exception $e){
                     $elements_array[$key]['elements'][$key2]['base_type'] = $node['name']."Type";
@@ -254,39 +253,45 @@ final class StubCommand extends Command
 
     private function getBaseType(string $type)
     {
-        echo $type."2".PHP_EOL;
         
         if(in_array($type, ['xs:date', 'xs:dateTime', "xs:base64Binary"]))
             return ['base_type' => str_replace("xs:", "", $type)];
-
-            echo $type."3".PHP_EOL;
-
 
             $xpath = new \DOMXPath($this->document);
             $xtype = $xpath->query('//xs:element [@name="'.$type.'"]');
 
             $sub_type = $xtype->item(0)->getAttribute('type');
 
-            echo $sub_type.PHP_EOL;
+            if($type == "TerzoIntermediarioOSoggettoEmittente")
+                echo $sub_type." sub " . PHP_EOL;
 
             if(in_array($sub_type, ['xs:date', 'xs:dateTime', "xs:base64Binary"]))
                 return ['base_type' => str_replace("xs:","", $sub_type)];
 
             $restriction = $xpath->query('//xs:simpleType [@name="'.$sub_type.'"]//xs:restriction');
 
+            if($type == "TerzoIntermediarioOSoggettoEmittente")
+            echo "1";
+
             if($restriction->count() == 1){
                 return $this->extractRestriction($restriction->item(0));
             }
 
+            
+            if($type == "TerzoIntermediarioOSoggettoEmittente")
+            echo "2";
+
             if($restriction->count() == 0) {
                 //must be complex!
-                $restriction = $xpath->query('//xs:complexType [@name="'.$sub_type.'"]//xs:sequence//xs:element');
+                // $restriction = $xpath->query('//xs:complexType [@name="'.$sub_type.'"]//xs:sequence//xs:element');
+                // $type = $restriction->item(0)->getAttribute('type');
 
-                $type = $restriction->item(0)->getAttribute('type');
-
-                return ['base_type' => $type];
-
+                return ['base_type' => $sub_type];
             }
+
+if($type == "TerzoIntermediarioOSoggettoEmittente") {
+    echo "3";
+}
 
 
             $restriction_type = $restriction->item(0)->getAttribute('base');
@@ -295,6 +300,10 @@ final class StubCommand extends Command
 
             $p = $pattern->item(0)->getAttribute('value');
 
+if($type == "TerzoIntermediarioOSoggettoEmittente") {
+    echo "4";
+}
+
             return ['base_type' => $restriction_type, 'pattern' => $p];
 
         
@@ -302,9 +311,15 @@ final class StubCommand extends Command
 
     private function extractRestriction(\DomElement $restriction): array
     {
+        // echo $restriction->getAttribute(('base')).PHP_EOL;
+
         match($restriction->getAttribute(('base')))
         {
             'xs:string' => $value = $this->harvestStringType($restriction),
+            'xs:normalizedString' => $value = $this->harvestStringType($restriction),
+            'xs:decimal' => $value = $this->harvestDecimal($restriction),
+            'xs:date' => $value = ['base_type' => 'date'],
+            'xs:dateTime' => $value = ['base_type' => 'date'],
             default => $value = [],
         };
 
@@ -318,11 +333,26 @@ final class StubCommand extends Command
         $data['base_type'] = 'string';
 
         foreach($element->childNodes as $childElement){
-            $data[str_replace("xs:", "", $childElement->nodeName)] = $childElement->nodeValue;
+            $data[str_replace("xs:", "", strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $childElement->nodeName)))] = $childElement->nodeValue;
         }
         
 
         return $data;
     }
 
+    private function harvestDecimal(\DomElement $element): array
+    {
+        $data = [];
+
+        $data['base_type'] = 'decimal';
+
+        foreach($element->childNodes as $childElement){
+
+             if ($childElement instanceOf \DOMElement) {
+                $data[str_replace("xs:", "", strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $childElement->nodeName)))] = $childElement->nodeValue;
+             }
+        }
+        
+        return $data;
+    }
 }
