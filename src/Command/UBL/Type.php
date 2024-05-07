@@ -2,6 +2,8 @@
 
 namespace CleverIt\UBL\Invoice\Command\UBL;
 
+use DOMElement;
+
 class Type
 {
 
@@ -14,26 +16,81 @@ class Type
     public string $udt = "src/FACT1/common/UBL-UnqualifiedDataTypes-2.1.xsd";
     public string $ccts_cct = "src/FACT1/common/CCTS_CCT_SchemaModule-2.1.xsd" ;
 
+    public string $ext = "src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd";
+
     public array $cac_map = [];
     public array $cbc_map = [];
     public array $udt_map = [];
     public array $ccts_cct_map = [];
+    public array $ext_map = [];
 
-    protected \DomDocument $document;
+    protected \DomDocument $type_document;
 
     public function __construct()
     {
 
-        $this->document = new \DOMDocument();
+        $this->type_document = new \DOMDocument();
         $this->getAllCbcTypes();
         $this->getAllCacTypes();
+        $this->getAllExtTypes();
+        $this->getAllCCTSTypes();
     }
 
+    public function getAllCCTSTypes(): self
+    {
+        $this->type_document->load($this->ccts_cct);
+
+        $elements = $this->type_document->getElementsByTagName("complexType");
+
+        foreach($elements as $element) {
+            $this->ccts_cct_map[$element->getAttribute("name")] = $this->extractCCT($element);
+        }
+
+        echo print_r($this->ccts_cct_map);
+
+        return $this;
+
+        
+    }
+
+    private function extractCCT(DOMElement $element): array
+    {
+        $data = [];
+
+        $xpath = new \DOMXPath($this->type_document);
+        $node = $xpath->query("./xsd:complexType//xsd:annotation//xsd:documentation//ccts:PrimativeType", $element);
+
+        if($node->count() == 1)
+            $data['type'] = $node->item(0)->nodeValue;
+    
+        $node = $xpath->query("./xsd:simpleContent//xsd:extension", $element);
+
+        if($node->count() == 1) {
+            $data['type'] = $node->item(0)->getAttribute("base");
+            // $data['minOccurs'] = $node->item(0)->getAttribute("use") == "optional" ? 0 : 1;
+        }
+
+        return $data;
+    }
+
+    public function getAllExtTypes(): self
+    {
+
+        $this->type_document->load($this->ext);
+
+        $elements = $this->type_document->getElementsByTagName("element");
+
+        foreach($elements as $element) {
+            $this->ext_map[$element->getAttribute("name")] = $element->getAttribute("type");
+        }
+
+        return $this;
+    }
     public function getAllCacTypes(): self
     {
-        $this->document->load($this->cac);
+        $this->type_document->load($this->cac);
 
-        $elements = $this->document->getElementsByTagName("element");
+        $elements = $this->type_document->getElementsByTagName("element");
 
         foreach($elements as $element) {
             $this->cac_map[$element->getAttribute("name")] = $element->getAttribute("type");
@@ -45,9 +102,9 @@ class Type
     public function getAllCbcTypes(): self
     {
                 
-        $this->document->load($this->cbc);
+        $this->type_document->load($this->cbc);
 
-        $elements = $this->document->getElementsByTagName("element");
+        $elements = $this->type_document->getElementsByTagName("element");
 
         foreach($elements as $element) {
             $this->cbc_map[$element->getAttribute("name")] = $element->getAttribute("type");
@@ -57,25 +114,45 @@ class Type
 
     }
     
+    public function findTrickyType(string $name){
+
+        if(isset($this->ext_map[$name]))
+            return $this->ext_map[$name];
+
+        if(isset($this->cbc_map[$name])) {
+            return $this->cbc_map[$name];
+        }
+
+        if(isset($this->cac_map[$name])) {
+            return $this->cac_map[$name];
+        }
+
+        if(isset($this->udt[$name])) {
+            return $this->udt[$name];
+        }
+            
+    } 
     public function hydrateTypes($typeX)
     {
-        
-        echo $typeX.PHP_EOL;
-
         $parts = explode(":", $typeX);
-        echo print_r($parts);
-        echo str_replace("-", "_", $parts[0]) . PHP_EOL;
+
+        if(count($parts) == 1)
+            return $this->findTrickyType($typeX);
+
+        //echo print_r($parts);
+        //echo str_replace("-", "_", $parts[0]) . PHP_EOL;
 
         $this->loadDomDoc(str_replace("-","_",$parts[0]));
 
         match($parts[0]){
             'cbc' => $component_type = $this->cbc_map[$parts[1]],
             'cac' => $component_type = $this->cac_map[$parts[1]],
+            'ext' => $component_type = $this->ext_map[$parts[1]],
             'udt' => $component_type = $parts[1],
             'ccts-cct' => $component_type = $parts[1],
         };
 
-        $xpath = new \DOMXPath($this->document);
+        $xpath = new \DOMXPath($this->type_document);
         $type = $xpath->query('//xsd:complexType [@name="'.$component_type.'"]//xsd:simpleContent//xsd:extension');
 
         if($type->count() == 0){
@@ -83,21 +160,19 @@ class Type
         }
 
         if($type->count() == 0){
-            return [$component_type, $component_type];
+            return $component_type;
         }
 
         $base = $type->item(0)->getAttribute("base");
 
-        echo $base.PHP_EOL;
-        
         $base_parts =explode(":", $base);
-        $this->loadDomDoc($base_parts[0]);
+
+        if(count($base_parts) > 1)
+            $this->loadDomDoc($base_parts[0]);
         
-        $xpath = new \DOMXPath($this->document);
+        $xpath = new \DOMXPath($this->type_document);
 
-        $type = $xpath->query('//xsd:complexType [@name="'.$base_parts[1].'"]//xsd:annotation//xsd:documentation//ccts:PrimitiveType');
-
-        $primative = $type->item(0)->nodeValue;
+        // $type = $xpath->query('//xsd:complexType [@name="'.$base_parts[1].'"]//xsd:annotation//xsd:type_documentation//ccts:PrimitiveType');
 
         $type = $xpath->query('//xsd:complexType [@name="'.$base_parts[1].'"]//xsd:simpleContent');
         
@@ -117,7 +192,7 @@ class Type
 
         $variable_type = explode(":", $ref)[1];
 
-        return [$primative, ucfirst($variable_type)];
+        return ucfirst($variable_type);
 
     }
 
@@ -125,7 +200,7 @@ class Type
     {
         $prefix = str_replace("-","_", $prefix);
 
-        $this->document->load($this->{$prefix});
+        $this->type_document->load($this->{$prefix});
         
         return $this;
 
@@ -135,10 +210,10 @@ class Type
 
     public function mapType(string $namespace, string $typeX)
     {        
-        echo $typeX.PHP_EOL;
+        //echo $typeX.PHP_EOL;
 
-        $this->document->load($namespace);
-        $xpath = new \DOMXPath($this->document);
+        $this->type_document->load($namespace);
+        $xpath = new \DOMXPath($this->type_document);
         
         if($namespace == $this->cac){
             $type = $xpath->query('//xsd:complexType [@name="'.$typeX.'"]//xsd:sequence');

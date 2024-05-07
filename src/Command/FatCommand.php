@@ -111,7 +111,16 @@ final class FatCommand extends Command
 
                 $choice_array = $this->extractChoice($sequence->item(0));
                 
-                $set['choices'] = $choice_array;
+                $choice_keys = [];
+
+                foreach($choice_array as $key => $arr)
+                {
+                    $choice_keys[] = array_keys($arr);
+                }
+
+                $set['choices'] = $choice_keys;
+
+                // $set['choices'] = $choice_array;
 
                 $sequence_list = $this->processSequences($sequence);
 
