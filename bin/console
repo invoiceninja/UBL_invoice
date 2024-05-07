@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use CleverIt\UBL\Invoice\Command\FatCommand;
 use CleverIt\UBL\Invoice\Command\StubCommand;
 use CleverIt\UBL\Invoice\Command\UblRuleCommand;
 
@@ -9,8 +10,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Create the Application
 $application = new Symfony\Component\Console\Application;
 
-
 $application->add(new StubCommand());
+$application->add(new FatCommand());
 $application->add(new UblRuleCommand());
 
 // Run it

@@ -372,7 +372,7 @@ final class StubCommand extends Command
                 $choice[$seq[0]->getAttribute("name")] = $string;
 
             }
-echo print_r($choice).PHP_EOL;
+            
             return ['choice' => $choice];
         }
         
