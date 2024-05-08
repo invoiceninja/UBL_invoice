@@ -50,7 +50,7 @@ class CbcType
 
             $complexBaseType = $this->getUdtType($value);
 
-            $data[] = array_merge($this->stub_validation, ['name' => $key, 'type' => $complexBaseType, 'elements' => []]);
+            $data[] = array_merge($this->stub_validation, ['name' => $key, 'base_type' => $complexBaseType, 'type' => $value, 'elements' => []]);
         }
 
         $this->elements = $data;
@@ -61,8 +61,6 @@ class CbcType
 
     public function getUdtType(string $name): string
     {
-
-        // $base_type = $this->type_map[$name];
 
         $xpath = "//xsd:complexType [@name='{$name}']//{$this->prefix}:simpleContent//{$this->prefix}:extension";
 
@@ -88,7 +86,7 @@ class CbcType
     }
     public function getPrimativeType(string $name): string
     {
-        $name = $this->type_map[$name];
+        $name = $this->type_map[$name] ?? $name;
 
         $result = $this->getXPath("./{$this->prefix}:complexType [@name='{$name}']//{$this->prefix}:simpleContent//{$this->prefix}:extension");
     
