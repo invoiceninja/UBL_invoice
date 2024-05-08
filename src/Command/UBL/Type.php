@@ -46,7 +46,7 @@ class Type
             $this->ccts_cct_map[$element->getAttribute("name")] = $this->extractCCT($element);
         }
 
-        echo print_r($this->ccts_cct_map);
+        // echo print_r($this->ccts_cct_map);
 
         return $this;
 
@@ -61,12 +61,12 @@ class Type
         $node = $xpath->query("./xsd:complexType//xsd:annotation//xsd:documentation//ccts:PrimativeType", $element);
 
         if($node->count() == 1)
-            $data['type'] = $node->item(0)->nodeValue;
+            $data['base_type'] = $node->item(0)->nodeValue;
     
         $node = $xpath->query("./xsd:simpleContent//xsd:extension", $element);
 
         if($node->count() == 1) {
-            $data['type'] = $node->item(0)->getAttribute("base");
+            $data['base_type'] = $node->item(0)->getAttribute("base");
             // $data['minOccurs'] = $node->item(0)->getAttribute("use") == "optional" ? 0 : 1;
         }
 
@@ -116,6 +116,8 @@ class Type
     
     public function findTrickyType(string $name){
 
+        // echo "finding tricky type {$name}".PHP_EOL;
+
         if(isset($this->ext_map[$name]))
             return $this->ext_map[$name];
 
@@ -133,14 +135,11 @@ class Type
             
     } 
     public function hydrateTypes($typeX)
-    {
+    {   //top level
         $parts = explode(":", $typeX);
 
         if(count($parts) == 1)
             return $this->findTrickyType($typeX);
-
-        //echo print_r($parts);
-        //echo str_replace("-", "_", $parts[0]) . PHP_EOL;
 
         $this->loadDomDoc(str_replace("-","_",$parts[0]));
 
@@ -148,9 +147,18 @@ class Type
             'cbc' => $component_type = $this->cbc_map[$parts[1]],
             'cac' => $component_type = $this->cac_map[$parts[1]],
             'ext' => $component_type = $this->ext_map[$parts[1]],
-            'udt' => $component_type = $parts[1],
-            'ccts-cct' => $component_type = $parts[1],
+            'udt' => $component_type = $this->udt_map[$parts[1]],
+            'ccts-cct' => $component_type = $this->ccts_cct_map[$parts[1]]['base_type'],
         };
+
+        match($parts[0]) {
+            'cbc' => $this->type_document->load($this->cbc),
+            'cac' => $this->type_document->load($this->cac),
+            'ext' => $this->type_document->load($this->ext),
+            'udt' => $this->type_document->load($this->udt),
+            'ccts-cct' => $this->type_document->load($this->ccts_cct),
+        };
+
 
         $xpath = new \DOMXPath($this->type_document);
         $type = $xpath->query('//xsd:complexType [@name="'.$component_type.'"]//xsd:simpleContent//xsd:extension');
@@ -192,7 +200,8 @@ class Type
 
         $variable_type = explode(":", $ref)[1];
 
-        return ucfirst($variable_type);
+        return $variable_type;
+        // return ucfirst($variable_type);
 
     }
 

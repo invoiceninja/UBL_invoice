@@ -110,8 +110,6 @@ final class RoCommand extends Command
 
     private function loadResource(string $type): self
     {
-        //echo $type.PHP_EOL;
-
         $parts = explode(":", $type);
 
         if(count($parts) == 1) {
@@ -119,8 +117,6 @@ final class RoCommand extends Command
         }
         
         $path = $this->resource_map["{$parts[0]}:"];
-
-        //echo "LOADING => {$path}".PHP_EOL;
 
         $this->document->load($path);
 
@@ -222,23 +218,23 @@ final class RoCommand extends Command
 
 
 
-    public function getNestedType(string $type): ?string
-    {
+    // public function getNestedType(string $type): ?string
+    // {
 
-        $this->loadResource($type);
+    //     $this->loadResource($type);
 
-        $parts = explode(":", $type);
+    //     $parts = explode(":", $type);
 
-        if(count($parts) == 1)
-            $parts = $this->searchForResource($type);
+    //     if(count($parts) == 1)
+    //         $parts = $this->searchForResource($type);
 
-        $name = $parts[1];
+    //     $name = $parts[1];
         
-        $element = $this->getElement($name);
+    //     $element = $this->getElement($name);
 
-        return $element->getAttribute("type");
+    //     return $element->getAttribute("type");
 
-    }
+    // }
 
 
     public function loadDoc(string $type): self
@@ -359,10 +355,6 @@ final class RoCommand extends Command
 
         for($x = 0; $x < $list->count(); $x++) {
             $node = $list->item($x);
-
-            $parent_name = $node->parentNode->getAttribute('name');
-            //echo "Parent = {$parent_name}".PHP_EOL;
-
             $child_array = [];
 
             foreach($node->childNodes as $childNode) {
@@ -370,11 +362,7 @@ final class RoCommand extends Command
                 if($childNode instanceof DOMElement) {
                     $child_array = $this->extractAttributes($childNode);
                     if(count($child_array) > 0) {
-                        //echo $child_array['name'].PHP_EOL;
                         $child_array['base_type'] = $this->type->hydrateTypes($child_array['name']);
-                        // $child_array['base_type'] = $this->getRootType($child_array['name']);
-
-                        // $arr = $this->harvestTypeArray($child_array['name'], $child_array['base_type']);
 
                         $tmp[] = array_merge($this->stub_validation, $child_array);
                     }

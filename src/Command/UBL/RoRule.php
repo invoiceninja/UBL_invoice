@@ -72,7 +72,7 @@ class RoRule
         // Extracted data array
         $data = array();
 
-        echo print_r($matches);
+        // echo print_r($matches);
         // Iterate over matched content
         foreach ($matches[1] as $match) {
             // Add the content to the data array
