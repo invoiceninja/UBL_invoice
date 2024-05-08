@@ -129,11 +129,11 @@ final class RooCommand extends Command
                 
                 foreach($this->data[0]['elements'] as $eKey => $eValue) {
 
-                    if($eValue['name'] ?? false == $key) {
+                    if(isset($eValue['name']) && $eValue['name'] == $key) {
                         
                         unset($rules["Invoice"][$key]['type']);
 
-                        $this->data[0]['elements'][$eKey] = array_merge($eValue, $rules["Invoice"][$key]);
+                        $this->data[0]['elements'][$eKey] = array_merge($value, $eValue);
 
                     }
                 }
