@@ -85,8 +85,6 @@ class CacType
 
                 if($sequence->item($x) instanceof DOMElement) {
                     
-                    // echo "Processing {$base_type} => ".PHP_EOL;
-
                     $elements[] = $this->parseSequenceNode($sequence->item($x));
                 }
             }
@@ -170,14 +168,14 @@ class CacType
         //perhaps already a type ie ":"
         if(stripos($searchable_type, ":") !== false){
             $data['name'] = $parsed_name;
-            $data['type'] = $this->extractRelatedType($searchable_type);
+            $data['base_type'] = $this->extractRelatedType($searchable_type);
             ksort($data);
             return $data;
         }
 
         if(isset($this->type_map[$searchable_type])){
             $data['name'] = $parsed_name;
-            $data['type'] = $this->type_map[$searchable_type];
+            $data['base_type'] = $this->type_map[$searchable_type];
             
             ksort($data);
             return $data;

@@ -50,7 +50,7 @@ class CbcType
 
             $complexBaseType = $this->getUdtType($value);
 
-            $data[] = array_merge($this->stub_validation, ['name' => $key, 'base_type' => $complexBaseType, 'type' => $value, 'elements' => []]);
+            $data[] = array_merge($this->stub_validation, ['name' => $key, 'base_type' => $complexBaseType, 'type' => $value]);
         }
 
         $this->elements = $data;
