@@ -322,10 +322,10 @@ final class UblRuleCommand extends Command
     private function write(): void
     {
 
-        // $elementsString = json_encode($this->rules, JSON_PRETTY_PRINT);
-        // $fp = fopen("./stubs/rules_elements.json", 'w');
-        // fwrite($fp, $elementsString);
-        // fclose($fp);
+        $elementsString = json_encode($this->rules, JSON_PRETTY_PRINT);
+        $fp = fopen("./stubs/rules_elements.json", 'w');
+        fwrite($fp, $elementsString);
+        fclose($fp);
 
     }
 

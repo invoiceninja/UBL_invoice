@@ -102,7 +102,8 @@ final class RooCommand extends Command
         $this->document = new \DomDocument();
         $this->document->load($this->resource);
 
-        $this->getParentTypes();
+        $this->getParentTypes()
+        ->injectRules();
 
         $this->output->writeln([" >> Writing sequence_elements to file",'============',]);
         $elementsString = json_encode($this->data, JSON_PRETTY_PRINT);
@@ -112,6 +113,35 @@ final class RooCommand extends Command
 
         return self::SUCCESS;
 
+    }
+
+    private function injectRules()
+    {
+
+
+            $e = new \CleverIt\UBL\Invoice\Command\UBL\RoResources();
+            $rules = $e->buildInvoice();
+
+            // echo print_r($roo[0]['elements']).PHP_EOL;
+
+
+            foreach($rules["Invoice"] as $key => $value) {
+                
+                foreach($this->data[0]['elements'] as $eKey => $eValue) {
+
+                    if($eValue['name'] ?? false == $key) {
+                        
+                        unset($rules["Invoice"][$key]['type']);
+
+                        $this->data[0]['elements'][$eKey] = array_merge($eValue, $rules["Invoice"][$key]);
+
+                    }
+                }
+
+            }
+
+
+            return $this;
     }
 
     public function getParentTypes(): self
