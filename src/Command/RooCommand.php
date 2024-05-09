@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CleverIt\UBL\Invoice\Command;
 
 use DOMElement;
+use Illuminate\Support\Collection;
 use CleverIt\UBL\Invoice\Command\UBL\Type;
 use CleverIt\UBL\Invoice\Command\UBL\CacType;
 use CleverIt\UBL\Invoice\Command\UBL\CbcType;
@@ -58,14 +59,42 @@ final class RooCommand extends Command
     private UdtType $udtType;
     private CccType $cctType;
     private CbcType $cbcType;
-    private array $resource_map = [
-        'ext:' => "src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd",
-        'cac:' => "src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd",
-        'cbc:' => "src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd",
-        'udt:' => "src/FACT1/common/UBL-UnqualifiedDataTypes-2.1.xsd",
-        'ccts-cct:' => "src/FACT1/common/CCTS_CCT_SchemaModule-2.1.xsd",
-    ];
 
+    private array $cacAppend = [
+        "BillingReferenceLineType",
+        "AttachmentType",
+        "ResultOfVerificationType",
+        "WorkPhaseReferenceType",
+        "ContactType",
+        "PartyIdentificationType",
+        "PartyNameType",
+        "LanguageType",
+        "AddressType",
+        "LocationType",
+        "PartyTaxSchemeType",
+        "PartyLegalEntityType",
+        "PersonType",
+        "ServiceProviderPartyType",
+        "PowerOfAttorneyType",
+        "FinancialAccountType",
+        "DespatchType",
+        "DeliveryUnitType",
+        "ShipmentType",
+        "CardAccountType",
+        "CreditAccountType",
+        "PaymentMandateType",
+        "TradeFinancingType",
+        "TaxCategoryType",
+        "ContractType",
+        "TaxSubtotalType",
+        "OrderLineReferenceType",
+        "LineReferenceType",
+        "PricingReferenceType",
+        "ItemType",
+        "PriceType",
+        "PriceExtensionType",
+    ];
+    
     private string $resource = "src/FACT1/UBL-Invoice-2.1.xsd";
 
     public $output;
@@ -118,24 +147,52 @@ final class RooCommand extends Command
     private function injectRules()
     {
 
-
             $e = new \CleverIt\UBL\Invoice\Command\UBL\RoResources();
             $rules = $e->buildInvoice();
 
-            // echo print_r($roo[0]['elements']).PHP_EOL;
+            foreach($rules["invoice"] as $key => $value) {
 
-
-            foreach($rules["Invoice"] as $key => $value) {
-                
                 foreach($this->data[0]['elements'] as $eKey => $eValue) {
 
                     if(isset($eValue['name']) && $eValue['name'] == $key) {
-                        
+               
                         unset($rules["Invoice"][$key]['type']);
-
-                        $this->data[0]['elements'][$eKey] = array_merge($value, $eValue);
+                        $this->data[0]['elements'][$eKey] = array_merge($eValue,$value);
 
                     }
+                }
+
+            }
+
+            foreach($rules['nested'] as $key => $value) {
+
+                foreach($this->data[0]['elements'] as $eKey => $eValue) {
+                
+                    if(isset($eValue['type']) && $eValue['type'] == $key) {
+                    
+
+                        if(count($value) == 1) {
+                        
+                            foreach($eValue['elements'] as $pKey => $prop){
+
+                                if($prop['name'] == array_key_first($value)){
+
+                                    $eValue['elements'][$pKey] = array_merge($prop, $value[$prop['name']]);
+                                    $this->data[0]['elements'][$eKey] = $eValue;
+
+                                }
+
+                            }
+                            //now find the child prop to inject
+
+                            // If there are more than one nesting level, we iterate down until we hit the required prop
+
+                        }
+                        else {
+                            //iterate again
+                        }
+                    }
+               
                 }
 
             }
@@ -205,6 +262,19 @@ final class RooCommand extends Command
 
         }
 
+        foreach($this->cacAppend as $append)
+        {
+
+            foreach($this->cacType->elements as $node) {
+                if($node['type'] == $append) {
+                    $tmp[] = $node;
+                    break;
+                }
+
+            }
+
+        }
+
         return $tmp;
 
     }
@@ -222,8 +292,6 @@ final class RooCommand extends Command
 
         $base_type = $type->type_map[$parts[1]];
 
-        echo "Base = {$base_type}".PHP_EOL;
-
         foreach($type->elements as $node)
         {
             if($node['type'] == $base_type || $node['type'] == $parts[1])
@@ -234,8 +302,6 @@ final class RooCommand extends Command
         }
 
         return $type->getPrimativeType($base_type);
-
-        return $base_type;
 
     }
 
@@ -256,6 +322,33 @@ final class RooCommand extends Command
 
         return $result->count() > 0 ? $result->item(0)->nodeValue : '';
 
+    }
+
+
+    public static function searchTypeValues(Collection $collection)
+    {
+        return $collection->flatMap(function ($item) {
+            // Check if the item is an array or a collection
+            if (is_array($item) || $item instanceof Collection) {
+                // If it's an array or a collection, recursively search
+                if(isset($item['type']) && $item['type'] != 'InvoiceType')
+                    return $item['type']; 
+                
+                return self::searchTypeValues(Collection::make($item));
+            }
+
+            if(is_string($item) && substr($item, -4) == 'Type') {
+                return [$item];
+                // echo "{$item} is a string".PHP_EOL;
+            }
+            // If the item is an object and has a 'type' property, return its value
+            if (is_object($item) && property_exists($item, 'type')) {
+                return $item->type;
+            }
+
+            // If none of the conditions are met, return an empty collection
+            return collect([]);
+        });
     }
 
 }

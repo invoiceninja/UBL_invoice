@@ -72,10 +72,9 @@ class RoResources
 
         $this->setBuildArray($this->invoiceRules())
              ->setBuildArray($this->genericEntityRules())
-             ->setBuildArray($this->complexRules())
              ->getBuildArray();
 
-        return ['Invoice' => $invoice];
+        return ['invoice' => $invoice, "nested" => $this->complexRules()];
     }
 
     public function ruleSet(): array 
@@ -83,51 +82,34 @@ class RoResources
         $rules = [
             [
                 'name' => 'InvoiceTypeCode',
-                'base_type' => 'string', 
-                'min_length' => null,
-                'max_length' => null, 
-                'pattern' => null,
+                'base_type' => 'string',
                 'resource' => ['380','384','389','751'],
             ],
             [
                 'name' => 'StreetName',
                 'base_type' => 'string', 
                 'min_length' => 1,
-                'max_length' => null, 
-                'pattern' => null,
-                'resource' => [],
             ],
             [
                 'name' => 'CityName',
                 'base_type' => 'string', 
                 'min_length' => 1,
-                'max_length' => null, 
-                'pattern' => null,
-                'resource' => [],
             ],
             [
                 'name' => 'DescriptionCode',
-                'base_type' => 'string', 
-                'min_length' => null,
-                'max_length' => null, 
-                'pattern' => null,
+                'base_type' => 'string',
                 'resource' => ['3', '35', '432'],
             ],
             [
                 'name' => 'CreditTypeCode',
-                'base_type' => 'string', 
-                'min_length' => null,
-                'max_length' => null, 
-                'pattern' => null,
+                'base_type' => 'string',
                 'resource' => ['381'],
             ],
             [
                 'name' => 'Note',
                 'base_type' => 'string', 
                 'min_length' => 0,
-                'max_length' => 300, 
-                'pattern' => '',
-                'resource' => [],
+                'max_length' => 300,
             ],
         ];
 
@@ -142,13 +124,14 @@ class RoResources
     public function complexRules()
     {
         return [
-            'InvoicePeriod' => [
+            'PeriodType' => [
                 'DescriptionCode' => [
                     'base_type' => 'string', 
-                    'min_length' => null,
-                    'max_length' => null, 
-                    'pattern' => null,
-                    'resource' => ['3', '35', '432'],
+                    'resource' => [
+                        '3' => "Invoice Date", 
+                        '35' => "Delivery Date",
+                        '432' => "Payment Date",
+                    ],
                 ],
             ],
             'AccountingSupplierParty' => [
@@ -164,27 +147,27 @@ class RoResources
                         'StreetName' => [
                             'base_type' => 'string', 
                             'min_length' => 1,
-                            'max_length' => null, 
-                            'pattern' => null,
-                            'resource' => [],
                         ],
                         'CityName' => [
                             'base_type' => 'string', 
                             'min_length' => 1,
-                            'max_length' => null, 
-                            'pattern' => null,
-                            'resource' => [],
                         ],
                         'CountrySubentity' => [
                             'base_type' => 'string', 
                             'min_length' => 1,
-                            'max_length' => null, 
-                            'pattern' => null,
                             'resource' => ['RO-AB','RO-AG','RO-AR','RO-B','RO-BC','RO-BH','RO-BN','RO-BR','RO-BT','RO-BV','RO-BZ','RO-CJ','RO-CL','RO-CS','RO-CT', 'RO-CV', 'RO-DB', 'RO-DJ', 'RO-GJ', 'RO-GL', 'RO-GR', 'RO-HD', 'RO-HR' , 'RO-IF', 'RO-IL', 'RO-IS', 'RO-MH', 'RO-MM', 'RO-MS', 'RO-NT', 'RO-OT', 'RO-PH', 'RO-SB', 'RO-SJ', 'RO-SM', 'RO-SV', 'RO-TL', 'RO-TM', 'RO-TR', 'RO-VL', 'RO-VN', 'RO-VS'],
                         ]
                     ]
                 ]
-            ]
+            ],
+            'InvoiceDocumentReference' => [
+                'ID' => [
+                    'base_type' => 'string', 
+                    'min_length' => 1,
+                    'max_length' => 200,
+                ],
+            ],
+
         ];
     } 
 
@@ -195,16 +178,10 @@ class RoResources
                 'StreetName' => [
                     'base_type' => 'string', 
                     'min_length' => 1,
-                    'max_length' => null, 
-                    'pattern' => null,
-                    'resource' => [],
                 ],
                 'CityName' => [
                     'base_type' => 'string', 
                     'min_length' => 1,
-                    'max_length' => null, 
-                    'pattern' => null,
-                    'resource' => [],
                 ]
             ]
         ];
@@ -213,13 +190,10 @@ class RoResources
     public function invoiceRules()
     {
         return [
-            'InvoiceTypeCode' => array_merge($this->stub_validation, [
+            'InvoiceTypeCode' => [
                 'base_type' => 'string', 
-                'min_length' => null,
-                'max_length' => null, 
-                'pattern' => null,
                 'resource' => ['380','384','389','751'],
-            ]),
+            ],
         ];
     }
 
@@ -228,9 +202,6 @@ class RoResources
         return [
             'CreditTypeCode' => [
                 'base_type' => 'string', 
-                'min_length' => null,
-                'max_length' => null, 
-                'pattern' => null,
                 'resource' => ['381'],
             ],
         ];
@@ -241,34 +212,19 @@ class RoResources
         return [
             'ID' => [
                 'base_type' => 'string', 
-                'min_length' => null,
-                'max_length' => null, 
                 'pattern' => '([0-9])',
-                'resource' => [],
             ],
             'Note' => [
                 'base_type' => 'string', 
                 'min_length' => 0,
                 'max_length' => 300, 
-                'pattern' => '',
-                'resource' => [],
             ],
-            'BillingReference' => [
-                'ID' => [
-                    'base_type' => 'string', 
-                    'min_length' => 1,
-                    'max_length' => 200, 
-                    'pattern' => '',
-                    'resource' => [],
-                ],
-                'InvoiceDocumentReference' => [
-                    'base_type' => 'string', 
-                    'min_length' => 1,
-                    'max_length' => 200, 
-                    'pattern' => '',
-                    'resource' => [],
-                ]
-            ]
+            'InvoiceDocumentReference' => [
+                'base_type' => 'string', 
+                'min_length' => 1,
+                'max_length' => 200,
+            ],
         ];
     }
+
 }
