@@ -109,7 +109,8 @@ class Ubl
 
         $this->parentProps()
         ->childNodes()
-        ->childTypes();
+        ->childTypes()
+        ->updateRules();
 
         $elementsString = json_encode($this->data, JSON_PRETTY_PRINT);
         $fp = fopen("./stubs/FactUbl.json", 'w');
@@ -219,6 +220,57 @@ class Ubl
 
         }
 
+        $neonates = [];
+
+        foreach($infants as $neonate)
+        {
+
+            if(isset($neonate['elements'])) {
+                foreach($neonate['elements'] as $e) {
+
+                    if(stripos($e['base_type'], 'Type') !== false) {
+
+                        foreach($this->cacType->elements as $node) {
+                            if($node['type'] == $e['base_type']) {
+                                $neonates[] = $node;
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                }
+            }
+
+        }
+
+
+        $foetuses = [];
+
+        foreach($neonates as $foetus) {
+
+            if(isset($foetus['elements'])) {
+                foreach($foetus['elements'] as $e) {
+
+                    if(stripos($e['base_type'], 'Type') !== false) {
+
+                        foreach($this->cacType->elements as $node) {
+                            if($node['type'] == $e['base_type']) {
+                                $foetuses[] = $node;
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                }
+            }
+
+        }
+
+
 
         $parent = $this->data;
         
@@ -230,6 +282,12 @@ class Ubl
 
         foreach($infants as $infant)
             $this->data[] = $infant;
+
+        foreach($neonates as $neonate)
+            $this->data[] = $neonate;
+
+        foreach($foetuses as $foetus)
+            $this->data[] = $foetus;
 
         return $this;
     }
@@ -248,20 +306,63 @@ class Ubl
 
         return $type->getNamedType($parts[1]);
 
-        // $base_type = $type->type_map[$parts[1]];
-
-        // foreach($type->elements as $node)
-        // {
-        //     if($node['base_type'] == $base_type || $node['type'] == $parts[1])
-        //     { 
-        //         return $node; //more complex nodes
-        //     }
-
-        // }
-
-        // return $type->getPrimativeType($base_type); //cbc
-
     }
 
+    private function updateRules(): self
+    {
+
+
+        $e = new \CleverIt\UBL\Invoice\Command\UBL\RoResources();
+        $rules = $e->buildInvoice();
+
+        foreach($rules["invoice"] as $key => $value) {
+
+            foreach($this->data[0]['elements'] as $eKey => $eValue) {
+
+                if(isset($eValue['name']) && $eValue['name'] == $key) {
+
+                    $this->data[0]['elements'][$eKey] = array_merge($eValue, $value);
+
+                }
+            }
+
+        }
+
+        foreach($rules['nested'] as $key => $value)
+        {
+
+            foreach($this->data as $dKey => $dValue)
+            {
+                if($key == $dValue['type'])
+                {
+                    foreach($rules['nested'][$key] as $nestKey => $value)
+                    {
+                        foreach($dValue['elements'] as $ddKey => $ddValue)
+                        {
+                            if($ddValue['name'] == $nestKey){
+
+                                echo print_r($ddKey).PHP_EOL;
+                                echo "1111".PHP_EOL;
+                                echo print_r($ddValue).PHP_EOL;
+                                
+                                echo "2222".PHP_EOL;
+
+                                echo print_r($value).PHP_EOL;
+                                echo "3333".PHP_EOL;
+
+                                $this->data[$dKey]['elements'][$ddKey] = array_merge($this->data[$dKey]['elements'][$ddKey], $value);
+                            }
+
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
+        return $this;
+    }
 
 }
