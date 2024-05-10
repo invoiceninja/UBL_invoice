@@ -44,6 +44,7 @@ class Ubl
     private UdtType $udtType;
     private CccType $cctType;
     private CbcType $cbcType;
+    private array $type_tracker = [];
 
     private array $cacAppend = [
         "BillingReferenceLineType",
@@ -176,7 +177,11 @@ class Ubl
         foreach($this->data['elements'] as $key => $element)
         {
             if(stripos($element['base_type'], 'Type') !== false) {     
-                    $types->push($element['base_type']);                    
+                
+                if(!in_array($element['base_type'], $this->type_tracker))
+                    $this->type_tracker[] = $element['base_type'];
+
+                $types->push($element['base_type']);                    
             }
         
         }
@@ -201,11 +206,12 @@ class Ubl
                 foreach($infant_type['elements'] as $e)
                 {
 
-                    if(stripos($e['base_type'], 'Type') !== false)
+                    if(stripos($e['base_type'], 'Type') !== false && !in_array($e['base_type'], $this->type_tracker))
                     {
 
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
+                                $this->type_tracker[] = $e['base_type'];
                                 $infants[] = $node;
                                 break;
                             }
@@ -228,10 +234,14 @@ class Ubl
             if(isset($neonate['elements'])) {
                 foreach($neonate['elements'] as $e) {
 
-                    if(stripos($e['base_type'], 'Type') !== false) {
+                    if(stripos($e['base_type'], 'Type') !== false && !in_array($e['base_type'], $this->type_tracker)) {
 
                         foreach($this->cacType->elements as $node) {
+
                             if($node['type'] == $e['base_type']) {
+                            
+                            $this->type_tracker[] = $e['base_type'];
+
                                 $neonates[] = $node;
                                 break;
                             }
@@ -253,10 +263,11 @@ class Ubl
             if(isset($foetus['elements'])) {
                 foreach($foetus['elements'] as $e) {
 
-                    if(stripos($e['base_type'], 'Type') !== false) {
+                    if(stripos($e['base_type'], 'Type') !== false && !in_array($e['base_type'], $this->type_tracker)) {
 
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
+                                $this->type_tracker[] = $e['base_type'];
                                 $foetuses[] = $node;
                                 break;
                             }
@@ -340,16 +351,6 @@ class Ubl
                         foreach($dValue['elements'] as $ddKey => $ddValue)
                         {
                             if($ddValue['name'] == $nestKey){
-
-                                echo print_r($ddKey).PHP_EOL;
-                                echo "1111".PHP_EOL;
-                                echo print_r($ddValue).PHP_EOL;
-                                
-                                echo "2222".PHP_EOL;
-
-                                echo print_r($value).PHP_EOL;
-                                echo "3333".PHP_EOL;
-
                                 $this->data[$dKey]['elements'][$ddKey] = array_merge($this->data[$dKey]['elements'][$ddKey], $value);
                             }
 
