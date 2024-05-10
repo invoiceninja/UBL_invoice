@@ -89,7 +89,7 @@ class CacType
                 }
             }
 
-            $data[] = ['type' => $base_type, 'elements' => $elements[0]];
+            $data[] = ['type' => $base_type, 'help' => '', 'choices' => [], 'elements' => $elements[0]];
         }
 
         $this->elements = $data;
@@ -215,5 +215,12 @@ class CacType
     {
         $xpath = new \DOMXPath($this->doc);
         return $xpath->query($path, $element);
+    }
+
+
+    public function getNamedType(string $name): array
+    {
+        return $this->parseNodeTypes(['name' => $name]);
+        // return [];
     }
 }

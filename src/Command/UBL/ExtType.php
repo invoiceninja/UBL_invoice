@@ -206,9 +206,9 @@ class ExtType
         return $type ?? throw new \Exception("could not find related type {$related_type}");
     }
 
-    public function getType(): string
+    public function getType(string $name): string
     {
-        $base_type = $this->type_map[$this->name];
+        $base_type = $this->type_map[$name];
 
         $xpath = "//xsd:complexType [@name='{$base_type}']";
         $query = $this->getXPath($xpath);
@@ -225,6 +225,11 @@ class ExtType
         $xpath = new \DOMXPath($this->doc);
         return $xpath->query($path, $element);
     }
+ 
+    public function getNamedType(string $name): array
+    {
+        $base_type = $this->type_map[$name];
 
-    // public function 
+        return ['base_type' => $base_type];
+    }
 }

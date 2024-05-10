@@ -50,7 +50,7 @@ class CbcType
 
             $complexBaseType = $this->getUdtType($value);
 
-            $data[] = array_merge($this->stub_validation, ['name' => $key, 'base_type' => $complexBaseType, 'type' => $value]);
+            $data[] = array_merge($this->stub_validation, ['base_type' => $complexBaseType]);
         }
 
         $this->elements = $data;
@@ -120,4 +120,12 @@ class CbcType
         return $xpath->query($path, $element);
     }
 
+    public function getNamedType(string $name): array
+    {
+        $base_type = $this->getPrimativeType($name);
+        // $rules = $this->get
+        return [
+            'base_type' => $base_type,
+        ];
+    }
 }

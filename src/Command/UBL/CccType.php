@@ -50,12 +50,14 @@ class CccType
 
         throw new \Exception("CCT => Could not find type {$name}");
     }
-
-
     private function getXPath(string $path, \DomElement $element = null): ?\DOMNodeList
     {
         $xpath = new \DOMXPath($this->doc);
         return $xpath->query($path, $element);
+    }
+    public function getNamedType(string $name): array
+    {
+        return ['base_type' => $this->getPrimativeType($name)];
     }
 
 }

@@ -245,6 +245,8 @@ final class RooCommand extends Command
                     
                     $name = $childNode->getAttribute('ref');
 
+                    echo $name.PHP_EOL;
+
                     if($name == 'ext:UBLExtensions')
                         continue;
                     
@@ -255,7 +257,14 @@ final class RooCommand extends Command
                     if($child_array['maxOccurs'] == 'unbounded')
                         $child_array['maxOccurs'] = "-1";
                     
+                        if($name == "cac:AccountingSupplierParty")
+                            echo print_r($child_array).PHP_EOL;
+
                     $tmp[] = $child_array;
+
+                    
+                    echo $name.PHP_EOL;
+
                 }
 
             }

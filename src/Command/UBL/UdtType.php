@@ -70,4 +70,8 @@ class UdtType
         return $xpath->query($path, $element);
     }
 
+    public function getNamedType(string $name): array
+    {
+        return ['base_type' => $this->getPrimativeType($name)];
+    }
 }
