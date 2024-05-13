@@ -131,6 +131,7 @@ class RoResources
             ],
             'DocumentReferenceType' => [
                 'ID' => [ 
+                    'min_length' => 1,
                     'max_length' => 200,
                 ],
                 'DocumentDescription' => [ 

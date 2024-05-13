@@ -7,9 +7,11 @@ use Laminas\Code\Generator\ClassGenerator;
 use Laminas\Code\Generator\DocBlockGenerator;
 use Laminas\Code\Generator\PropertyGenerator;
 use Laminas\Code\Generator\DocBlock\Tag\GenericTag;
+use Laminas\Code\Generator\TypeGenerator;
 
 class Gen
 {
+    public const LINE_FEED = "\n";
 
     public function __construct()
     {
@@ -29,34 +31,59 @@ class Gen
         }
     }
 
-    public function init($class)
+    public function init($_class)
     {
         // echo print_r($class).PHP_EOL;
 
         $props = [];
-        foreach($class['elements'] as $key => $element)
+
+        
+        $class = new ClassGenerator();
+        $class->setName($_class['type'])->setExtendedClass('Data');
+
+        foreach($_class['elements'] as $key => $element)
         {
-            // echo print_r($element).PHP_EOL;
+            // // $type = new TypeGenerator($element['name']);
+            $type = TypeGenerator::fromTypeString($element['name']);
+            
+            // // echo print_r($element).PHP_EOL;
+            // $prop = new PropertyGenerator(name: $element['name'], flags: PropertyGenerator::FLAG_PUBLIC, type: $type);
+            // // $prop->setData
+            // $props[] = $prop;
 
-            $props[] = new PropertyGenerator(name: $element['name'], flags: PropertyGenerator::FLAG_PUBLIC, type: $element['name']);
-        }
+            
+            $property = new PropertyGenerator();
+            $property->setName($element['name']);
+            $property->setVisibility(PropertyGenerator::VISIBILITY_PUBLIC);
+            $property->setType($type); 
+            
+            $property->omitDefaultValue(true);
 
-        echo (new ClassGenerator())
-            ->setName($class['type'])
-            ->setExtendedClass('Data')
-            ->setDocblock(
+            $class->addPropertyFromGenerator($property);
+            $class->setDocblock(
                 (new DocBlockGenerator())
                     ->setShortDescription('Sample generated class')
-                    ->setLongDescription('This is a class generated with Laminas\Code\Generator.')
-                    ->setTags([
-                        new GenericTag('version', '$Rev:$'),
-                        new GenericTag('license', 'New BSD'),
-                    ])
-            )
-            ->addProperties($props)
-        ->addConstants([
-                new PropertyGenerator('bat', 'foobarbazbat', PropertyGenerator::FLAG_CONSTANT)
-            ])
-            ->generate();
+            );
+
+            $class->setNamespaceName("FatturaPA");
+
+        }
+
+        $class_string = "<?php " . self::LINE_FEED.self::LINE_FEED;
+        $class_string .= $class->generate();
+
+        $fp = fopen("./stubs/Classes/{$_class['type']}.php", 'w');
+        fwrite($fp, $class_string);
+        fclose($fp);
+
+        // echo (new ClassGenerator())
+        //     ->setName($class['type'])
+        //     ->setExtendedClass('Data')
+        //     
+        //     ->addProperties($props)
+        // ->addConstants([
+        //         new PropertyGenerator('bat', 'foobarbazbat', PropertyGenerator::FLAG_CONSTANT)
+        //     ])
+        //     ->generate();
     }
 }

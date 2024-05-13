@@ -112,8 +112,8 @@ class UblObject
 
         $this->parentProps()
         ->childNodes()
-        ->childTypes();
-        // ->updateRules();
+        ->childTypes()
+        ->updateRules();
 
         
         $this->final = new \stdClass();
@@ -431,27 +431,15 @@ echo "iunfant => {$key} - {$infant['type']}".PHP_EOL;
 
         foreach($rules["invoice"] as $key => $value) {
 
-            foreach($this->data as $dKey => $eValue) {
 
-                $tmp_elements = (array)$eValue;
-
-                if(!isset($tmp_elements['elements']))
-                    continue;
-
-                foreach($tmp_elements['elements'] as $eKey => $eValue) {
-
-                    if(isset($eValue['name']) && $eValue['name'] == $key) {
-
-                        echo "evalue name = {$eValue['name']}".PHP_EOL;
-                        echo "ekey = {$eKey}".PHP_EOL;
-                        echo "dkey = {$dKey}".PHP_EOL;
-                        echo "key = {$key}".PHP_EOL;
-                        $this->data[$dKey]['elements'][$eKey] = (object) array_merge((array)$eValue, (array)$value);
-
-                    }
             
-                }
+            foreach($this->data["InvoiceType"]['elements'] as $eKey => $eValue) {
 
+                if(isset($eValue['name']) && $eValue['name'] == $key) {
+
+                    $this->data["InvoiceType"]['elements'][$eKey] = array_merge($eValue, $value);
+
+                }
             }
 
         }
