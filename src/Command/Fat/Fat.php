@@ -28,6 +28,7 @@ class Fat
     protected \DomDocument $document;
     private array $type_map = [];
     private array $data = [];
+    public object $final;
 
     public function __construct()
     {
@@ -45,11 +46,10 @@ class Fat
         $this->mapTypes()
         ->getParentTypes();
 
-
-        $final = new \stdClass;
-        $final->InvoiceType = (object)$this->data;
+        $this->final = new \stdClass;
+        $this->final->InvoiceType = (object)$this->data;
         
-        $elementsString = json_encode($final, JSON_PRETTY_PRINT);
+        $elementsString = json_encode($this->final, JSON_PRETTY_PRINT);
         $fp = fopen("./stubs/FatturaPAOBJ.json", 'w');
         fwrite($fp, $elementsString);
         fclose($fp);
@@ -124,8 +124,7 @@ class Fat
                 {                        
                     $child_array = $this->extractAttributes($childNode);
 
-                    
-                    if(is_null($child_array['name'])) {
+                    if(is_array($child_array) && !isset($child_array['name']) || is_null($child_array['name'])) {
                         continue;
                     }
 
@@ -260,8 +259,6 @@ class Fat
         if(!$type)
             return [];
         
-        echo "extracting resource for {$type}".PHP_EOL;
-
         $resource = [];
 
         $xpath = new \DOMXPath($this->document);
