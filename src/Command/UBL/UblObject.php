@@ -3,6 +3,8 @@
 namespace CleverIt\UBL\Invoice\Command\UBL;
 
 use DOMElement;
+use Illuminate\Support\Collection;
+use CleverIt\UBL\Invoice\Command\UBL\Type;
 use CleverIt\UBL\Invoice\Command\UBL\CacType;
 use CleverIt\UBL\Invoice\Command\UBL\CbcType;
 use CleverIt\UBL\Invoice\Command\UBL\CccType;
@@ -35,7 +37,7 @@ class UblObject
 
     private string $prefix = "xsd";
 
-    public object $data;
+    public array $data = [];
 
     private ExtType $extType;
     private CacType $cacType;
@@ -93,7 +95,6 @@ class UblObject
     public function init(): self
     {
 
-        $this->data = new \stdClass;
         $this->cbcType = new CbcType();
 
         $this->extType = new ExtType();
@@ -161,7 +162,7 @@ class UblObject
                 $maxOccurs = "-1";
             }
 
-            $parent_elements[] = (object)array_merge($this->stub_validation, [
+            $parent_elements[$parts[1]] = array_merge($this->stub_validation, [
                 'name' => $parts[1],
                 'base_type' => $element->getAttribute('ref'),
                 'min_occurs' => (int)$element->getAttribute('minOccurs'),
@@ -170,24 +171,20 @@ class UblObject
 
         }
 
-        $this->data->type = 'InvoiceType'; 
-            
-            $this->data->help = '';
-            $this->data->choices = [];
-            $this->data->elements = (object)$parent_elements;
-        
+        $this->data = [
+            'type' => 'InvoiceType',
+            'help' => '',
+            'choices' => [],
+            'elements' => $parent_elements
+        ];
 
         return $this;
     }
 
     private function childNodes(): self
     {
-        foreach($this->data->elements as $key => $element) {
-
-            if(isset($element->elements))
-                $element->elements = (object)$element->elements;
-
-            $this->data->elements->{$key} = (object)array_merge((array)$element, (array)$this->harvestNode($element->base_type));
+        foreach($this->data['elements'] as $key => $element) {
+            $this->data['elements'][$key] = array_merge($element, $this->harvestNode($element['base_type']));
         }
 
         return $this;
@@ -197,14 +194,14 @@ class UblObject
     {
         $types = collect();
 
-        foreach($this->data->elements as $key => $element) {
-            if(stripos($element->base_type, 'Type') !== false) {
+        foreach($this->data['elements'] as $key => $element) {
+            if(stripos($element['base_type'], 'Type') !== false) {
 
-                if(!in_array($element->base_type, $this->type_tracker)) {
-                    $this->type_tracker[] = $element->base_type;
+                if(!in_array($element['base_type'], $this->type_tracker)) {
+                    $this->type_tracker[] = $element['base_type'];
                 }
 
-                $types->push($element->base_type);
+                $types->push($element['base_type']);
             }
 
         }
@@ -231,7 +228,7 @@ class UblObject
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
                                 $this->type_tracker[] = $e['base_type'];
-                                $infants[] = $node;
+                                $infants[] =[$e['name'] => $node];
                                 break;
                             }
                         }
@@ -260,7 +257,7 @@ class UblObject
 
                                 $this->type_tracker[] = $e['base_type'];
 
-                                $neonates[] = $node;
+                                $neonates[] = [$e['name'] => $node];
                                 break;
                             }
                         }
@@ -286,7 +283,7 @@ class UblObject
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
                                 $this->type_tracker[] = $e['base_type'];
-                                $foetuses[] = $node;
+                                $foetuses[] = [$e['name'] => $node];
                                 break;
                             }
                         }
@@ -301,34 +298,63 @@ class UblObject
 
 
 
-        // $parent = $this->data;
+        $parent = $this->data;
 
-        // $this->data = [];
-        // $this->data[] = $parent;
-
+        $this->data = [];
+        $this->data[] = $parent;
 
         foreach($child_types as $type) {
-            $this->data->{$type['type']} = (object)json_decode(json_encode($type),false);
-            // $this->data[] = $type;
+
+            $new_set = [];
+            foreach($type['elements'] as $stub){
+                $new_set[$stub['name']] = $stub;
+            }
+            $type['elements'] = $new_set;
+
+            $this->data[] = (object)$type;
         }
 
         foreach($infants as $infant) {
 
-            $this->data->{$infant['type']} = (object)json_decode(json_encode($infant),false);
-            // $this->data[] = $infant;
+            $new_set = [];
+
+            if(isset($infant['elements']))
+            {
+
+                foreach($infant['elements'] as $stub) {
+                    $new_set[$stub['name']] = $stub;
+                }
+                $infant['elements'] = $new_set;
+    
+            }
+            $this->data[] = (object)$infant;
         }
 
         foreach($neonates as $neonate) {
             
-$this->data->{$neonate['type']} = (object)json_decode(json_encode($neonate),false);
-
-            // $this->data[] = $neonate;
+            $new_set = [];
+            if(isset($neonate['elements']))
+            {
+                foreach($neonate['elements'] as $stub) {
+                    $new_set[$stub['name']] = $stub;
+                }
+                $neonate['elements'] = $new_set;
+            }
+            $this->data[] = (object)$neonate;
         }
 
         foreach($foetuses as $foetus) {
 
-$this->data->{$foetus['type']} = (object)json_decode(json_encode($foetus),false);
-            // $this->data[] = $foetus;
+            $new_set = [];
+
+            if(isset($foetus['elements']))
+            {
+                foreach($foetus['elements'] as $stub) {
+                    $new_set[$stub['name']] = $stub;
+                }
+                $foetus['elements'] = $new_set;
+            }
+            $this->data[] = (object)$foetus;
         }
 
         return $this;
@@ -359,11 +385,11 @@ $this->data->{$foetus['type']} = (object)json_decode(json_encode($foetus),false)
 
         foreach($rules["invoice"] as $key => $value) {
 
-            foreach($this->data->elements as $eKey => $eValue) {
+            foreach($this->data[0]['elements'] as $eKey => $eValue) {
 
-                if(isset($eValue->name) && $eValue->name == $key) {
+                if(isset($eValue['name']) && $eValue['name'] == $key) {
 
-                    $this->data->elements->{$eKey} = (object)array_merge((array)$eValue, (array)$value);
+                    $this->data[0]['elements'][$eKey] = array_merge($eValue, $value);
 
                 }
             }
@@ -373,20 +399,18 @@ $this->data->{$foetus['type']} = (object)json_decode(json_encode($foetus),false)
         foreach($rules['nested'] as $key => $value) {
 
             foreach($this->data as $dKey => $dValue) {
-                if($key == $dKey) {
+                if(isset($dValue->type) && $key == $dValue->type) {
                     foreach($rules['nested'][$key] as $nestKey => $value) {
                         foreach($dValue->elements as $ddKey => $ddValue) {
-                            if($ddValue->name == $nestKey) {
+                            if(is_array($ddValue) && $ddValue['name'] == $nestKey) {
 
-                                echo print_r($value).PHP_EOL;
-                                echo "dd name = {$ddValue->name}".PHP_EOL;
-                                echo "nest key = ".$nestKey.PHP_EOL;
-                                echo "ddkey = {$ddKey}".PHP_EOL;
-                                echo "key = {$key}".PHP_EOL; 
-                                echo "dkey = {$dKey}".PHP_EOL;
+                                // echo print_r($this->data[$dKey]->elements[$ddKey]).PHP_EOL;
+                                $this->data[$dKey]->elements[$ddKey] = (object)array_merge((array)$this->data[$dKey]->elements[$ddKey], $value);
+                            }
+                            elseif(is_object($ddValue) && $ddValue->name == $nestKey){
 
-                                echo print_r($$this->data->{$dKey}->elements->{$ddKey}).PHP_EOL;
-                                $this->data->{$dKey}->elements->{$ddKey} = (object)array_merge((array)$this->data->{$dKey}->elements->{$ddKey}, (array)$value);
+                                $this->data[$dKey]->elements[$ddKey] = (object)array_merge((array)$this->data[$dKey]->elements[$ddKey], $value);
+
                             }
 
                         }
