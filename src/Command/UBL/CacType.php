@@ -24,16 +24,16 @@ class CacType
            "base_type" => null,
            "resource" => [],
            "length" => null,
-           "fraction_digits" => null,
-           "total_digits" => null,
-           "max_exclusive" => null,
-           "min_exclusive" => null,
-           "max_inclusive" => null,
-           "min_inclusive" => null,
+        //    "fraction_digits" => null,
+        //    "total_digits" => null,
+        //    "max_exclusive" => null,
+        //    "min_exclusive" => null,
+        //    "max_inclusive" => null,
+        //    "min_inclusive" => null,
+        //    "whitespace" => null,
            "max_length" => null,
            "min_length" => null,
            "pattern" => null,
-           "whitespace" => null,
    ];
     private CbcType $cbcType;
     private UdtType $udtType;
@@ -125,13 +125,15 @@ class CacType
                     if(in_array($attr->nodeName, ['ref', 'minOccurs','maxOccurs'])) {
 
                         $key = $attr->nodeName == 'ref' ? 'name' : $attr->nodeName;
-                        
-                        if($attr->nodeName == 'maxOccurs' && $attr->nodeValue == 'unbounded')
-                        {
-                            $child_array['maxOccurs'] = "-1";
-                        }
-                        else
+
+                        if($attr->nodeName == 'maxOccurs') {
+                            $child_array['max_occurs'] = $attr->nodeValue == 'unbounded' ? -1 : (int)$attr->nodeValue;
+                        } elseif($attr->nodeName == 'minOccurs') {
+                            $child_array['min_occurs'] = (int)$attr->nodeValue;
+                        } else {
                             $child_array[$key] = $attr->nodeValue;
+                        }
+
 
                         $child_array['help'] = $this->getAnnotation($childNode);
                     }

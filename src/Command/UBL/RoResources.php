@@ -218,7 +218,7 @@ class RoResources
                     'max_length' => 200,
                 ],
                 'AdditionalItemProperty' => [
-                    'maxOccurs' => 50,
+                    'max_occurs' => 50,
                 ],
             ],
             'ItemPropertyType' => [

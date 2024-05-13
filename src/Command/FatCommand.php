@@ -24,17 +24,19 @@ final class FatCommand extends Command
        "base_type" => null,
        "resource" => [],
        "length" => null,
-       "fraction_digits" => null,
-       "total_digits" => null,
-       "max_exclusive" => null,
-       "min_exclusive" => null,
-       "max_inclusive" => null,
-       "min_inclusive" => null,
+    //    "fraction_digits" => null,
+    //    "total_digits" => null,
+    //    "max_exclusive" => null,
+    //    "min_exclusive" => null,
+    //    "max_inclusive" => null,
+    //    "min_inclusive" => null,
+    //    "whitespace" => null,
        "max_length" => null,
        "min_length" => null,
        "pattern" => null,
-       "whitespace" => null,
    ];
+
+   private array $type_map = [];
 
     protected \DomDocument $document;
 
@@ -56,6 +58,8 @@ final class FatCommand extends Command
         $this->document = new \DomDocument();
         $this->document->load("src/FatturaPA/Schema_del_file_xml_FatturaPA_v1.2.2.xsd");
 
+        $this->mapTypes();
+
         $data = $this->getParentTypes();
 
         $data = $this->normalizeTypes($data);
@@ -70,6 +74,20 @@ final class FatCommand extends Command
 
     }
 
+    public function mapTypes()
+    {
+        
+        $types = $this->document->getElementsByTagName('element');
+
+        foreach($types as $type)
+        {
+            if($type instanceof \DOMElement && $type->hasAttribute(('type')))
+                $this->type_map[$type->getAttribute(('name'))] = $type->getAttribute('type'); 
+        }
+
+        return $this;
+    }
+
     public function expandTypes(array $data): array
     {
         $types = [];
@@ -82,7 +100,7 @@ final class FatCommand extends Command
             {
                 $dto['type'] = $node['type'];
                 $sequence = $this->document->getElementsByTagName($node['type']);
-                $dto['elements'] = $this->processSequences($sequence);
+                $dto['elements'] = (object)$this->processSequences($sequence);
             }
 
             $types[] = $dto;
@@ -119,8 +137,6 @@ final class FatCommand extends Command
                 }
 
                 $set['choices'] = $choice_keys;
-
-                // $set['choices'] = $choice_array;
 
                 $sequence_list = $this->processSequences($sequence);
 
@@ -165,10 +181,15 @@ final class FatCommand extends Command
 
                         $annotation = $this->extractAnnotation($childNode);
                         $child_array['help'] = $annotation;
-                        $child_array['resource'] = isset($child_array['base_type']) ? $this->extractResource($child_array['base_type']) : [];
+                        $child_array['resource'] = $this->extractResource($child_array['type']);
                         
-                        if(isset($child_array['base_type']))
-                            $child_array = array_merge($child_array, $this->extractRestriction($child_array['base_type']));
+                        if(isset($child_array['type'])){
+                            $child_array = array_merge($child_array, $this->extractRestriction($child_array['type']));
+                            unset($child_array['type']);
+                        }
+
+                        if(!isset($child_array['base_type']) && isset($child_array['name']))
+                            $child_array['base_type'] = $this->type_map[$child_array['name']];
 
                         $data[] = array_merge($this->stub_validation, $child_array);
                     }
@@ -213,8 +234,12 @@ final class FatCommand extends Command
 
     }
 
-    public function extractResource(string $type)
+    public function extractResource(?string $type)
     {
+        if(!$type)
+            return [];
+        
+        echo "extracting resource for {$type}".PHP_EOL;
 
         $resource = [];
 
@@ -225,6 +250,63 @@ final class FatCommand extends Command
             return $resource;
 
         $node = $result->item(0);
+
+
+        // switch($type){
+        //     case "String10Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 10;
+        //     break;
+        //     case "String15Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 15;
+        //     break;
+        //     case "String20Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 20;
+        //     break;
+        //     case "String35Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 35;
+        //     break;
+        //     case "String60Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 60;
+        //     break;
+        //     case "String80Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 80;
+        //     break;
+        //     case "String100Type":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 100;
+        //     break;
+        //     case "String35LatinExtType":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 35;
+        //     break;
+        //     case "String60LatinType":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 60;
+        //     break;
+        //     case "String80LatinType":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 80;
+        //     break;
+        //     case "String100LatinType":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 100;
+        //     break;
+        //     case "String200LatinType":
+        //         $resource['min_length'] = 1;
+        //         $resource['max_length'] = 200;
+        //     break;
+        //     case "String1000LatinType":
+        //         $resource['min_length'] = 10;
+        //         $resource['max_length'] = 1000;
+        //     break;
+
+        // }
 
         foreach($node->childNodes as $childNode)
         {
@@ -252,10 +334,18 @@ final class FatCommand extends Command
         $xpath = new \DOMXPath($this->document);
         $result = $xpath->query('./xs:simpleType [@name="'.$type.'"]//xs:restriction');
 
-        if($result->count() == 0)
+        if($result->count() == 0){
             return $resource;
+        }
 
         $node = $result->item(0);
+
+        
+        if($node->hasAttribute('base')) {
+            $resource['base_type'] = str_replace("xs:", "", $node->getAttribute('base'));
+        } else {
+            $resource['base_type'] = $this->type_map[$type] ?? str_replace("xs:", "", $type);
+        }
 
         foreach($node->childNodes as $childNode)
         {
@@ -263,16 +353,75 @@ final class FatCommand extends Command
             if($childNode instanceof \DomElement)
             {
         
-                $resource['base_type'] = str_replace("xs:","",$node->getAttribute('base'));
+                if(!in_array($childNode->localName, ['enumeration'])){
 
-                if(!in_array($childNode->localName, ['enumeration']))
-                    $resource[$childNode->localName] = $childNode->getAttribute("value");
+                    $resource[$this->camelToSnake($childNode->localName)] = $childNode->getAttribute("value");
+   
+                }
             }
 
         }
 
+        if(isset($resource['pattern']))
+            $resource = $this->extractPattern($resource);
+
         return $resource;
         
+    }
+
+
+    private function extractPattern($resource)
+    {
+        $parts = [];
+
+        if (preg_match('/{([^{}]+)}[^{}]*$/', $resource['pattern'], $matches)) {
+            $contents = $matches[1];
+            $parts = explode(",", $contents);
+        }
+
+        if(count($parts) == 2 && $resource['base_type'] == 'normalizedString'){
+            
+            $resource['min_length'] = (int)$parts[0];
+            $resource['max_length'] = (int)$parts[1];
+            $resource['base_type'] = 'string';
+
+        }
+
+        if(count($parts) == 1 && $resource['base_type'] == 'string') {
+
+            $resource['min_length'] = (int)$parts[0];
+            $resource['max_length'] = (int)$parts[0];
+            $resource['base_type'] = 'string';
+
+        }
+
+        if(count($parts) == 2 && $resource['base_type'] == 'string') {
+
+            $resource['min_length'] = (int)$parts[0];
+            $resource['max_length'] = (int)$parts[1];
+            $resource['base_type'] = 'string';
+
+        }
+
+        return $resource;
+
+    }
+
+    private function camelToSnake(string $camelCase): string
+    {
+        $result = '';
+
+        for ($i = 0; $i < strlen($camelCase); $i++) {
+            $char = $camelCase[$i];
+
+            if (ctype_upper($char)) {
+                $result .= '_' . strtolower($char);
+            } else {
+                $result .= $char;
+            }
+        }
+
+        return ltrim($result, '_');
     }
 
 
@@ -284,6 +433,10 @@ final class FatCommand extends Command
             if(in_array($attr->nodeName, ['name','type','minOccurs','maxOccurs'])) {
 
                 $key = $attr->nodeName == 'type' ? 'base_type' : $attr->nodeName;
+
+                $key = $attr->nodeName == 'minOccurs' ? 'min_occurs' : $attr->nodeName;
+
+                $key = $attr->nodeName == 'maxOccurs' ? 'max_occurs' : $attr->nodeName;
 
                 $child_array[$key] = $attr->nodeValue;
             }
@@ -333,21 +486,41 @@ final class FatCommand extends Command
             foreach($elements['elements'] as $key => $element)
             {
                 match($element['base_type']){
-                    'normalizedString' => $data[$pkey]['elements'][$key]['base_type'] = 'string', 
+                    
+                    // 'normalizedString' => $data[$pkey]['elements'][$key]['base_type'] = 'string', 
                     'token' => $data[$pkey]['elements'][$key]['base_type'] = 'string',
                     'xs:date' => $data[$pkey]['elements'][$key]['base_type'] = 'date',
                     'xs:dateTime' => $data[$pkey]['elements'][$key]['base_type'] = 'datetime',
                     'xs:base64Binary' => $data[$pkey]['elements'][$key]['base_type'] = 'base64',
-
+                    'String80LatinType' => $data[$pkey]['elements'][$key] = array_merge ($data[$pkey]['elements'][$key], ['base_type' => 'string', 'max_length' => 80]),
+                    'String60LatinType' => $data[$pkey]['elements'][$key] = array_merge ($data[$pkey]['elements'][$key], ['base_type' => 'string', 'max_length' => 60]),
                     default => null
                 };
 
-                
-                $data[$pkey]['elements'][$key]['minOccurs'] = $data[$pkey]['elements'][$key]['minOccurs'] ?? "1";
-                $data[$pkey]['elements'][$key]['maxOccurs'] = $data[$pkey]['elements'][$key]['maxOccurs'] ?? "1";
+                $data[$pkey]['elements'][$key]['min_occurs'] = isset($data[$pkey]['elements'][$key]['minOccurs']) ? (int)$data[$pkey]['elements'][$key]['minOccurs'] : 1;
+                $data[$pkey]['elements'][$key]['max_occurs'] = isset($data[$pkey]['elements'][$key]['maxOccurs']) ? (int)$data[$pkey]['elements'][$key]['maxOccurs'] : 1;
 
-                if($data[$pkey]['elements'][$key]['maxOccurs'] == "unbounded")
-                    $data[$pkey]['elements'][$key]['maxOccurs'] = "-1";
+                if(isset($data[$pkey]['elements'][$key]['maxOccurs']) && $data[$pkey]['elements'][$key]['maxOccurs'] == "unbounded")
+                    $data[$pkey]['elements'][$key]['max_occurs'] = -1;
+
+                if(isset($data[$pkey]['elements'][$key]['minLength'])){
+                    $data[$pkey]['elements'][$key]['min_length'] = $data[$pkey]['elements'][$key]['minLength'];
+                }
+
+                if(isset($data[$pkey]['elements'][$key]['maxLength'])) {
+                    $data[$pkey]['elements'][$key]['max_length'] = $data[$pkey]['elements'][$key]['maxLength'];
+                }
+
+                // if(isset($data[$pkey]['elements'][$key]['type'])){
+                //     $data[$pkey]['elements'][$key]['base_type'] = $data[$pkey]['elements'][$key]['type'];
+                // }
+                
+                // unset($data[$pkey]['elements'][$key]['type']);
+                unset($data[$pkey]['elements'][$key]['maxLength']);
+                unset($data[$pkey]['elements'][$key]['minLength']);
+                unset($data[$pkey]['elements'][$key]['minOccurs']);
+                unset($data[$pkey]['elements'][$key]['maxOccurs']);
+                
             }
 
         }

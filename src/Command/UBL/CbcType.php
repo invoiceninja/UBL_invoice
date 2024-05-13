@@ -21,16 +21,16 @@ class CbcType
            "base_type" => null,
            "resource" => [],
            "length" => null,
-           "fraction_digits" => null,
-           "total_digits" => null,
-           "max_exclusive" => null,
-           "min_exclusive" => null,
-           "max_inclusive" => null,
-           "min_inclusive" => null,
+        //    "fraction_digits" => null,
+        //    "total_digits" => null,
+        //    "max_exclusive" => null,
+        //    "min_exclusive" => null,
+        //    "max_inclusive" => null,
+        //    "min_inclusive" => null,
+        //    "whitespace" => null,
            "max_length" => null,
            "min_length" => null,
            "pattern" => null,
-           "whitespace" => null,
    ];
    
     private \DOMDocument $doc;

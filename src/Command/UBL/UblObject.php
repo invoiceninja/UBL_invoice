@@ -3,15 +3,13 @@
 namespace CleverIt\UBL\Invoice\Command\UBL;
 
 use DOMElement;
-use Illuminate\Support\Collection;
-use CleverIt\UBL\Invoice\Command\UBL\Type;
 use CleverIt\UBL\Invoice\Command\UBL\CacType;
 use CleverIt\UBL\Invoice\Command\UBL\CbcType;
 use CleverIt\UBL\Invoice\Command\UBL\CccType;
 use CleverIt\UBL\Invoice\Command\UBL\ExtType;
 use CleverIt\UBL\Invoice\Command\UBL\UdtType;
 
-class Ubl
+class UblObject
 {
     private array $stub_validation =
         [
@@ -37,7 +35,7 @@ class Ubl
 
     private string $prefix = "xsd";
 
-    public array $data = [];
+    public object $data;
 
     private ExtType $extType;
     private CacType $cacType;
@@ -80,7 +78,7 @@ class Ubl
         "PriceType",
         "PriceExtensionType",
     ];
-    
+
     private string $resource = "src/FACT1/UBL-Invoice-2.1.xsd";
 
     private array $exclusion_nodes = [
@@ -94,7 +92,8 @@ class Ubl
 
     public function init(): self
     {
-        
+
+        $this->data = new \stdClass;
         $this->cbcType = new CbcType();
 
         $this->extType = new ExtType();
@@ -114,7 +113,7 @@ class Ubl
         ->updateRules();
 
         $elementsString = json_encode($this->data, JSON_PRETTY_PRINT);
-        $fp = fopen("./stubs/FactUbl.json", 'w');
+        $fp = fopen("./stubs/FactUblObj.json", 'w');
         fwrite($fp, $elementsString);
         fclose($fp);
 
@@ -149,42 +148,46 @@ class Ubl
 
         $parent_elements = [];
 
-        foreach($elements as $element)
-        {
-            if(!$element->hasAttribute('ref') || in_array($element->getAttribute('ref'),$this->exclusion_nodes))
+        foreach($elements as $element) {
+            if(!$element->hasAttribute('ref') || in_array($element->getAttribute('ref'), $this->exclusion_nodes)) {
                 continue;
+            }
 
             $parts = explode(":", $element->getAttribute('ref'));
 
             $maxOccurs = $element->getAttribute('maxOccurs');
 
-            if($maxOccurs == "unbounded")
+            if($maxOccurs == "unbounded") {
                 $maxOccurs = "-1";
+            }
 
-            $parent_elements[] = array_merge($this->stub_validation, [
+            $parent_elements[] = (object)array_merge($this->stub_validation, [
                 'name' => $parts[1],
                 'base_type' => $element->getAttribute('ref'),
                 'min_occurs' => (int)$element->getAttribute('minOccurs'),
                 'max_occurs' => (int)$maxOccurs,
             ]);
-                        
+
         }
 
-        $this->data = [
-            'type' => 'InvoiceType',
-            'help' => '',
-            'choices' => [],
-            'elements' => $parent_elements
-        ];
+        $this->data->type = 'InvoiceType'; 
+            
+            $this->data->help = '';
+            $this->data->choices = [];
+            $this->data->elements = (object)$parent_elements;
+        
 
         return $this;
     }
 
     private function childNodes(): self
     {
-        foreach($this->data['elements'] as $key => $element)
-        {
-            $this->data['elements'][$key] = array_merge($element, $this->harvestNode($element['base_type']));
+        foreach($this->data->elements as $key => $element) {
+
+            if(isset($element->elements))
+                $element->elements = (object)$element->elements;
+
+            $this->data->elements->{$key} = (object)array_merge((array)$element, (array)$this->harvestNode($element->base_type));
         }
 
         return $this;
@@ -194,20 +197,20 @@ class Ubl
     {
         $types = collect();
 
-        foreach($this->data['elements'] as $key => $element)
-        {
-            if(stripos($element['base_type'], 'Type') !== false) {     
-                
-                if(!in_array($element['base_type'], $this->type_tracker))
-                    $this->type_tracker[] = $element['base_type'];
+        foreach($this->data->elements as $key => $element) {
+            if(stripos($element->base_type, 'Type') !== false) {
 
-                $types->push($element['base_type']);                    
+                if(!in_array($element->base_type, $this->type_tracker)) {
+                    $this->type_tracker[] = $element->base_type;
+                }
+
+                $types->push($element->base_type);
             }
-        
+
         }
 
         $child_types = $types->unique()->map(function ($t) {
-            
+
             foreach($this->cacType->elements as $node) {
                 if($node['type'] == $t) {
                     return $node;
@@ -218,16 +221,12 @@ class Ubl
 
         $infants = [];
 
-        foreach($child_types as $infant_type)
-        {
+        foreach($child_types as $infant_type) {
 
-            if(isset($infant_type['elements']))
-            {
-                foreach($infant_type['elements'] as $e)
-                {
+            if(isset($infant_type['elements'])) {
+                foreach($infant_type['elements'] as $e) {
 
-                    if(stripos($e['base_type'], 'Type') !== false && !in_array($e['base_type'], $this->type_tracker))
-                    {
+                    if(stripos($e['base_type'], 'Type') !== false && !in_array($e['base_type'], $this->type_tracker)) {
 
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
@@ -248,8 +247,7 @@ class Ubl
 
         $neonates = [];
 
-        foreach($infants as $neonate)
-        {
+        foreach($infants as $neonate) {
 
             if(isset($neonate['elements'])) {
                 foreach($neonate['elements'] as $e) {
@@ -259,8 +257,8 @@ class Ubl
                         foreach($this->cacType->elements as $node) {
 
                             if($node['type'] == $e['base_type']) {
-                            
-                            $this->type_tracker[] = $e['base_type'];
+
+                                $this->type_tracker[] = $e['base_type'];
 
                                 $neonates[] = $node;
                                 break;
@@ -303,22 +301,35 @@ class Ubl
 
 
 
-        $parent = $this->data;
-        
-        $this->data = [];
-        $this->data[] = $parent;
+        // $parent = $this->data;
 
-        foreach($child_types as $type)  
-            $this->data[] = $type;
+        // $this->data = [];
+        // $this->data[] = $parent;
 
-        foreach($infants as $infant)
-            $this->data[] = $infant;
 
-        foreach($neonates as $neonate)
-            $this->data[] = $neonate;
+        foreach($child_types as $type) {
+            $this->data->{$type['type']} = (object)json_decode(json_encode($type),false);
+            // $this->data[] = $type;
+        }
 
-        foreach($foetuses as $foetus)
-            $this->data[] = $foetus;
+        foreach($infants as $infant) {
+
+            $this->data->{$infant['type']} = (object)json_decode(json_encode($infant),false);
+            // $this->data[] = $infant;
+        }
+
+        foreach($neonates as $neonate) {
+            
+$this->data->{$neonate['type']} = (object)json_decode(json_encode($neonate),false);
+
+            // $this->data[] = $neonate;
+        }
+
+        foreach($foetuses as $foetus) {
+
+$this->data->{$foetus['type']} = (object)json_decode(json_encode($foetus),false);
+            // $this->data[] = $foetus;
+        }
 
         return $this;
     }
@@ -326,10 +337,10 @@ class Ubl
 
     private function harvestNode(string $name)
     {
-        
+
         $parts = explode(":", $name);
 
-        match($parts[0]){
+        match($parts[0]) {
             'cac' => $type = $this->cacType,
             'cbc' => $type = $this->cbcType,
             'ext' => $type = $this->extType,
@@ -348,30 +359,34 @@ class Ubl
 
         foreach($rules["invoice"] as $key => $value) {
 
-            foreach($this->data[0]['elements'] as $eKey => $eValue) {
+            foreach($this->data->elements as $eKey => $eValue) {
 
-                if(isset($eValue['name']) && $eValue['name'] == $key) {
+                if(isset($eValue->name) && $eValue->name == $key) {
 
-                    $this->data[0]['elements'][$eKey] = array_merge($eValue, $value);
+                    $this->data->elements->{$eKey} = (object)array_merge((array)$eValue, (array)$value);
 
                 }
             }
 
         }
 
-        foreach($rules['nested'] as $key => $value)
-        {
+        foreach($rules['nested'] as $key => $value) {
 
-            foreach($this->data as $dKey => $dValue)
-            {
-                if($key == $dValue['type'])
-                {
-                    foreach($rules['nested'][$key] as $nestKey => $value)
-                    {
-                        foreach($dValue['elements'] as $ddKey => $ddValue)
-                        {
-                            if($ddValue['name'] == $nestKey){
-                                $this->data[$dKey]['elements'][$ddKey] = array_merge($this->data[$dKey]['elements'][$ddKey], $value);
+            foreach($this->data as $dKey => $dValue) {
+                if($key == $dKey) {
+                    foreach($rules['nested'][$key] as $nestKey => $value) {
+                        foreach($dValue->elements as $ddKey => $ddValue) {
+                            if($ddValue->name == $nestKey) {
+
+                                echo print_r($value).PHP_EOL;
+                                echo "dd name = {$ddValue->name}".PHP_EOL;
+                                echo "nest key = ".$nestKey.PHP_EOL;
+                                echo "ddkey = {$ddKey}".PHP_EOL;
+                                echo "key = {$key}".PHP_EOL; 
+                                echo "dkey = {$dKey}".PHP_EOL;
+
+                                echo print_r($$this->data->{$dKey}->elements->{$ddKey}).PHP_EOL;
+                                $this->data->{$dKey}->elements->{$ddKey} = (object)array_merge((array)$this->data->{$dKey}->elements->{$ddKey}, (array)$value);
                             }
 
                         }

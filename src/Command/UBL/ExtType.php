@@ -22,17 +22,17 @@ class ExtType
            "name" => null,
            "base_type" => null,
            "resource" => [],
-           "length" => null,
-           "fraction_digits" => null,
-           "total_digits" => null,
-           "max_exclusive" => null,
-           "min_exclusive" => null,
-           "max_inclusive" => null,
-           "min_inclusive" => null,
+        //    "length" => null,
+        //    "fraction_digits" => null,
+        //    "total_digits" => null,
+        //    "max_exclusive" => null,
+        //    "min_exclusive" => null,
+        //    "max_inclusive" => null,
+        //    "min_inclusive" => null,
+        //    "whitespace" => null,
            "max_length" => null,
            "min_length" => null,
            "pattern" => null,
-           "whitespace" => null,
    ];
 
     private \DOMDocument $doc;
@@ -127,7 +127,13 @@ class ExtType
                         
                         if($attr->nodeName == 'maxOccurs' && $attr->nodeValue == 'unbounded')
                         {
-                            $child_array['maxOccurs'] = "-1";
+                            $child_array['max_occurs'] = -1;
+                        }
+                        elseif($attr->nodeName == 'maxOccurs'){
+                            $child_array['max_occurs'] = (int)$attr->nodeValue;
+                        }
+                        elseif($attr->nodeName == 'minOccurs'){
+                            $child_array['min_occurs'] = (int)$attr->nodeValue;
                         }
                         else
                             $child_array[$key] = $attr->nodeValue;
