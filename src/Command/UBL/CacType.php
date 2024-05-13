@@ -23,7 +23,7 @@ class CacType
            "name" => null,
            "base_type" => null,
            "resource" => [],
-           "length" => null,
+        //    "length" => null,
         //    "fraction_digits" => null,
         //    "total_digits" => null,
         //    "max_exclusive" => null,
@@ -88,6 +88,7 @@ class CacType
                     $elements[] = $this->parseSequenceNode($sequence->item($x));
                 }
             }
+            
 
             $data[] = ['type' => $base_type, 'help' => '', 'choices' => [], 'elements' => $elements[0]];
         }
@@ -139,8 +140,8 @@ class CacType
                     }
                 }
 
-                // $data[] = $child_array;
                 $data[] = array_merge($this->stub_validation, $this->parseNodeTypes($child_array));
+
             }
         }
 

@@ -47,7 +47,7 @@ class Fat
         ->getParentTypes();
 
         $this->final = new \stdClass;
-        $this->final->InvoiceType = (object)$this->data;
+        $this->final = (object)$this->data;
         
         $elementsString = json_encode($this->final, JSON_PRETTY_PRINT);
         $fp = fopen("./stubs/FatturaPAOBJ.json", 'w');

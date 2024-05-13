@@ -23,7 +23,7 @@ final class FatCommand extends Command
        "name" => null,
        "base_type" => null,
        "resource" => [],
-       "length" => null,
+    //    "length" => null,
     //    "fraction_digits" => null,
     //    "total_digits" => null,
     //    "max_exclusive" => null,

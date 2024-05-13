@@ -87,6 +87,8 @@ class UblObject
         'ext:UBLExtensions',
     ];
 
+    private object $final;
+
     public function __construct()
     {
 
@@ -110,10 +112,18 @@ class UblObject
 
         $this->parentProps()
         ->childNodes()
-        ->childTypes()
-        ->updateRules();
+        ->childTypes();
+        // ->updateRules();
 
-        $elementsString = json_encode($this->data, JSON_PRETTY_PRINT);
+        
+        $this->final = new \stdClass();
+
+        // $this->final = (object)['InvoiceType' => $this->data[0]];
+
+
+        $this->final = (object) $this->data;
+
+        $elementsString = json_encode($this->final, JSON_PRETTY_PRINT);
         $fp = fopen("./stubs/FactUblObj.json", 'w');
         fwrite($fp, $elementsString);
         fclose($fp);
@@ -167,11 +177,12 @@ class UblObject
                 'base_type' => $element->getAttribute('ref'),
                 'min_occurs' => (int)$element->getAttribute('minOccurs'),
                 'max_occurs' => (int)$maxOccurs,
+                'help' => $this->getAnnotation($element)
             ]);
 
         }
 
-        $this->data = [
+        $this->data['InvoiceType'] = [
             'type' => 'InvoiceType',
             'help' => '',
             'choices' => [],
@@ -181,10 +192,27 @@ class UblObject
         return $this;
     }
 
+    private function getAnnotation(DOMElement $element): string
+    {
+        $result = $this->getXPath("./{$this->prefix}:annotation//{$this->prefix}:documentation//ccts:Component//ccts:Definition", $element);
+        
+        return $result->count() > 0 ? trim(str_replace("\n","", $result->item(0)->nodeValue)) : '';
+
+    }
+    
+    private function getXPath(string $path, \DomElement $element = null): ?\DOMNodeList
+    {
+        $xpath = new \DOMXPath($this->document);
+        return $xpath->query($path, $element);
+    }
+
     private function childNodes(): self
     {
-        foreach($this->data['elements'] as $key => $element) {
-            $this->data['elements'][$key] = array_merge($element, $this->harvestNode($element['base_type']));
+        foreach($this->data as $key => $elements) {
+
+            foreach($elements['elements'] as $eKey => $element) {
+                $this->data[$key]['elements'][$eKey] = array_merge($element, $this->harvestNode($element['base_type']));
+            }
         }
 
         return $this;
@@ -194,16 +222,19 @@ class UblObject
     {
         $types = collect();
 
-        foreach($this->data['elements'] as $key => $element) {
-            if(stripos($element['base_type'], 'Type') !== false) {
+        foreach($this->data as $key => $elements) {
 
-                if(!in_array($element['base_type'], $this->type_tracker)) {
-                    $this->type_tracker[] = $element['base_type'];
+            foreach($elements['elements'] as $eKey => $element) {
+                if(stripos($element['base_type'], 'Type') !== false) {
+
+                    if(!in_array($element['base_type'], $this->type_tracker)) {
+                        $this->type_tracker[] = $element['base_type'];
+                    }
+
+                    $types->push($element['base_type']);
                 }
 
-                $types->push($element['base_type']);
             }
-
         }
 
         $child_types = $types->unique()->map(function ($t) {
@@ -228,7 +259,7 @@ class UblObject
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
                                 $this->type_tracker[] = $e['base_type'];
-                                $infants[] =[$e['name'] => $node];
+                                $infants[$e['name']] = $node;
                                 break;
                             }
                         }
@@ -257,7 +288,7 @@ class UblObject
 
                                 $this->type_tracker[] = $e['base_type'];
 
-                                $neonates[] = [$e['name'] => $node];
+                                $neonates[$e['name']] = $node;
                                 break;
                             }
                         }
@@ -283,7 +314,7 @@ class UblObject
                         foreach($this->cacType->elements as $node) {
                             if($node['type'] == $e['base_type']) {
                                 $this->type_tracker[] = $e['base_type'];
-                                $foetuses[] = [$e['name'] => $node];
+                                $foetuses[$e['name']] = $node;
                                 break;
                             }
                         }
@@ -298,11 +329,13 @@ class UblObject
 
 
 
-        $parent = $this->data;
+        // $parent = $this->data;
 
-        $this->data = [];
-        $this->data[] = $parent;
+        // $this->data = [];
+        // $this->data[] = $parent;
 
+
+        
         foreach($child_types as $type) {
 
             $new_set = [];
@@ -311,8 +344,10 @@ class UblObject
             }
             $type['elements'] = $new_set;
 
-            $this->data[] = (object)$type;
+            $this->data[$type['type']] = (object)$type;
         }
+
+        // echo print_r($this->data);
 
         foreach($infants as $infant) {
 
@@ -321,13 +356,17 @@ class UblObject
             if(isset($infant['elements']))
             {
 
-                foreach($infant['elements'] as $stub) {
+                foreach($infant['elements'] as $key =>$stub) {
                     $new_set[$stub['name']] = $stub;
                 }
                 $infant['elements'] = $new_set;
     
             }
-            $this->data[] = (object)$infant;
+
+echo "iunfant => {$key} - {$infant['type']}".PHP_EOL;
+
+            $this->data[$infant['type']] = (object)$infant;
+
         }
 
         foreach($neonates as $neonate) {
@@ -335,12 +374,15 @@ class UblObject
             $new_set = [];
             if(isset($neonate['elements']))
             {
-                foreach($neonate['elements'] as $stub) {
+                
+                foreach($neonate['elements'] as $key => $stub) {
                     $new_set[$stub['name']] = $stub;
                 }
                 $neonate['elements'] = $new_set;
             }
-            $this->data[] = (object)$neonate;
+
+            echo "neo nate => {$key} - {$neonate['type']}".PHP_EOL;
+            $this->data[$neonate['type']] = (object)$neonate;
         }
 
         foreach($foetuses as $foetus) {
@@ -349,14 +391,18 @@ class UblObject
 
             if(isset($foetus['elements']))
             {
-                foreach($foetus['elements'] as $stub) {
+                foreach($foetus['elements'] as $key => $stub) {
                     $new_set[$stub['name']] = $stub;
                 }
                 $foetus['elements'] = $new_set;
             }
-            $this->data[] = (object)$foetus;
+
+            echo "foetus {$key} => {$stub['base_type']}".PHP_EOL;
+            // echo print_r($foetus).PHP_EOL;
+            $this->data[$foetus['type']] = (object)$foetus;
         }
 
+        // echo print_r($this->type_tracker).PHP_EOL;
         return $this;
     }
 
@@ -385,13 +431,27 @@ class UblObject
 
         foreach($rules["invoice"] as $key => $value) {
 
-            foreach($this->data[0]['elements'] as $eKey => $eValue) {
+            foreach($this->data as $dKey => $eValue) {
 
-                if(isset($eValue['name']) && $eValue['name'] == $key) {
+                $tmp_elements = (array)$eValue;
 
-                    $this->data[0]['elements'][$eKey] = array_merge($eValue, $value);
+                if(!isset($tmp_elements['elements']))
+                    continue;
 
+                foreach($tmp_elements['elements'] as $eKey => $eValue) {
+
+                    if(isset($eValue['name']) && $eValue['name'] == $key) {
+
+                        echo "evalue name = {$eValue['name']}".PHP_EOL;
+                        echo "ekey = {$eKey}".PHP_EOL;
+                        echo "dkey = {$dKey}".PHP_EOL;
+                        echo "key = {$key}".PHP_EOL;
+                        $this->data[$dKey]['elements'][$eKey] = (object) array_merge((array)$eValue, (array)$value);
+
+                    }
+            
                 }
+
             }
 
         }
@@ -404,7 +464,6 @@ class UblObject
                         foreach($dValue->elements as $ddKey => $ddValue) {
                             if(is_array($ddValue) && $ddValue['name'] == $nestKey) {
 
-                                // echo print_r($this->data[$dKey]->elements[$ddKey]).PHP_EOL;
                                 $this->data[$dKey]->elements[$ddKey] = (object)array_merge((array)$this->data[$dKey]->elements[$ddKey], $value);
                             }
                             elseif(is_object($ddValue) && $ddValue->name == $nestKey){

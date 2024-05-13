@@ -23,22 +23,22 @@ class Gen
 
         $final = $fat->final;
 
-        foreach($final->InvoiceType as $value)
+        foreach($final as $value)
         {
-                $this->init($value);
+            $this->init($value);
         }
     }
 
     public function init($class)
     {
-        echo print_r($class).PHP_EOL;
+        // echo print_r($class).PHP_EOL;
 
         $props = [];
         foreach($class['elements'] as $key => $element)
         {
-            echo print_r($element).PHP_EOL;
+            // echo print_r($element).PHP_EOL;
 
-            $props[] = new PropertyGenerator($element['name'], $element['name'], PropertyGenerator::FLAG_PUBLIC);
+            $props[] = new PropertyGenerator(name: $element['name'], flags: PropertyGenerator::FLAG_PUBLIC, type: $element['name']);
         }
 
         echo (new ClassGenerator())
