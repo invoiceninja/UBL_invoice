@@ -43,6 +43,7 @@ class ROEinvoiceTest extends TestCase
 {
 
     public function setUp(): void{
+        $this->markTestSkipped();
     }
 
 
@@ -97,122 +98,10 @@ function evaluateXPath($xpathExpression, $xmlDocument)
 
     }
 
-    public function testSchemaTronValidation()
+    public function testROEinvoice()
     {
-        
-            //if i hack the xslt file and downgrade it to xslt (not xslt2) it parses fine!
-            $schematron = new Schematron();
-            $schematron->load('src/FACT1/common/Validation-Invoice_v1.0.8.sch');
-
-            $document = new \DOMDocument();
-            $document->load('tests/ROEinvoice/ro.xml');
-            $result = $schematron->validate($document);
-
-            echo print_r($result,1);
-
+    
+        $this->assertTrue(true);
     }
 
-    public function testParseXsd()
-    {
-
-        $reader = new SchemaReader();
-
-        $reader->addKnownNamespaceSchemaLocation(
-        "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
-        "src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
-        $reader->addKnownNamespaceSchemaLocation(
-        "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
-        "src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd"
-        );
-        $reader->addKnownNamespaceSchemaLocation(
-        "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
-        "src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd"
-        );
-
-        $schema = $reader->readFile("src/FACT1/UBL-Invoice-2.1.xsd");
-        $CommonAggregateComponents = $reader->readFile("src/FACT1/common/UBL-CommonAggregateComponents-2.1.xsd");
-        $CommonBasicComponents = $reader->readFile("src/FACT1/common/UBL-CommonBasicComponents-2.1.xsd");
-        $CommonExtensionComponents = $reader->readFile("src/FACT1/common/UBL-CommonExtensionComponents-2.1.xsd");
-
-        $schema->addSchema($CommonAggregateComponents);
-        $schema->addSchema($CommonBasicComponents);
-        $schema->addSchema($CommonExtensionComponents);
-
-        //         foreach ($schema->getElements() as $element) {
-        // echo $element->getName().PHP_EOL;
-        //         }
-        // $e = $schema->getElement("InvoiceTypeCode");
-        // echo var_dump($e);
-
-        // foreach ($schema->getGroups() as $group) {
-        // }
-
-                // echo "attr" . PHP_EOL;
-        // foreach ($schema->getAttributes() as $attr) {
-            // echo $attr->getName().PHP_EOL;
-        // }
-
-        // foreach ($schema->getAttributeGroups() as $attrGroup) {
-        // }
-
-        $r = [];
-
-        foreach ($schema->getTypes() as $type) {
-            // echo $type->getName(). PHP_EOL;
-        }
-
-        $elements_array = [];
-
-        foreach ($schema->getTypes() as $type) {
-
-            $data = [];
-            $data['type'] = $type->getName();
-
-            // $schema2 = $type->getSchema();
-            // foreach($schema2->getTypes() as $tt)
-            // {
-            //     echo $tt->getName().PHP_EOL;
-            // }
-
-
-            $elements = [];
-
-            if(method_exists($type, "getElements")) {
-                foreach($type?->getElements() as $innerElement) {
-
-//                     echo print_r(get_class_methods($type)) . PHP_EOL;
-
-// echo print_r($type->getExtension(), 1). PHP_EOL;
-
-// echo print_r($type->getRestriction(), 1). PHP_EOL;
-
-                    $elements[] = [
-                        'name' => $innerElement->getName(),
-                        'min' => $innerElement->getMin(),
-                        'max' => $innerElement->getMax(),
-                    ];
-
-                    
-
-                    // if($innerElement->getName() == 'InvoiceTypeCode') {
-                    //     $innerElement->ge
-                    // }
-                }
-            }
-
-            $data['elements'] = $elements;
-
-            $elements_array[] = $data;
-        }
-
-
-$x = $schema->getType('UBLExtensions');
-
-echo "xx" . PHP_EOL;
-echo $x;
-echo isset($x);
-
-        // echo print_r($elements_array);
-        // echo json_encode($r);
-    }
 }

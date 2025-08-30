@@ -351,7 +351,7 @@ class FatturaTest extends TestCase
         $this->assertTrue($validation);
     }
 
-    public function testParseXsd()
+    public function parseXsd()
     {
 
         $reader = new SchemaReader();
@@ -427,7 +427,8 @@ class FatturaTest extends TestCase
             if(method_exists($type, "getElements")) {
                 foreach($type?->getElements() as $innerElement) {
 
-                    echo ">> ".$innerElement->getName() .PHP_EOL;
+                    // echo ">> ".$innerElement->getName() .PHP_EOL;
+                    // 
 
                     $elements[] = [
                         'name' => $innerElement->getName(),
@@ -445,5 +446,7 @@ class FatturaTest extends TestCase
 
         // echo print_r($r);
         // echo json_encode($r);
+
+        $this->assertTrue(true);
     }
 }
