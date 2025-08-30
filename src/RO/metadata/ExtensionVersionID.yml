@@ -1,4 +1,0 @@
-CleverIt\UBL\Invoice\RO\ExtensionVersionID:
-    xml_root_name: ExtensionVersionID
-    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2'
-    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2'

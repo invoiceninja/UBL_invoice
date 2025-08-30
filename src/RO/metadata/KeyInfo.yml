@@ -1,4 +1,0 @@
-CleverIt\UBL\Invoice\RO\KeyInfo:
-    xml_root_name: KeyInfo
-    xml_root_namespace: 'http://www.w3.org/2000/09/xmldsig#'
-    namespace: 'http://www.w3.org/2000/09/xmldsig#'

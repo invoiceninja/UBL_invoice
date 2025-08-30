@@ -1,4 +1,0 @@
-CleverIt\UBL\Invoice\RO\Declaration:
-    xml_root_name: Declaration
-    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
-    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

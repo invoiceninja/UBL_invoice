@@ -1,4 +1,0 @@
-CleverIt\UBL\Invoice\RO\EnvironmentalEmission:
-    xml_root_name: EnvironmentalEmission
-    xml_root_namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'
-    namespace: 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'

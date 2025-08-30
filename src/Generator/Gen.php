@@ -44,7 +44,7 @@ class Gen
         foreach($_class['elements'] as $key => $element)
         {
             // // $type = new TypeGenerator($element['name']);
-            $type = TypeGenerator::fromTypeString($element['name']);
+            $type = TypeGenerator::fromTypeString($element['name']."|Optional");
             
             // // echo print_r($element).PHP_EOL;
             // $prop = new PropertyGenerator(name: $element['name'], flags: PropertyGenerator::FLAG_PUBLIC, type: $type);
@@ -56,10 +56,10 @@ class Gen
             $property->setName($element['name']);
             $property->setVisibility(PropertyGenerator::VISIBILITY_PUBLIC);
             $property->setType($type); 
-            
             $property->omitDefaultValue(true);
-
+            
             $class->addPropertyFromGenerator($property);
+
             $class->setDocblock(
                 (new DocBlockGenerator())
                     ->setShortDescription('Sample generated class')
