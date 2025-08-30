@@ -23,7 +23,7 @@
         "sabre/xml": "^4.0",
         "goetas-webservices/xsd2php-runtime": "^0.2.17",
         "dallgoot/yaml": "0.9.1.2",
-        "illuminate/collections": "^10.48"
+        "illuminate/collections": "^10|^11|^12"
     },
 
     "autoload": {
