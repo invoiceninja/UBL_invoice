@@ -2,7 +2,7 @@
 
 namespace CleverIt\UBL\Invoice\Codes\V21;
 
-class PaymentCode
+class PaymentMeansCode
 {
 
     public const INSTRUMENT_NOT_DEFINED  = '1';
